@@ -1,0 +1,4601 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enquête Police Scientifique – Chapitre 2 : Du caractère à l'ADN | SVT 3ème</title>
+<style>
+  :root {
+    --bg-main: #0b1120;
+    --bg-card: #151f32;
+    --bg-card-hover: #1e2c45;
+    --bg-input: #0f172a;
+    --cyan: #06b6d4;
+    --cyan-glow: rgba(6, 182, 212, 0.35);
+    --cyan-dim: #0891b2;
+    --amber: #f59e0b;
+    --amber-glow: rgba(245, 158, 11, 0.3);
+    --yellow-police: #facc15;
+    --green-valid: #10b981;
+    --green-glow: rgba(16, 185, 129, 0.3);
+    --red-alert: #ef4444;
+    --red-glow: rgba(239, 68, 68, 0.35);
+    --purple-dna: #a855f7;
+    --purple-glow: rgba(168, 85, 247, 0.35);
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: #334155;
+    --border-accent: #0284c7;
+    --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* Scanlines subtle background overlay */
+  body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  /* HEADER */
+  header.police-header {
+    background: linear-gradient(180deg, #111c30 0%, #0c1424 100%);
+    border-bottom: 2px solid var(--border-accent);
+    padding: 12px 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .badge-icon {
+    width: 48px;
+    height: 48px;
+    background: radial-gradient(circle, #0284c7 0%, #0369a1 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px var(--cyan-glow);
+    border: 1px solid var(--cyan);
+  }
+
+  .brand-text h1 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #e2e8f0;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .brand-text h1 span.tag-case {
+    background: var(--red-alert);
+    color: white;
+    font-size: 0.65rem;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    letter-spacing: 1px;
+    animation: blink 2s infinite ease-in-out;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .brand-text p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .header-agent {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .header-agent label {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--cyan);
+    text-transform: uppercase;
+  }
+
+  .header-agent input {
+    background: #090e17;
+    border: 1px solid #334155;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .header-agent input:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan-glow);
+  }
+
+  .nav-btn-act2 {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    border: 1px solid #a855f7;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 0 12px var(--purple-glow);
+    transition: all 0.2s;
+  }
+
+  .nav-btn-act2:hover {
+    background: #8b5cf6;
+    transform: translateY(-1px);
+    box-shadow: 0 0 16px var(--purple-glow);
+  }
+
+  .audio-toggle {
+    background: #1e293b;
+    border: 1px solid #475569;
+    color: #cbd5e1;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+
+  .audio-toggle:hover {
+    background: #334155;
+    color: #fff;
+  }
+
+  /* STEP NAVIGATION TABS */
+  nav.stepper-nav {
+    background: #0d1525;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    padding: 6px 15px;
+    gap: 8px;
+    overflow-x: auto;
+    position: sticky;
+    top: 73px;
+    z-index: 90;
+  }
+
+  .step-tab {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s;
+    white-space: nowrap;
+  }
+
+  .step-tab:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+  }
+
+  .step-tab.active {
+    background: #1e293b;
+    color: var(--cyan);
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan-glow);
+  }
+
+  .step-tab .step-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+  }
+
+  .step-tab.active .step-badge {
+    background: var(--cyan);
+    color: #0b1120;
+    font-weight: 700;
+  }
+
+  /* MAIN CONTENT CONTAINER */
+  main.investigation-container {
+    max-width: 1350px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+  }
+
+  /* STEP PANELS */
+  .step-panel {
+    display: none;
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  .step-panel.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* PANEL HEADER CARD */
+  .panel-banner {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--cyan);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .panel-banner h2 {
+    font-size: 1.25rem;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .panel-banner p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 4px;
+    max-width: 850px;
+  }
+
+  .target-badge {
+    background: rgba(6, 182, 212, 0.15);
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ============================================================
+     STEP 1 : SCENE DE CRIME INTERACTIVE (HOTSPOTS)
+     ============================================================ */
+  .scene-explorer-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 22px;
+  }
+
+  @media (max-width: 1024px) {
+    .scene-explorer-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .scene-viewport-wrapper {
+    position: relative;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  }
+
+  .scene-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    user-select: none;
+  }
+
+  .camera-overlay {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(4px);
+    padding: 5px 12px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #e2e8f0;
+    pointer-events: none;
+  }
+
+  .rec-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--red-alert);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--red-alert);
+    animation: blink 1s infinite;
+  }
+
+  .tape-decoration {
+    position: absolute;
+    bottom: 12px;
+    right: 20px;
+    background: var(--yellow-police);
+    color: #000;
+    font-weight: 900;
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    letter-spacing: 1.5px;
+    transform: rotate(-2deg);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    pointer-events: none;
+    font-family: var(--font-mono);
+  }
+
+  /* HOTSPOTS */
+  .hotspot {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 20;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.9);
+    border: 2px solid var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--cyan-glow);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .hotspot::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid var(--cyan);
+    animation: ripple 2s infinite ease-out;
+  }
+
+  @keyframes ripple {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+
+  .hotspot:hover {
+    transform: translate(-50%, -50%) scale(1.15);
+    border-color: var(--yellow-police);
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.6);
+  }
+
+  .hotspot.visited {
+    border-color: var(--green-valid);
+    box-shadow: 0 0 10px var(--green-glow);
+  }
+  .hotspot.visited::before {
+    border-color: var(--green-valid);
+  }
+
+  .hotspot-number {
+    font-size: 0.82rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    color: #fff;
+  }
+
+  .hotspot-tag {
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(11, 17, 32, 0.9);
+    border: 1px solid var(--border);
+    color: #e2e8f0;
+    font-size: 0.65rem;
+    padding: 1px 6px;
+    border-radius: 3px;
+    white-space: nowrap;
+    pointer-events: none;
+    font-family: var(--font-mono);
+  }
+
+  /* SIDE PANEL FOR INSPECTION */
+  .inspection-sidebar {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .inspection-sidebar h3 {
+    font-size: 1.05rem;
+    color: var(--cyan);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+  }
+
+  .clue-details-box {
+    background: #0d1525;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    min-height: 260px;
+  }
+
+  .clue-empty-state {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    text-align: center;
+    padding: 40px 10px;
+    line-height: 1.5;
+  }
+
+  .clue-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .clue-header h4 {
+    color: #fff;
+    font-size: 1rem;
+  }
+
+  .clue-type-pill {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(6, 182, 212, 0.15);
+    color: var(--cyan);
+    border: 1px solid var(--cyan-dim);
+    font-family: var(--font-mono);
+  }
+
+  .clue-body p {
+    font-size: 0.86rem;
+    color: #cbd5e1;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .clue-question {
+    background: rgba(245, 158, 11, 0.1);
+    border-left: 3px solid var(--amber);
+    padding: 10px 12px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.84rem;
+    color: #fde68a;
+    margin-top: 10px;
+  }
+
+  .clue-action-btn {
+    width: 100%;
+    margin-top: 14px;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .clue-action-btn:hover {
+    background: #0284c7;
+    box-shadow: 0 0 12px var(--cyan-glow);
+  }
+
+  .clue-checklist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .clue-checklist li {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .clue-checklist li:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+  }
+
+  .clue-checklist li.discovered {
+    color: #a7f3d0;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+
+  .check-icon {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #475569;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+  }
+
+  .clue-checklist li.discovered .check-icon {
+    background: var(--green-valid);
+    border-color: var(--green-valid);
+    color: #0b1120;
+    font-weight: bold;
+  }
+
+  /* ============================================================
+     STEP 2 : SCELLÉS & PRELEVEMENTS D'ADN
+     ============================================================ */
+  .dna-samples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  .dna-sample-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dna-sample-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 4px; height: 100%;
+    background: var(--border);
+    transition: background 0.2s;
+  }
+
+  .dna-sample-card:hover {
+    border-color: var(--purple-dna);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px var(--purple-glow);
+  }
+
+  .dna-sample-card.active-sample {
+    border-color: var(--purple-dna);
+    background: #19233c;
+  }
+
+  .dna-sample-card.active-sample::before {
+    background: var(--purple-dna);
+  }
+
+  .dna-sample-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sample-code {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--purple-dna);
+    background: rgba(168, 85, 247, 0.15);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .sample-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .dna-sample-card h4 {
+    font-size: 0.95rem;
+    color: #f8fafc;
+  }
+
+  .sample-badge-dna {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+
+  .dna-yes {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+  }
+
+  .dna-no {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+  }
+
+  .dna-microscope-panel {
+    background: #0f172a;
+    border: 2px solid var(--border-accent);
+    border-radius: 12px;
+    padding: 22px;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 22px;
+    margin-bottom: 22px;
+  }
+
+  @media (max-width: 850px) {
+    .dna-microscope-panel {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .microscope-lens-viewport {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, #022c43 0%, #05131f 70%, #000 100%);
+    border: 6px solid #334155;
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.25), inset 0 0 30px rgba(0,0,0,0.8);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .microscope-reticle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    pointer-events: none;
+    background: 
+      linear-gradient(to right, transparent 49.5%, rgba(6, 182, 212, 0.3) 50%, transparent 50.5%),
+      linear-gradient(to bottom, transparent 49.5%, rgba(6, 182, 212, 0.3) 50%, transparent 50.5%);
+  }
+
+  .cell-visual-svg {
+    width: 80%;
+    height: 80%;
+    filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.5));
+    animation: cellFloat 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes cellFloat {
+    0% { transform: scale(0.96) translate(-2px, -2px); }
+    100% { transform: scale(1.02) translate(2px, 2px); }
+  }
+
+  .sample-analysis-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .sample-analysis-content h3 {
+    font-size: 1.2rem;
+    color: var(--yellow-police);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sample-analysis-content p {
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    line-height: 1.55;
+  }
+
+  .dna-verdict-box {
+    background: rgba(168, 85, 247, 0.1);
+    border-left: 4px solid var(--purple-dna);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.88rem;
+    color: #e9d5ff;
+    line-height: 1.5;
+  }
+
+  /* Transition teaser to Activity 2 */
+  .act2-teaser-card {
+    background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+    border: 2px dashed #8b5cf6;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .act2-teaser-card h4 {
+    font-size: 1.1rem;
+    color: #c4b5fd;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .act2-teaser-card p {
+    font-size: 0.88rem;
+    color: #94a3b8;
+    max-width: 750px;
+  }
+
+  /* ============================================================
+     STEP 3 : AGENDA & CARACTERES SPECIFIQUES
+     ============================================================ */
+  .agenda-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .agenda-banner-image {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    display: block;
+  }
+
+  .species-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .species-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .species-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--cyan);
+    box-shadow: 0 6px 20px var(--cyan-glow);
+  }
+
+  .species-card-header {
+    height: 140px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+  }
+
+  .species-card-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.3s;
+  }
+
+  .species-card:hover .species-card-header img {
+    transform: scale(1.05);
+  }
+
+  .species-pill {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(11, 17, 32, 0.85);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    font-style: italic;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .species-badge-role {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .role-animal {
+    background: rgba(245, 158, 11, 0.85);
+    color: #000;
+  }
+  .role-humain {
+    background: rgba(6, 182, 212, 0.85);
+    color: #000;
+  }
+
+  .species-card-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .species-card-body h4 {
+    font-size: 0.98rem;
+    color: #f8fafc;
+  }
+
+  .species-traits {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .species-traits strong {
+    color: #cbd5e1;
+  }
+
+  .species-category-tag {
+    margin-top: auto;
+    font-size: 0.72rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #0f172a;
+    border: 1px solid var(--border);
+    color: #94a3b8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Specific Characters Interactive Question */
+  .pedago-quiz-box {
+    background: #1e293b;
+    border: 1px solid var(--border-accent);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-top: 10px;
+  }
+
+  .pedago-quiz-box h3 {
+    font-size: 1.05rem;
+    color: var(--yellow-police);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .quiz-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .quiz-btn {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .quiz-btn:hover {
+    background: #1e293b;
+    border-color: var(--cyan);
+  }
+
+  .quiz-btn.correct {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: var(--green-valid);
+    color: #a7f3d0;
+  }
+
+  .quiz-btn.incorrect {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: var(--red-alert);
+    color: #fca5a5;
+  }
+
+  .feedback-msg {
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    display: none;
+    line-height: 1.45;
+  }
+
+  .feedback-msg.show {
+    display: block;
+  }
+
+  .feedback-msg.success {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid var(--green-valid);
+    color: #a7f3d0;
+  }
+
+  .feedback-msg.info {
+    background: rgba(6, 182, 212, 0.15);
+    border: 1px solid var(--cyan);
+    color: #a5f3fc;
+  }
+
+  /* ============================================================
+     STEP 4 : VIDEOSURVEILLANCE & PORTRAITS-ROBOTS
+     ============================================================ */
+  .cctv-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 22px;
+  }
+
+  @media (max-width: 900px) {
+    .cctv-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cctv-monitor {
+    background: #020617;
+    border: 2px solid #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+  }
+
+  .cctv-bar {
+    background: #090e1a;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1e293b;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--cyan);
+  }
+
+  .cctv-screen {
+    position: relative;
+    padding: 12px;
+    background: #050b14;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cctv-img {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #334155;
+    filter: contrast(1.1);
+  }
+
+  /* Scan target boxes */
+  .face-scanner-box {
+    position: absolute;
+    border: 2px dashed var(--yellow-police);
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+    animation: pulseScan 2s infinite ease-in-out;
+  }
+
+  .face-scanner-box.suspect-left {
+    top: 25%;
+    left: 20%;
+    width: 28%;
+    height: 60%;
+  }
+
+  .face-scanner-box.suspect-right {
+    top: 25%;
+    left: 68%;
+    width: 28%;
+    height: 60%;
+  }
+
+  @keyframes pulseScan {
+    0%, 100% { border-color: var(--yellow-police); opacity: 0.9; }
+    50% { border-color: var(--cyan); opacity: 0.4; }
+  }
+
+  .scanner-legend {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--yellow-police);
+    display: flex;
+    gap: 15px;
+  }
+
+  .suspect-comparison-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .suspect-comparison-panel h3 {
+    font-size: 1.05rem;
+    color: #fff;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+  }
+
+  .suspect-dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .suspect-mini-card {
+    background: #0f172a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .suspect-mini-card.active-suspect {
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan-glow);
+  }
+
+  .suspect-mini-card img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 5px;
+    background: #000;
+  }
+
+  .suspect-mini-card h4 {
+    font-size: 0.88rem;
+    color: #f1f5f9;
+  }
+
+  .suspect-traits-list {
+    list-style: none;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .trait-tag {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-family: var(--font-mono);
+  }
+  .tag-hereditaire {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+  .tag-acquis {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  /* ============================================================
+     STEP 5 : LABORATOIRE DE CLASSIFICATION (DRAG & DROP / CLICK)
+     ============================================================ */
+  .classifier-workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .inventory-pool {
+    background: #111a2d;
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+
+  .inventory-pool h3 {
+    font-size: 0.95rem;
+    color: #e2e8f0;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cards-reservoir {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-height: 80px;
+    padding: 8px;
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 8px;
+  }
+
+  /* TRAIT CARD */
+  .trait-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.84rem;
+    color: #f1f5f9;
+    cursor: grab;
+    user-select: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 280px;
+  }
+
+  .trait-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--cyan);
+    box-shadow: 0 4px 12px var(--cyan-glow);
+  }
+
+  .trait-card.dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+  }
+
+  .trait-card .card-actions {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .move-btn {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    padding: 2px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    flex: 1;
+    text-align: center;
+  }
+
+  .move-btn:hover {
+    background: #334155;
+    color: #fff;
+  }
+
+  /* CLASSIFICATION COLUMNS */
+  .columns-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .columns-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .drop-column {
+    background: var(--bg-card);
+    border: 2px dashed #334155;
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    min-height: 380px;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+
+  .drop-column.drag-over {
+    border-color: var(--cyan);
+    background-color: rgba(6, 182, 212, 0.05);
+  }
+
+  .column-header {
+    border-bottom: 2px solid;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+
+  .col-specifique .column-header {
+    border-color: #38bdf8;
+  }
+  .col-specifique h4 {
+    color: #38bdf8;
+    font-size: 0.95rem;
+  }
+
+  .col-hereditaire .column-header {
+    border-color: #34d399;
+  }
+  .col-hereditaire h4 {
+    color: #34d399;
+    font-size: 0.95rem;
+  }
+
+  .col-acquis .column-header {
+    border-color: #fbbf24;
+  }
+  .col-acquis h4 {
+    color: #fbbf24;
+    font-size: 0.95rem;
+  }
+
+  .column-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 3px;
+    line-height: 1.35;
+  }
+
+  .column-slot {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 6px;
+    border-radius: 6px;
+    background: rgba(11, 17, 32, 0.4);
+    min-height: 250px;
+  }
+
+  .validation-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #111a2d;
+    padding: 14px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: #0284c7;
+    box-shadow: 0 0 15px var(--cyan-glow);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: #1e293b;
+    border: 1px solid #475569;
+    color: #cbd5e1;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: #334155;
+    color: #fff;
+  }
+
+  /* ============================================================
+     STEP 6 : RAPPORT DE POLICE SCIENTIFIQUE (OFFICIAL REPORT)
+     ============================================================ */
+  .report-sheet {
+    background: #ffffff;
+    color: #1e293b;
+    border-radius: 8px;
+    padding: 35px 45px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+    font-family: 'Times New Roman', Times, serif;
+    position: relative;
+    border: 1px solid #cbd5e1;
+  }
+
+  .report-official-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #0f172a;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+  }
+
+  .official-motto {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 1.4;
+  }
+
+  .official-meta {
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: #334155;
+  }
+
+  .report-title-block {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .report-title-block h2 {
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #0f172a;
+    margin-bottom: 5px;
+  }
+
+  .report-title-block p {
+    font-style: italic;
+    font-size: 0.95rem;
+    color: #475569;
+  }
+
+  .report-section {
+    margin-bottom: 22px;
+  }
+
+  .report-section h3 {
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #0f172a;
+    border-bottom: 1px solid #94a3b8;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+    font-family: var(--font-main);
+  }
+
+  .report-section p, .report-section ul {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #1e293b;
+  }
+
+  .report-section ul {
+    padding-left: 20px;
+    margin-top: 6px;
+  }
+
+  .report-conclusion-box {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid #0284c7;
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin-top: 15px;
+  }
+
+  .stamp-box {
+    position: absolute;
+    bottom: 40px;
+    right: 50px;
+    border: 3px double #b91c1c;
+    color: #b91c1c;
+    padding: 8px 18px;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transform: rotate(-8deg);
+    opacity: 0.85;
+    border-radius: 6px;
+    pointer-events: none;
+  }
+
+  .print-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  /* Transition card to Activity 2 at bottom of step 6 */
+  .next-chapter-bridge {
+    background: linear-gradient(135deg, #1e1b4b 0%, #172554 100%);
+    border: 2px solid #8b5cf6;
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 30px;
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .next-chapter-bridge h3 {
+    font-size: 1.25rem;
+    color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .next-chapter-bridge p {
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    margin-top: 6px;
+    max-width: 700px;
+    line-height: 1.5;
+  }
+
+  /* PRINT STYLES */
+  @media print {
+    body {
+      background: white !important;
+      color: black !important;
+    }
+    body::before, header, nav, .print-actions, .panel-banner, .next-chapter-bridge {
+      display: none !important;
+    }
+    .report-sheet {
+      box-shadow: none !important;
+      border: none !important;
+      padding: 0 !important;
+      max-width: 100% !important;
+    }
+    .step-panel {
+      display: none !important;
+    }
+    #step-6 {
+      display: block !important;
+    }
+  }
+
+  /* MODAL FOR IMAGE ZOOM */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+  }
+  .modal-overlay.open {
+    display: flex;
+  }
+  .modal-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    max-width: 900px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  }
+  .modal-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid #475569;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+  .modal-body {
+    padding: 20px;
+    text-align: center;
+  }
+  .modal-body img {
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: 6px;
+  }
+
+  /* =========================================================================
+     NOUVEAUX STYLES : AGENDA OUVERT (08 NOVEMBRE), CCTV VIDEO & SCELLÉS ADN
+     ========================================================================= */
+
+  /* --- AGENDA OUVERT (LIVRE DU SOIGNEUR) --- */
+  .agenda-planner-container {
+    background: #1e1b18;
+    border-radius: 14px;
+    padding: 16px;
+    border: 2px solid #574c43;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.6);
+    margin-bottom: 24px;
+  }
+  .agenda-book-spread {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    background: #fbf9f4;
+    color: #1c1917;
+    border-radius: 10px;
+    padding: 22px 24px;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.06);
+    border: 1px solid #d6cfc7;
+  }
+  @media (max-width: 900px) {
+    .agenda-book-spread {
+      grid-template-columns: 1fr;
+    }
+  }
+  /* Reliure spirale centrale */
+  .agenda-book-spread::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 50%;
+    width: 14px;
+    transform: translateX(-50%);
+    background: repeating-linear-gradient(
+      to bottom,
+      #94a3b8 0px,
+      #94a3b8 6px,
+      transparent 6px,
+      transparent 14px
+    );
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  @media (max-width: 900px) {
+    .agenda-book-spread::before { display: none; }
+  }
+  .agenda-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #b91c1c;
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+  .agenda-date-badge {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #991b1b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .agenda-page-sub {
+    font-size: 0.75rem;
+    color: #78716c;
+    font-family: var(--font-mono);
+  }
+  .agenda-schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .agenda-entry-item {
+    display: flex;
+    gap: 12px;
+    background: #ffffff;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #e7e5e4;
+    border-left: 4px solid var(--cyan-dim);
+    transition: all 0.2s;
+  }
+  .agenda-entry-item:hover {
+    border-left-color: var(--cyan);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateX(2px);
+  }
+  .agenda-time-pill {
+    background: #0f172a;
+    color: #38bdf8;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    height: fit-content;
+    white-space: nowrap;
+  }
+  .agenda-entry-body {
+    flex: 1;
+  }
+  .agenda-entry-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #0f172a;
+    margin-bottom: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .agenda-entry-species {
+    font-style: italic;
+    font-size: 0.78rem;
+    color: #0284c7;
+    font-weight: 600;
+  }
+  .agenda-entry-desc {
+    font-size: 0.82rem;
+    color: #44403c;
+    line-height: 1.35;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .agenda-entry-thumb {
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    flex-shrink: 0;
+  }
+  /* Alerte dîner 20h */
+  .agenda-entry-alert {
+    border-left-color: #dc2626 !important;
+    background: #fff5f5 !important;
+    border: 1.5px dashed #ef4444 !important;
+  }
+  .agenda-entry-alert .agenda-time-pill {
+    background: #dc2626;
+    color: #ffffff;
+  }
+  .alert-investigation-box {
+    margin-top: 8px;
+    background: #fee2e2;
+    border: 1px solid #f87171;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    color: #991b1b;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  /* --- SCELLÉS JUDICIAIRES (8 ÉCHANTILLONS) --- */
+  .seals-grid-8 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .seal-bag-card {
+    background: linear-gradient(145deg, #162032 0%, #0d1525 100%);
+    border: 1.5px solid #334155;
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+  }
+  .seal-bag-card:hover {
+    border-color: var(--cyan);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(6, 182, 212, 0.25);
+  }
+  .seal-bag-card.active-sample {
+    border-color: #a855f7;
+    background: linear-gradient(145deg, #1e1b4b 0%, #171c35 100%);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+  }
+  /* Bandeau rouge de scellé inviolable */
+  .seal-tamper-tape {
+    background: repeating-linear-gradient(
+      45deg,
+      #dc2626,
+      #dc2626 12px,
+      #991b1b 12px,
+      #991b1b 24px
+    );
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 4px 6px;
+    letter-spacing: 1px;
+    border-radius: 6px 6px 0 0;
+    margin: -12px -12px 10px -12px;
+    border-bottom: 1.5px solid #7f1d1d;
+  }
+  .seal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .seal-code {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: #38bdf8;
+    background: rgba(6, 182, 212, 0.15);
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+  }
+  .seal-barcode {
+    font-family: monospace;
+    font-size: 0.72rem;
+    color: #94a3b8;
+    letter-spacing: 2px;
+  }
+  .seal-visual-pouch {
+    height: 90px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px dashed #475569;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  /* Reflet plastique */
+  .seal-visual-pouch::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .seal-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .seal-location {
+    font-size: 0.74rem;
+    color: #94a3b8;
+    margin-bottom: 8px;
+    flex: 1;
+  }
+  .seal-dna-tag {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+  }
+
+  /* --- VIDÉOSURVEILLANCE & RECONNAISSANCE FACIALE --- */
+  .cctv-full-suite {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 1000px) {
+    .cctv-full-suite {
+      grid-template-columns: 1fr;
+    }
+  }
+  .cctv-monitor-chassis {
+    background: #090d16;
+    border: 2px solid #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+  }
+  .cctv-topbar {
+    background: #0f172a;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1e293b;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+  .cctv-rec-indicator {
+    color: #ef4444;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .rec-dot-blink {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow: 0 0 8px #ef4444;
+    animation: recBlink 1s infinite alternate;
+  }
+  @keyframes recBlink {
+    from { opacity: 0.2; }
+    to { opacity: 1; }
+  }
+  .cctv-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    background: #000;
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  #cctv-video-canvas, #modal-cctv-canvas {
+    width: 100%;
+    height: 320px;
+    display: block;
+  }
+  /* Lignes de balayage CRT */
+  .cctv-scanlines {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.25) 2px,
+      rgba(0, 0, 0, 0.25) 4px
+    );
+    pointer-events: none;
+  }
+  .cctv-hud-overlay {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #38bdf8;
+    text-shadow: 0 0 4px #0284c7;
+    pointer-events: none;
+  }
+  .cctv-controls-strip {
+    background: #0b1120;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #1e293b;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .cctv-btn-pill {
+    background: #1e293b;
+    color: #cbd5e1;
+    border: 1px solid #475569;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .cctv-btn-pill:hover, .cctv-btn-pill.active {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #38bdf8;
+  }
+  /* Panneau Reconnaissance Faciale */
+  .facial-recognition-dock {
+    background: #0f172a;
+    border: 1.5px solid #1e293b;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .facial-header {
+    border-bottom: 1px solid #334155;
+    padding-bottom: 8px;
+  }
+  .facial-header h3 {
+    font-size: 1.05rem;
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 4px 0;
+  }
+  .suspect-match-card {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 12px;
+    background: #162032;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .suspect-match-card.high-match {
+    border-color: #10b981;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+  }
+  .suspect-match-img-wrap {
+    position: relative;
+    width: 80px;
+    height: 90px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #475569;
+  }
+  .suspect-match-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .biometric-reticle-svg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .match-score-gauge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .match-bar-track {
+    flex: 1;
+    height: 8px;
+    background: #1e293b;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .match-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0284c7 0%, #10b981 100%);
+    border-radius: 4px;
+  }
+  .match-percent-text {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #34d399;
+  }
+
+  /* MODALS DÉDIÉS */
+  .modal-large-content {
+    background: var(--bg-main);
+    border: 2px solid var(--border-accent);
+    border-radius: 14px;
+    max-width: 960px;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+  }
+
+
+  /* =========================================================================
+     ORGANISATEUR EN CUIR RÉALISTE (STYLE FILOFAX SOIGNEUR-CHEF)
+     ========================================================================= */
+  .real-leather-organizer {
+    background: radial-gradient(circle at 50% 30%, #9a532d 0%, #6d3319 60%, #4a200e 100%);
+    border: 3px solid #3c190a;
+    border-radius: 20px;
+    padding: 24px 34px 24px 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), inset 0 2px 8px rgba(255, 255, 255, 0.2);
+    position: relative;
+    max-width: 980px;
+    margin: 0 auto 28px auto;
+    display: flex;
+    align-items: stretch;
+  }
+  /* Surpiqûre cuir réaliste sur le pourtour */
+  .real-leather-organizer::before {
+    content: "";
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border: 2px dashed #b8784f;
+    border-radius: 14px;
+    pointer-events: none;
+    opacity: 0.75;
+  }
+  /* Volet gauche cuir (pochettes) */
+  .organizer-leather-pocket {
+    width: 28px;
+    margin-right: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+  }
+  @media (max-width: 768px) {
+    .organizer-leather-pocket { display: none; }
+    .real-leather-organizer { padding: 12px; }
+  }
+  .card-slot {
+    height: 60px;
+    border-left: 2px dashed #b8784f;
+    border-top: 1px solid rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.15);
+    border-radius: 4px;
+  }
+
+  /* Structure double page */
+  .organizer-spread {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 28px 1fr;
+    background: #e2dbce;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    overflow: hidden;
+    position: relative;
+  }
+  @media (max-width: 900px) {
+    .organizer-spread {
+      grid-template-columns: 1fr;
+    }
+    .binder-rings-spine {
+      display: none;
+    }
+  }
+
+  /* Page de gauche (Calendrier) */
+  .calendar-page {
+    background: #fffdf9;
+    padding: 20px 22px 20px 30px;
+    color: #1e293b;
+    position: relative;
+    box-shadow: inset -10px 0 20px rgba(0,0,0,0.04);
+  }
+  /* Trous de perforation */
+  .punch-holes-column {
+    position: absolute;
+    right: 6px;
+    top: 35px;
+    bottom: 35px;
+    width: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+  }
+  .hole {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #4a200e;
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.8), 0 0 1px #fff;
+  }
+
+  /* En-tête imprimé de la page */
+  .cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid #8b1d1d;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  .cal-header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .cal-day-num {
+    font-size: 2.8rem;
+    font-weight: 900;
+    line-height: 0.9;
+    color: #8b1d1d;
+    font-family: Georgia, serif;
+  }
+  .cal-day-meta {
+    display: flex;
+    flex-direction: column;
+  }
+  .cal-day-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #8b1d1d;
+    letter-spacing: 1px;
+  }
+  .cal-month-year {
+    font-size: 0.82rem;
+    color: #64748b;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .cal-header-right {
+    text-align: right;
+    font-size: 0.72rem;
+    color: #64748b;
+    font-family: var(--font-mono);
+  }
+  .cal-week {
+    display: block;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  /* Grille des heures et écriture manuscrite */
+  .cal-schedule-table {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #cbd5e1;
+  }
+  .cal-row {
+    display: flex;
+    align-items: center;
+    min-height: 27px;
+    border-bottom: 1px solid #e2e8f0;
+    position: relative;
+  }
+  .cal-hour {
+    width: 44px;
+    font-size: 0.74rem;
+    font-family: var(--font-mono);
+    color: #94a3b8;
+    border-right: 1px solid #cbd5e1;
+    padding-right: 6px;
+    flex-shrink: 0;
+  }
+  .cal-handwritten {
+    flex: 1;
+    padding-left: 10px;
+    font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+    font-size: 0.88rem;
+    color: #1d4ed8; /* Encre bleue stylo-bille */
+    letter-spacing: 0.2px;
+  }
+  .cal-handwritten.cal-bold {
+    font-weight: 700;
+    color: #1e40af;
+  }
+
+  /* Reliure 6 anneaux métalliques */
+  .binder-rings-spine {
+    background: linear-gradient(to right, #475569 0%, #1e293b 50%, #475569 100%);
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 0;
+  }
+  .ring-group {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .metal-ring {
+    width: 24px;
+    height: 12px;
+    background: linear-gradient(to bottom, #f8fafc 0%, #94a3b8 40%, #475569 70%, #f1f5f9 100%);
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.6), inset 0 1px 1px #fff;
+    border: 1px solid #64748b;
+  }
+
+  /* Page de droite (Bloc-notes quadrillé) */
+  .notepad-page {
+    background: #fff;
+    padding: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 10px 0 20px rgba(0,0,0,0.03);
+  }
+  .notepad-binding-tape {
+    background: #0f172a;
+    color: #94a3b8;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-align: center;
+    padding: 6px;
+    border-bottom: 2px solid #334155;
+  }
+  .notepad-grid-area {
+    flex: 1;
+    background-color: #ffffff;
+    background-image: 
+      linear-gradient(#e2e8f0 1px, transparent 1px),
+      linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+    background-size: 16px 16px;
+    padding: 20px;
+    position: relative;
+    min-height: 400px;
+  }
+  .note-handwritten {
+    font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+    color: #1e3a8a;
+    font-size: 0.88rem;
+    line-height: 2.1;
+    margin-bottom: 6px;
+  }
+  .note-line-1 {
+    font-weight: 800;
+    color: #0f172a;
+    text-decoration: underline;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+  }
+
+  /* Lunettes posées sur le bloc-notes */
+  .glasses-overlay-svg {
+    position: absolute;
+    bottom: 20px;
+    right: 15px;
+    width: 220px;
+    height: 110px;
+    pointer-events: none;
+    filter: drop-shadow(4px 10px 10px rgba(0,0,0,0.35));
+    transform: rotate(-8deg);
+  }
+
+  /* Porte-stylo cuir & stylo */
+  .organizer-pen-loop {
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 140px;
+    background: #6d3319;
+    border: 2px solid #3c190a;
+    border-radius: 0 10px 10px 0;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pen-body {
+    width: 12px;
+    height: 190px;
+    background: linear-gradient(to right, #1e293b, #475569, #0f172a);
+    border-radius: 6px;
+    position: relative;
+    box-shadow: 2px 5px 10px rgba(0,0,0,0.7);
+    border: 1px solid #64748b;
+  }
+  .pen-clip {
+    position: absolute;
+    top: 25px;
+    left: -4px;
+    width: 4px;
+    height: 55px;
+    background: #cbd5e1;
+    border-radius: 2px;
+    box-shadow: -1px 2px 4px rgba(0,0,0,0.5);
+  }
+  .pen-grip {
+    position: absolute;
+    bottom: 30px;
+    left: 0; right: 0;
+    height: 40px;
+    background: repeating-linear-gradient(to bottom, #334155 0px, #334155 2px, #1e293b 2px, #1e293b 4px);
+  }
+
+
+  /* =========================================================================
+     MONITEUR UNIFIÉ : VIDÉO & PORTRAITS-ROBOTS CÔTE À CÔTE SUR L'ÉCRAN
+     ========================================================================= */
+  .cctv-unified-terminal {
+    background: #090d16;
+    border: 3px solid #1e293b;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+    overflow: hidden;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .cctv-unified-topbar {
+    background: #0f172a;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #1e293b;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: #94a3b8;
+  }
+  .cctv-unified-screen {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    background: #000;
+    position: relative;
+    border-bottom: 2px solid #1e293b;
+    min-height: 420px;
+  }
+  @media (max-width: 980px) {
+    .cctv-unified-screen {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Volet gauche : Enregistrement vidéo de la caméra */
+  .cctv-video-half {
+    position: relative;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 2px solid #1e293b;
+  }
+  .cctv-video-half video {
+    width: 100%;
+    height: 100%;
+    max-height: 440px;
+    object-fit: contain;
+    display: block;
+  }
+  .cctv-video-hud-overlay {
+    position: absolute;
+    top: 10px; left: 12px; right: 12px;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #38bdf8;
+    text-shadow: 0 0 4px #0284c7;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* Volet droit : Portraits-robots sur l'écran */
+  .cctv-facial-half {
+    background: #0b1120;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    overflow-y: auto;
+  }
+  .facial-half-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: #38bdf8;
+  }
+  .portraits-robots-screen-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .screen-sketch-card {
+    background: #111a2e;
+    border: 1.5px solid #1e293b;
+    border-radius: 8px;
+    padding: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .screen-sketch-card.suspect-a-card {
+    border-color: #10b981;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+  }
+  .screen-sketch-card.suspect-b-card {
+    border-color: #06b6d4;
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.2);
+  }
+  .screen-sketch-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+  .screen-sketch-crop {
+    width: 100%;
+    height: 140px;
+    background: #000;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #334155;
+    margin-bottom: 6px;
+  }
+  .screen-sketch-crop img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .screen-sketch-crop img.crop-face-a {
+    object-position: 8% 22%;
+    transform: scale(1.15);
+  }
+  .screen-sketch-crop img.crop-face-b {
+    object-position: 92% 22%;
+    transform: scale(1.15);
+  }
+  .screen-scan-laser {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: #34d399;
+    box-shadow: 0 0 6px #10b981;
+    animation: scanLaserAnim 2s infinite ease-in-out alternate;
+  }
+  @keyframes scanLaserAnim {
+    0% { top: 6%; opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { top: 92%; opacity: 0.4; }
+  }
+  .sketch-traits-mini {
+    font-size: 0.7rem;
+    color: #cbd5e1;
+    line-height: 1.35;
+    margin: 0;
+    padding-left: 12px;
+  }
+
+</style>
+</head>
+<body>
+
+  <!-- HEADER SCIENTIFIQUE -->
+  <header class="police-header">
+    <div class="header-brand">
+      <div class="badge-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+          <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/>
+          <path d="M12 8v8M8 12h8" stroke="#facc15" stroke-width="2.5"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>Police Scientifique & Criminalistique <span class="tag-case">Affaire Zoo #3E-02</span></h1>
+        <p>SVT Classe de 3ème – Collège de Biguglia | Chapitre 2 : Du caractère à l'ADN</p>
+      </div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <div class="header-agent">
+        <label for="agent-name">Enquêteur :</label>
+        <input type="text" id="agent-name" placeholder="Prénom NOM" value="Élève Enquêteur">
+        <label for="agent-class" style="margin-left:6px;">Classe :</label>
+        <input type="text" id="agent-class" placeholder="3ème..." style="width:70px;" value="3ème">
+      </div>
+      <a href="activite2.html" class="nav-btn-act2" title="Passer à l'Activité 2 (Laboratoire Cellulaire)">
+        🧬 Activité N°2 ▶
+      </a>
+      <button class="audio-toggle" id="audio-btn" onclick="toggleAudio()" title="Activer / Couper les bruitages">
+        <span id="audio-icon">🔊</span> Son ON
+      </button>
+    </div>
+  </header>
+
+  <!-- STEP NAVIGATION TABS -->
+  <nav class="stepper-nav">
+    <button class="step-tab active" onclick="goToStep(1)" id="tab-1">
+      <span class="step-badge">1</span> 🔍 Scène de Crime
+    </button>
+    <button class="step-tab" onclick="goToStep(2)" id="tab-2">
+      <span class="step-badge">2</span> 🧪 Scellés d'ADN
+    </button>
+    <button class="step-tab" onclick="goToStep(3)" id="tab-3">
+      <span class="step-badge">3</span> 🦁 Agenda & Espèces
+    </button>
+    <button class="step-tab" onclick="goToStep(4)" id="tab-4">
+      <span class="step-badge">4</span> 📹 Vidéosurveillance
+    </button>
+    <button class="step-tab" onclick="goToStep(5)" id="tab-5">
+      <span class="step-badge">5</span> 🧬 Labo de Tri SVT
+    </button>
+    <button class="step-tab" onclick="goToStep(6)" id="tab-6">
+      <span class="step-badge">6</span> 📄 Rapport d'Enquête
+    </button>
+  </nav>
+
+  <!-- MAIN CONTAINER -->
+  <main class="investigation-container">
+
+    <!-- ============================================================
+         ETAPE 1 : SCENE DE CRIME
+         ============================================================ -->
+    <section class="step-panel active" id="step-1">
+      <div class="panel-banner">
+        <div>
+          <h2>🔎 Exploration de la Scène de Crime – Bureau du Soigneur</h2>
+          <p>Marc Delorme, 42 ans, soigneur animalier en chef du parc zoologique, a été retrouvé inanimé dans son bureau. Inspectez les points d'intérêt pour relever les indices médico-légaux.</p>
+        </div>
+        <span class="target-badge">Objectif : 5 indices à explorer</span>
+      </div>
+
+      <div class="scene-explorer-layout">
+        <!-- VUE SCENE DE CRIME AVEC HOTSPOTS -->
+        <div class="scene-viewport-wrapper">
+          <img src="assets/enquete_genetique/scene_de_crime.jpg" alt="Scène de crime dans le bureau du soigneur" class="scene-image" id="crime-scene-img">
+          
+          <div class="camera-overlay">
+            <span class="rec-dot"></span>
+            <span>CAM_01 • BUREAU_SOIGNEUR • ENQUÊTE EN COURS</span>
+          </div>
+
+          <div class="tape-decoration">POLICE SCIENTIFIQUE • ZONE SÉCURISÉE • NE PAS FRANCHIR</div>
+
+          <!-- HOTSPOT 1 : LA VICTIME -->
+          <div class="hotspot" style="top: 67%; left: 49%;" onclick="inspectClue('victim')" title="Examiner la victime" id="hotspot-victim">
+            <span class="hotspot-number">1</span>
+            <span class="hotspot-tag">Victime</span>
+          </div>
+
+          <!-- HOTSPOT 2 : SCELLÉS & PRELEVEMENTS D'ADN -->
+          <div class="hotspot" style="top: 73%; left: 21%;" onclick="inspectClue('samples'); openSamplesModal();" title="Examiner les prélèvements d'ADN" id="hotspot-samples">
+            <span class="hotspot-number">2</span>
+            <span class="hotspot-tag">Scellés ADN</span>
+          </div>
+
+          <!-- HOTSPOT 3 : AGENDA DU SOIGNEUR SUR LE BUREAU -->
+          <div class="hotspot" style="top: 36%; left: 37%;" onclick="inspectClue('agenda'); openAgendaModal();" title="Examiner l'agenda du soigneur" id="hotspot-agenda">
+            <span class="hotspot-number">3</span>
+            <span class="hotspot-tag">Agenda</span>
+          </div>
+
+          <!-- HOTSPOT 4 : L'ECRAN ORDINATEUR / VIDEOSURVEILLANCE -->
+          <div class="hotspot" style="top: 26%; left: 49%;" onclick="inspectClue('computer'); openCctvModal();" title="Examiner l'ordinateur" id="hotspot-computer">
+            <span class="hotspot-number">4</span>
+            <span class="hotspot-tag">Vidéos</span>
+          </div>
+
+          <!-- HOTSPOT 5 : BALISE 20 & TASSE DE CAFE -->
+          <div class="hotspot" style="top: 84%; left: 84%;" onclick="inspectClue('coffee')" title="Examiner la balise 20" id="hotspot-coffee">
+            <span class="hotspot-number">5</span>
+            <span class="hotspot-tag">Balise #20</span>
+          </div>
+        </div>
+
+        <!-- SIDEBAR D'INSPECTION -->
+        <div class="inspection-sidebar">
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            Dossier d'Analyse Médicale
+          </h3>
+
+          <div class="clue-details-box" id="clue-display">
+            <div class="clue-empty-state">
+              <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5" style="margin-bottom:12px;">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <p>Cliquez sur l'un des <strong>5 repères numérotés</strong> sur la scène de crime pour inspecter les éléments clés.</p>
+            </div>
+          </div>
+
+          <!-- CHECKLIST DES DECOUVERTES -->
+          <div>
+            <h4 style="font-size:0.85rem; color:#cbd5e1; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Éléments répertoriés :</h4>
+            <ul class="clue-checklist">
+              <li id="chk-victim"><span class="check-icon"></span> 1. Examen physique de la victime (caractères)</li>
+              <li id="chk-samples"><span class="check-icon"></span> 2. Boîte de scellés biologiques (sources d'ADN)</li>
+              <li id="chk-agenda"><span class="check-icon"></span> 3. Agenda de la journée (animaux & humains)</li>
+              <li id="chk-computer"><span class="check-icon"></span> 4. Terminal informatique (surveillance)</li>
+              <li id="chk-coffee"><span class="check-icon"></span> 5. Balise n°20 & indices périphériques</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ETAPE 2 : SCELLÉS & PRELEVEMENTS D'ADN (NOUVELLE RUBRIQUE)
+         ============================================================ -->
+    <section class="step-panel" id="step-2">
+      <div class="panel-banner">
+        <div>
+          <h2>🧪 Étape 2 : Galerie des 8 Scellés Judiciaires & Prélèvements d'ADN</h2>
+          <p>Les techniciens en identification criminelle ont placé sous scellés <strong>8 prélèvements biologiques</strong> réalisés sur la scène de crime. Cliquez sur un scellé pour examiner ses cellules au microscope et identifier la localisation de l'ADN.</p>
+        </div>
+        <span class="target-badge">Notion : Traces biologiques & ADN</span>
+      </div>
+
+      <!-- BANDEAU RÈGLE ESSENTIELLE ACTIVITÉ 3 -->
+      <div style="background:linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border:1.5px solid #a855f7; border-radius:10px; padding:14px 18px; margin-bottom:20px; display:flex; align-items:center; gap:16px;">
+        <span style="font-size:2rem;">🎯</span>
+        <div>
+          <h4 style="color:#c084fc; margin:0 0 4px 0; font-size:1rem;">Règle d'or de l'enquête : Tous ces 8 prélèvements contiennent de l'ADN exploitable !</h4>
+          <p style="color:#e2e8f0; font-size:0.86rem; margin:0; line-height:1.4;">
+            Qu'il s'agisse des cellules folliculaires des poils et cheveux, des globules blancs du sang ou des cellules buccales de la salive, <strong>toutes ces cellules possèdent un noyau avec de l'ADN</strong>. Ces 8 échantillons feront l'objet de <strong>l'Activité N°3</strong> pour reconstituer les caryotypes (chromosomes) de chaque suspect et animal !
+          </p>
+        </div>
+      </div>
+
+      <!-- GRILLE DES 8 SCELLÉS JUDICIAIRES -->
+      <div class="seals-grid-8">
+
+        <!-- 1. POILS ANIMAUX -->
+        <div class="seal-bag-card active-sample" id="dna-card-poils" onclick="selectDnaSample('poils')">
+          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
+          <div class="seal-header">
+            <span class="seal-code">#SC-2026-P01</span>
+            <span class="seal-barcode">|||| ||| ||||</span>
+          </div>
+          <div class="seal-visual-pouch">
+            <svg width="100" height="70" viewBox="0 0 100 70">
+              <path d="M15 60 Q 30 20, 50 15" stroke="#d97706" stroke-width="2.5" fill="none"/>
+              <circle cx="15" cy="60" r="3.5" fill="#f59e0b"/>
+              <path d="M40 65 Q 55 30, 80 25" stroke="#1c1917" stroke-width="3" fill="none"/>
+              <circle cx="40" cy="65" r="4" fill="#52525b"/>
+              <path d="M60 62 Q 70 35, 90 30" stroke="#b45309" stroke-width="2" fill="none"/>
+              <circle cx="60" cy="62" r="3" fill="#f59e0b"/>
+            </svg>
+          </div>
+          <div class="seal-title">Poils d'animaux (avec racines)</div>
+          <div class="seal-location">📍 Blouson de travail & manches de Marc</div>
+          <div class="seal-dna-tag">✅ ADN Présent (Bulbes racinaires)</div>
+        </div>
+
+        <!-- 2. CHEVEUX HUMAINS -->
+        <div class="seal-bag-card" id="dna-card-cheveux" onclick="selectDnaSample('cheveux')">
+          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
+          <div class="seal-header">
+            <span class="seal-code">#SC-2026-C01</span>
+            <span class="seal-barcode">||| ||||| ||</span>
+          </div>
+          <div class="seal-visual-pouch">
+            <svg width="100" height="70" viewBox="0 0 100 70">
+              <path d="M20 15 Q 40 40, 70 55" stroke="#334155" stroke-width="3" fill="none"/>
+              <circle cx="70" cy="55" r="5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+              <circle cx="70" cy="55" r="2.5" fill="#a855f7"/>
+            </svg>
+          </div>
+          <div class="seal-title">Cheveux humains (avec bulbes)</div>
+          <div class="seal-location">📍 Col déchiré de Marc & sol (lutte)</div>
+          <div class="seal-dna-tag">✅ ADN Présent (Follicule pileux)</div>
+        </div>
+
+        <!-- 3. SANG 1 SOL -->
+        <div class="seal-bag-card" id="dna-card-sang1" onclick="selectDnaSample('sang1')">
+          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
+          <div class="seal-header">
+            <span class="seal-code">#SC-2026-B01</span>
+            <span class="seal-barcode">|||| || ||||</span>
+          </div>
+          <div class="seal-visual-pouch">
+            <svg width="100" height="70" viewBox="0 0 100 70">
+              <rect x="25" y="32" width="55" height="5" fill="#cbd5e1" rx="2"/>
+              <ellipse cx="25" cy="34" rx="10" ry="6" fill="#991b1b"/>
+              <circle cx="22" cy="34" r="2" fill="#ef4444"/>
+            </svg>
+          </div>
+          <div class="seal-title">Écouvillon Sang n°1 (Sol)</div>
+          <div class="seal-location">📍 Flaque au sol près du corps inanimé</div>
+          <div class="seal-dna-tag">✅ ADN Présent (Globules blancs)</div>
+        </div>
+
+        <!-- 4. SANG 2 BUREAU -->
+        <div class="seal-bag-card" id="dna-card-sang2" onclick="selectDnaSample('sang2')">
+          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
+          <div class="seal-header">
+            <span class="seal-code">#SC-2026-B02</span>
+            <span class="seal-barcode">|| ||||| |||</span>
+          </div>
+          <div class="seal-visual-pouch">
+            <svg width="100" height="70" viewBox="0 0 100 70">
+              <rect x="25" y="32" width="55" height="5" fill="#cbd5e1" rx="2"/>
+              <ellipse cx="25" cy="34" rx="10" ry="6" fill="#b91c1c"/>
+            </svg>
+          </div>
+          <div class="seal-title">Écouvillon Sang n°2 (Bureau)</div>
+          <div class="seal-location">📍 Coin métallique tranchant du meuble</div>
+          <div class="seal-dna-tag">✅ ADN Présent (Globules blancs)</div>
+        </div>
+
+        <!-- 5. SANG 3 ONGLES -->
+        <div class="seal-bag-card" id="dna-card-sang3" onclick="selectDnaSample('sang3')">
+          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
+          <div class="seal-header">
+            <span class="seal-code">#SC-2026-B03</span>
+            <span class="seal-barcode">||||| || |||</span>
+          </div>
+          <div class="seal-visual-pouch">
+            <svg width="100" height="70" viewBox="0 0 100 70">
+              <rect x="25" y="32" width="55" height="5" fill="#cbd5e1" rx="2"/>
+              <ellipse cx="25" cy="34" rx="9" ry="5.5" fill="#7f1d1d"/>
+            </svg>
+          </div>
+          <div class="seal-title">Écouvillon Sang n°3 (Ongles)</div>
+          <div class="seal-location">📍 Grattage sous les ongles de Marc (défense)</div>
+          <div class="seal-dna-tag">✅ ADN Présent (Cellules cutanées + Sang)</div>
+        </div>
+
+        <!-- 6. SANG 4 CAISSE -->
+        <div class="seal-bag-card" id="dna-card-sang4" onclick="selectDnaSample('sang4')">
+          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
+          <div class="seal-header">
+            <span class="seal-code">#SC-2026-B04</span>
+            <span class="seal-barcode">||| || |||||</span>
+          </div>
+          <div class="seal-visual-pouch">
+            <svg width="100" height="70" viewBox="0 0 100 70">
+              <rect x="25" y="32" width="55" height="5" fill="#cbd5e1" rx="2"/>
+              <ellipse cx="25" cy="34" rx="10" ry="6" fill="#991b1b"/>
+            </svg>
+          </div>
+          <div class="seal-title">Écouvillon Sang n°4 (Caisse)</div>
+          <div class="seal-location">📍 Éclaboussure sur caisse de transport</div>
+          <div class="seal-dna-tag">✅ ADN Présent (Globules blancs)</div>
+        </div>
+
+        <!-- 7. SANG 5 TÉLÉPHONE -->
+        <div class="seal-bag-card" id="dna-card-sang5" onclick="selectDnaSample('sang5')">
+          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
+          <div class="seal-header">
+            <span class="seal-code">#SC-2026-B05</span>
+            <span class="seal-barcode">|||| ||| |||</span>
+          </div>
+          <div class="seal-visual-pouch">
+            <svg width="100" height="70" viewBox="0 0 100 70">
+              <rect x="25" y="32" width="55" height="5" fill="#cbd5e1" rx="2"/>
+              <ellipse cx="25" cy="34" rx="10" ry="6" fill="#b91c1c"/>
+            </svg>
+          </div>
+          <div class="seal-title">Écouvillon Sang n°5 (Combiné)</div>
+          <div class="seal-location">📍 Empreinte digitale sanglante sur téléphone</div>
+          <div class="seal-dna-tag">✅ ADN Présent (Globules blancs)</div>
+        </div>
+
+        <!-- 8. SALIVE GOBELET -->
+        <div class="seal-bag-card" id="dna-card-salive" onclick="selectDnaSample('salive')">
+          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
+          <div class="seal-header">
+            <span class="seal-code">#SC-2026-S01</span>
+            <span class="seal-barcode">|| |||||| ||</span>
+          </div>
+          <div class="seal-visual-pouch">
+            <svg width="100" height="70" viewBox="0 0 100 70">
+              <rect x="25" y="32" width="55" height="5" fill="#cbd5e1" rx="2"/>
+              <ellipse cx="25" cy="34" rx="10" ry="6" fill="#38bdf8" opacity="0.6"/>
+              <circle cx="25" cy="34" r="3" fill="#0284c7"/>
+            </svg>
+          </div>
+          <div class="seal-title">Écouvillon Salive n°1 (Gobelet)</div>
+          <div class="seal-location">📍 Buvant de la tasse de café sur le bureau</div>
+          <div class="seal-dna-tag">✅ ADN Présent (Cellules buccales)</div>
+        </div>
+
+      </div>
+
+      <!-- PANNEAU D'ANALYSE MICROSCOPIQUE -->
+      <div class="dna-microscope-panel">
+        <div class="microscope-lens-viewport">
+          <div class="microscope-reticle"></div>
+          <svg class="cell-visual-svg" id="microscope-svg" viewBox="0 0 200 200">
+            <!-- DYNAMIC CELL ANATOMY IN SVG -->
+          </svg>
+        </div>
+
+        <div class="sample-analysis-content" id="dna-analysis-text">
+          <!-- REMPLI PAR JAVASCRIPT -->
+        </div>
+      </div>
+
+      <!-- TEASER TRANSITION VERS ACTIVITE 2 & 3 -->
+      <div class="act2-teaser-card" style="margin-top:20px;">
+        <div>
+          <h4>🔬 Transition SVT : De la Cellule à la Localisation de l'ADN</h4>
+          <p>Tous ces prélèvements contiennent des cellules munies d'un <strong>noyau</strong>. Pour comprendre comment cet ADN détermine nos caractères et comment le manipuler, passez à l'Activité N°2 (micro-injection et transfert de noyau) !</p>
+        </div>
+        <a href="activite2.html" class="btn-primary" style="text-decoration:none; background:linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);">
+          Lancer le Laboratoire de Transfert de Noyau (Activité N°2) ▶
+        </a>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+        <button class="btn-secondary" onclick="goToStep(1)">◀ Retour à la Scène de Crime</button>
+        <button class="btn-primary" onclick="goToStep(3)">Passer à l'Agenda du Soigneur ▶</button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+<section class="step-panel" id="step-3">
+      <div class="panel-banner">
+        <div>
+          <h2>🦁 Étape 3 : L'Agenda du Dimanche 08 Novembre & Les Espèces Rencontrées</h2>
+          <p>L'agenda professionnel de Marc Delorme retrouvé sur son bureau retrace l'ensemble de ses interventions et rencontres du <strong>dimanche 08 novembre</strong>. Analysez les espèces côtoyées pour distinguer les caractères spécifiques propres à chaque être vivant.</p>
+        </div>
+        <span class="target-badge">Notion : Caractères Spécifiques</span>
+      </div>
+
+      <!-- AGENDA OUVERT RÉALISTE : DIMANCHE 08 NOVEMBRE -->
+            <!-- ORGANISATEUR CUIR RÉALISTE : LE PLANNING DE LA VICTIME (MARC) -->
+      <div class="real-leather-organizer">
+        <!-- VOLET GAUCHE CUIR (FENTES CARTES) -->
+        <div class="organizer-leather-pocket">
+          <div class="card-slot"></div>
+          <div class="card-slot"></div>
+          <div class="card-slot"></div>
+        </div>
+
+        <!-- DOUBLE PAGE DE L'AGENDA -->
+        <div class="organizer-spread">
+          
+          <!-- PAGE GAUCHE : AGENDA OFFICIEL IMPRIMÉ & REMPLI PAR MARC -->
+          <div class="organizer-page calendar-page">
+            <div class="punch-holes-column">
+              <span class="hole"></span>
+              <span class="hole"></span>
+              <span class="hole"></span>
+              <span class="hole"></span>
+              <span class="hole"></span>
+              <span class="hole"></span>
+            </div>
+
+            <div class="cal-header">
+              <div class="cal-header-left">
+                <div class="cal-day-num">8</div>
+                <div class="cal-day-meta">
+                  <span class="cal-day-name">DIMANCHE</span>
+                  <span class="cal-month-year">NOVEMBRE 2026</span>
+                </div>
+              </div>
+              <div class="cal-header-right">
+                <span class="cal-week">Semaine 45</span>
+                <span class="cal-saint">St Geoffroy</span>
+              </div>
+            </div>
+
+            <div class="cal-schedule-table">
+              <div class="cal-row"><span class="cal-hour">08:00</span><span class="cal-handwritten">Prise de service – relève gardien</span></div>
+              <div class="cal-row"><span class="cal-hour">09:00</span><span class="cal-handwritten">Ronde générale du parc</span></div>
+              <div class="cal-row"><span class="cal-hour">10:00</span><span class="cal-handwritten cal-bold">10h : Soin du muntjac (pansement sabot avant)</span></div>
+              <div class="cal-row"><span class="cal-hour">11:00</span><span class="cal-handwritten">Nettoyage enclos cervidés B</span></div>
+              <div class="cal-row"><span class="cal-hour">12:00</span><span class="cal-handwritten cal-bold">12h : Déjeuner avec Laura et Léa</span></div>
+              <div class="cal-row"><span class="cal-hour">13:00</span><span class="cal-handwritten">Pause café cafétéria</span></div>
+              <div class="cal-row"><span class="cal-hour">14:00</span><span class="cal-handwritten cal-bold">14h : Réunion avec Paul le collègue</span></div>
+              <div class="cal-row"><span class="cal-hour">15:00</span><span class="cal-handwritten cal-bold">15h : Soin et surveillance chimpanzés</span></div>
+              <div class="cal-row"><span class="cal-hour">16:00</span><span class="cal-handwritten">Distribution des fruits & enrichissement</span></div>
+              <div class="cal-row"><span class="cal-hour">17:00</span><span class="cal-handwritten">Pesée des rations de viande</span></div>
+              <div class="cal-row"><span class="cal-hour">18:00</span><span class="cal-handwritten cal-bold">18h : Nourrir le lion (fauverie centrale)</span></div>
+              <div class="cal-row"><span class="cal-hour">19:00</span><span class="cal-handwritten">Rangement bureau & registre de soins</span></div>
+              <div class="cal-row"><span class="cal-hour">20:00</span><span class="cal-handwritten cal-bold">20h : Dîner de famille (à la maison)</span></div>
+              <div class="cal-row"><span class="cal-hour">21:00</span><span class="cal-handwritten"></span></div>
+            </div>
+          </div>
+
+          <!-- RELIURE CENTRALE : 6 ANNEAUX MÉTALLIQUES CHROMÉS -->
+          <div class="binder-rings-spine">
+            <div class="ring-group ring-group-top">
+              <div class="metal-ring"></div>
+              <div class="metal-ring"></div>
+              <div class="metal-ring"></div>
+            </div>
+            <div class="ring-group ring-group-bottom">
+              <div class="metal-ring"></div>
+              <div class="metal-ring"></div>
+              <div class="metal-ring"></div>
+            </div>
+          </div>
+
+          <!-- PAGE DROITE : BLOC-NOTES QUADRILLÉ AVEC LUNETTES POSÉES -->
+          <div class="organizer-page notepad-page">
+            <div class="notepad-binding-tape">RÉSERVE BIOLOGIQUE DU PARC • NOTES DE MARC</div>
+            <div class="notepad-grid-area">
+              <div class="note-handwritten note-line-1">Notes & Rappels du jour :</div>
+              <div class="note-handwritten">– Rappeler le vétérinaire pour contrôle annuel fauves</div>
+              <div class="note-handwritten">– Vérifier le loquet du sas n°2 (primates)</div>
+              <div class="note-handwritten">– Pesée muntjac : 14,2 kg (bonne forme)</div>
+              <div class="note-handwritten">– Commander 2 sacs de granulés enrichis</div>
+              <div class="note-handwritten">– Prévoir nouvelle litière copeaux pour jeudi</div>
+
+              <!-- LUNETTES DE MARC POSÉES SUR LE PAPIER (STYLE RÉALISTE) -->
+              <svg class="glasses-overlay-svg" viewBox="0 0 240 120">
+                <ellipse cx="65" cy="55" rx="36" ry="26" fill="rgba(255,255,255,0.25)" stroke="#6b21a8" stroke-width="3.5"/>
+                <ellipse cx="65" cy="55" rx="34" ry="24" fill="none" stroke="#9333ea" stroke-width="1.5"/>
+                <path d="M101 50 Q 120 44, 139 50" fill="none" stroke="#6b21a8" stroke-width="3.5"/>
+                <ellipse cx="175" cy="55" rx="36" ry="26" fill="rgba(255,255,255,0.25)" stroke="#6b21a8" stroke-width="3.5"/>
+                <ellipse cx="175" cy="55" rx="34" ry="24" fill="none" stroke="#9333ea" stroke-width="1.5"/>
+                <path d="M29 55 Q 10 75, 45 95" fill="none" stroke="#581c87" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M211 55 Q 230 75, 195 95" fill="none" stroke="#581c87" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="45" y1="40" x2="65" y2="65" stroke="rgba(255,255,255,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="155" y1="40" x2="175" y2="65" stroke="rgba(255,255,255,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- PORTE-STYLO EN CUIR & STYLO BILLE MÉTALLIQUE SUR LE CÔTÉ -->
+        <div class="organizer-pen-loop">
+          <div class="pen-body">
+            <div class="pen-clip"></div>
+            <div class="pen-grip"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- FICHES COMPARATIVES DES 6 ESPÈCES RENCONTRÉES -->
+      <h3 style="color:#38bdf8; margin:24px 0 14px 0; display:flex; align-items:center; gap:8px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h10M7 12h10M7 17h10"/>
+        </svg>
+        Fiches Biologiques des Espèces & Contacts Rencontrés
+      </h3>
+
+      <div class="species-grid">
+        
+        <!-- 1. LION -->
+        <div class="species-card">
+          <div class="species-card-header">
+            <img src="assets/enquete_genetique/espece_1.jpg" alt="Panthera leo">
+            <span class="species-pill">Panthera leo</span>
+            <span class="species-badge-role role-animal">Animal du zoo</span>
+          </div>
+          <div class="species-card-body">
+            <h4>Lion d'Afrique (Nourri à 18h)</h4>
+            <p class="species-traits"><strong>Caractères spécifiques :</strong> Grand félin quadrupède, pelage fauve, crinière imposante chez le mâle, griffes rétractiles, régime carnivore.</p>
+            <div class="species-category-tag">
+              <span>Mammifère • Félin</span>
+              <span style="color:#f59e0b;">Espèce Non-Humaine</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. MUNTJAC -->
+        <div class="species-card">
+          <div class="species-card-header">
+            <img src="assets/enquete_genetique/espece_2.jpg" alt="Muntiacus muntjak">
+            <span class="species-pill">Muntiacus muntjak</span>
+            <span class="species-badge-role role-animal">Animal du zoo</span>
+          </div>
+          <div class="species-card-body">
+            <h4>Muntjac indien (Soigné à 10h)</h4>
+            <p class="species-traits"><strong>Caractères spécifiques :</strong> Petit cervidé quadrupède, pelage roux/brun, présence de courtes cornes et canines supérieures saillantes, sabots ongulés.</p>
+            <div class="species-category-tag">
+              <span>Mammifère • Cervidé</span>
+              <span style="color:#f59e0b;">Espèce Non-Humaine</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. PAUL LE COLLÈGUE -->
+        <div class="species-card">
+          <div class="species-card-header">
+            <img src="assets/enquete_genetique/espece_3.jpg" alt="Paul le collègue">
+            <span class="species-pill">Homo sapiens</span>
+            <span class="species-badge-role role-humain">Humain</span>
+          </div>
+          <div class="species-card-body">
+            <h4>Paul (Collègue de travail - Réunion à 14h)</h4>
+            <p class="species-traits"><strong>Caractères spécifiques :</strong> Bipédie permanente exclusive, volume crânien important, pouce opposable à la main, absence de fourrure intégrale.</p>
+            <div class="species-category-tag">
+              <span>Espèce : <em>Homo sapiens</em></span>
+              <span style="color:#06b6d4;">Humain</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. CHIMPANZÉ -->
+        <div class="species-card">
+          <div class="species-card-header">
+            <img src="assets/enquete_genetique/espece_4.jpg" alt="Pan troglodytes">
+            <span class="species-pill">Pan troglodytes</span>
+            <span class="species-badge-role role-animal">Primate du zoo</span>
+          </div>
+          <div class="species-card-body">
+            <h4>Chimpanzé (Surveillé à 15h)</h4>
+            <p class="species-traits"><strong>Caractères spécifiques :</strong> Primate, corps recouvert de poils sombres, quadrupédie avec appui sur les phalanges, pouces opposables aux mains ET aux pieds.</p>
+            <div class="species-category-tag">
+              <span>Mammifère • Hominidé</span>
+              <span style="color:#f59e0b;">Espèce Non-Humaine</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. CHIEN DE GARDE -->
+        <div class="species-card">
+          <div class="species-card-header">
+            <img src="assets/enquete_genetique/espece_5.jpg" alt="Canis lupus familiaris">
+            <span class="species-pill">Canis lupus familiaris</span>
+            <span class="species-badge-role role-animal">Sécurité du parc</span>
+          </div>
+          <div class="species-card-body">
+            <h4>Chien de garde du zoo</h4>
+            <p class="species-traits"><strong>Caractères spécifiques :</strong> Canidé quadrupède, museau allongé, truffe humide, ouïe et odorat très développés, griffes non rétractiles.</p>
+            <div class="species-category-tag">
+              <span>Mammifère • Canidé</span>
+              <span style="color:#f59e0b;">Espèce Non-Humaine</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. LAURA ET LÉA -->
+        <div class="species-card">
+          <div class="species-card-header">
+            <img src="assets/enquete_genetique/espece_6.jpg" alt="Laura et Léa">
+            <span class="species-pill">Homo sapiens</span>
+            <span class="species-badge-role role-humain">Famille</span>
+          </div>
+          <div class="species-card-body">
+            <h4>Laura & Léa (Épouse et Fille - Déjeuner à 12h)</h4>
+            <p class="species-traits"><strong>Caractères spécifiques :</strong> Partagent tous les caractères propres à l'espèce humaine (bipédie exclusive, volume crânien, langage articulé). Présentent des variations individuelles des traits du visage propres à chaque membre de la famille.</p>
+            <div class="species-category-tag">
+              <span>Espèce : <em>Homo sapiens</em></span>
+              <span style="color:#06b6d4;">Humain</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- QUESTION PEDAGOGIQUE 1 -->
+      <div class="pedago-quiz-box">
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Déduction Scientifique : Qu'est-ce qu'un "caractère spécifique" en SVT ?
+        </h3>
+        <p style="font-size:0.88rem; color:#cbd5e1;">Sur la scène de crime, Marc a soigné des fauves, des cervidés et des primates. Comment les scientifiques définissent-ils un caractère spécifique ?</p>
+        
+        <div class="quiz-options-grid">
+          <button class="quiz-btn" onclick="checkSpecificQuiz(this, false)">
+            <span>❌</span> Un caractère unique propre à un seul individu que personne d'autre ne possède.
+          </button>
+          <button class="quiz-btn" onclick="checkSpecificQuiz(this, true)">
+            <span>✅</span> Un caractère partagé par l'ensemble des individus d'une même espèce (ex. la bipédie exclusive chez <em>Homo sapiens</em>).
+          </button>
+          <button class="quiz-btn" onclick="checkSpecificQuiz(this, false)">
+            <span>❌</span> Un caractère qui apparaît uniquement après un accident ou un entraînement sportif intensif.
+          </button>
+        </div>
+        <div class="feedback-msg" id="specific-quiz-feedback"></div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+        <button class="btn-secondary" onclick="goToStep(2)">◀ Retour aux Scellés d'ADN</button>
+        <button class="btn-primary" onclick="goToStep(4)">Passer à la Vidéosurveillance & Reconnaissance Faciale ▶</button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+<section class="step-panel" id="step-4">
+      <div class="panel-banner">
+        <div>
+          <h2>📹 Étape 4 : Vidéosurveillance & Reconnaissance Faciale (Portraits-Robots)</h2>
+          <p>Le serveur de vidéosurveillance a enregistré le passage de deux suspects dans le couloir menant au bureau de Marc. Le module biométrique analyse l'extrait vidéo et compare les visages détectés aux <strong>portraits-robots</strong> établis par la police judiciaire.</p>
+        </div>
+        <span class="target-badge">Notion : Variations Individuelles</span>
+      </div>
+
+      <!-- INTERFACE COMPLÈTE DE VIDÉOSURVEILLANCE -->
+            <!-- MONITEUR DE VIDÉOSURVEILLANCE AVEC PORTRAITS-ROBOTS SUR L'ÉCRAN -->
+      <div class="cctv-unified-terminal">
+        
+        <!-- BARRE SUPÉRIEURE DU MONITEUR -->
+        <div class="cctv-unified-topbar">
+          <span class="cctv-rec-indicator">
+            <span class="rec-dot-blink"></span>
+            ● REC • MONITEUR EXT-01 [COULOIR DU BUREAU]
+          </span>
+          <span id="cctv-timecode">2026-11-08 19:42:15</span>
+        </div>
+
+        <!-- ZONE D'AFFICHAGE DE L'ÉCRAN : VIDÉO À GAUCHE + PORTRAITS-ROBOTS À DROITE -->
+        <div class="cctv-unified-screen">
+          
+          <!-- GAUCHE DE L'ÉCRAN : L'ENREGISTREMENT DE LA CAMÉRA -->
+          <div class="cctv-video-half">
+            <div class="cctv-video-hud-overlay">
+              <span>CAM 01 : ENREGISTREMENT CONTINU</span>
+              <span style="color:#34d399; font-weight:700;">2 INDIVIDUS DÉTECTÉS [LOCK]</span>
+            </div>
+            
+            <video id="cctv-video-element" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay></video>
+            <div class="cctv-scanlines"></div>
+          </div>
+
+          <!-- DROITE DE L'ÉCRAN : LES 2 PORTRAITS-ROBOTS ET LA RECONNAISSANCE FACIALE -->
+          <div class="cctv-facial-half">
+            <div class="facial-half-header">
+              <span>RECONNAISSANCE FACIALE BIOMÉTRIQUE</span>
+              <span style="color:#34d399; font-weight:700;">2 MATCHS PORTRAITS-ROBOTS</span>
+            </div>
+
+            <!-- LES DEUX PORTRAITS-ROBOTS CÔTE À CÔTE -->
+            <div class="portraits-robots-screen-grid">
+              
+              <!-- PORTRAIT-ROBOT 1 (SUSPECT A) -->
+              <div class="screen-sketch-card suspect-a-card">
+                <div class="screen-sketch-header">
+                  <span style="font-weight:700; color:#f1f5f9;">Portrait-Robot #01</span>
+                  <span style="color:#34d399; font-weight:700;">Match 98.7%</span>
+                </div>
+                <div class="screen-sketch-crop">
+                  <img src="assets/enquete_genetique/suspect1.jpg" alt="Portrait Robot Suspect A" class="crop-face-a">
+                  <div class="screen-scan-laser"></div>
+                </div>
+                <ul class="sketch-traits-mini">
+                  <li>• Visage : <strong>Allongé</strong> <span class="trait-tag tag-hereditaire" style="font-size:0.6rem;">Héréditaire</span></li>
+                  <li>• Yeux : <strong>Foncés</strong> <span class="trait-tag tag-hereditaire" style="font-size:0.6rem;">Héréditaire</span></li>
+                  <li>• Nez : <strong>Fin</strong> <span class="trait-tag tag-hereditaire" style="font-size:0.6rem;">Héréditaire</span></li>
+                  <li>• Barbe : <strong>Bouc taillé</strong> <span class="trait-tag tag-acquis" style="font-size:0.6rem;">Acquis</span></li>
+                </ul>
+              </div>
+
+              <!-- PORTRAIT-ROBOT 2 (SUSPECT B) -->
+              <div class="screen-sketch-card suspect-b-card">
+                <div class="screen-sketch-header">
+                  <span style="font-weight:700; color:#f1f5f9;">Portrait-Robot #02</span>
+                  <span style="color:#22d3ee; font-weight:700;">Match 96.2%</span>
+                </div>
+                <div class="screen-sketch-crop">
+                  <img src="assets/enquete_genetique/suspect2.jpg" alt="Portrait Robot Suspect B" class="crop-face-b">
+                  <div class="screen-scan-laser" style="background:#22d3ee; box-shadow:0 0 6px #06b6d4;"></div>
+                </div>
+                <ul class="sketch-traits-mini">
+                  <li>• Visage : <strong>Carré</strong> <span class="trait-tag tag-hereditaire" style="font-size:0.6rem;">Héréditaire</span></li>
+                  <li>• Yeux : <strong>Clairs</strong> <span class="trait-tag tag-hereditaire" style="font-size:0.6rem;">Héréditaire</span></li>
+                  <li>• Nez : <strong>Droit</strong> <span class="trait-tag tag-hereditaire" style="font-size:0.6rem;">Héréditaire</span></li>
+                  <li>• Coiffure : <strong>Mèche</strong> <span class="trait-tag tag-acquis" style="font-size:0.6rem;">Acquis</span></li>
+                </ul>
+              </div>
+
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+              <button class="btn-secondary" style="padding:4px 10px; font-size:0.75rem; width:100%; text-align:center;" onclick="openModal('assets/enquete_genetique/portraits_robots.jpg')">
+                🔍 Agrandir la planche complète des portraits-robots
+              </button>
+            </div>
+
+            <!-- OBSERVATION SVT DANS LE MONITEUR -->
+            <div style="background:#090d16; padding:8px 10px; border-radius:6px; border:1px solid #1e293b; font-size:0.75rem; color:#cbd5e1; line-height:1.4;">
+              <strong style="color:#38bdf8;">Observation SVT :</strong> Bien qu'appartenant à la même espèce (<em>Homo sapiens</em>), ces deux individus présentent des <strong>variations individuelles</strong> héritées de leurs parents (forme du visage, des yeux et du nez).
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CONTRÔLES INFÉRIEURS DU MONITEUR -->
+        <div class="cctv-controls-strip">
+          <div style="display:flex; gap:6px;">
+            <button class="cctv-btn-pill active" id="btn-cam-play" onclick="toggleCctvPlay()">⏸ Pause</button>
+            <button class="cctv-btn-pill" onclick="restartCctvVideo()">⏮ Revoir l'extrait</button>
+          </div>
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:#94a3b8;">SERVEUR VIDÉO POLICE JUDICIAIRE • 08 NOVEMBRE 2026</span>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+        <button class="btn-secondary" onclick="goToStep(3)">◀ Retour à l'Agenda & Espèces</button>
+        <button class="btn-primary" onclick="goToStep(5)">Passer au Labo de Tri & Classification SVT ▶</button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+<section class="step-panel" id="step-5">
+      <div class="panel-banner">
+        <div>
+          <h2>🧬 Étape 5 : Laboratoire de Tri & Classification SVT</h2>
+          <p>Classez chaque carte d'indice dans la bonne catégorie. Vous pouvez <strong>glisser-déposer</strong> les cartes ou <strong>cliquer sur les boutons de renvoi</strong> sous chaque élément.</p>
+        </div>
+        <span class="target-badge">Mission : 12 indices à classer</span>
+      </div>
+
+      <div class="classifier-workspace">
+        
+        <!-- RESERVOIR DES CARTES NON CLASSEES -->
+        <div class="inventory-pool">
+          <h3>
+            <span>📦 Éléments à classer (<span id="cards-remaining-count">12</span> restants)</span>
+            <button class="btn-secondary" style="font-size:0.75rem; padding:4px 10px;" onclick="resetClassification()">↺ Réinitialiser le tri</button>
+          </h3>
+          <div class="cards-reservoir" id="reservoir" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'reservoir')">
+            <!-- LES CARTES SONT GENEREES EN JS -->
+          </div>
+        </div>
+
+        <!-- 3 COLONNES DE DESTINATION -->
+        <div class="columns-grid">
+          
+          <!-- COLONNE 1 : SPECIFIQUE -->
+          <div class="drop-column col-specifique" id="col-specifique" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'col-specifique')">
+            <div class="column-header">
+              <h4>🧬 Caractères Spécifiques</h4>
+              <p class="column-desc">Partagés par TOUS les individus d'une même espèce (définissent l'espèce humaine <em>Homo sapiens</em>).</p>
+            </div>
+            <div class="column-slot" id="slot-specifique"></div>
+          </div>
+
+          <!-- COLONNE 2 : INDIVIDUEL HEREDITAIRE -->
+          <div class="drop-column col-hereditaire" id="col-hereditaire" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'col-hereditaire')">
+            <div class="column-header">
+              <h4>👨‍👩‍👧 Caractères Individuels Héréditaires</h4>
+              <p class="column-desc">Propres à chaque individu, présents dès la naissance et transmis par les parents au fil des générations.</p>
+            </div>
+            <div class="column-slot" id="slot-hereditaire"></div>
+          </div>
+
+          <!-- COLONNE 3 : MODIFIE PAR LE MODE DE VIE OU L'ENVIRONNEMENT -->
+          <div class="drop-column col-acquis" id="col-acquis" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'col-acquis')">
+            <div class="column-header">
+              <h4>✂️ Caractères Modifiés par le Mode de Vie / Environnement</h4>
+              <p class="column-desc">Acquis ou modifiés au cours de la vie (alimentation, sport, soleil, accidents, coiffure). Non transmis aux enfants !</p>
+            </div>
+            <div class="column-slot" id="slot-acquis"></div>
+          </div>
+
+        </div>
+
+        <!-- BARRE DE VALIDATION -->
+        <div class="validation-bar">
+          <div>
+            <span style="font-size:0.9rem; color:#cbd5e1;" id="score-text">Score : <strong>0 / 12</strong> validés</span>
+            <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">Vous devez positionner toutes les cartes pour générer le rapport final.</div>
+          </div>
+
+          <div style="display:flex; gap:10px;">
+            <button class="btn-primary" onclick="verifyClassification()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Vérifier la Classification
+            </button>
+            <button class="btn-secondary" id="btn-to-report" onclick="goToStep(6)" style="display:none;">
+              Consulter le Rapport Officiel ▶
+            </button>
+          </div>
+        </div>
+
+        <!-- FEEDBACK DETAILLES DE CORRECTION -->
+        <div class="feedback-msg" id="classification-feedback"></div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ETAPE 6 : RAPPORT OFFICIEL DE POLICE SCIENTIFIQUE
+         ============================================================ -->
+    <section class="step-panel" id="step-6">
+      <div class="panel-banner">
+        <div>
+          <h2>📄 Rapport Officiel d'Investigation Criminalistique</h2>
+          <p>Voici la synthèse de votre enquête médico-légale. Ce document officiel valide l'Activité 1 du chapitre de génétique. Vous pouvez l'imprimer ou l'exporter au format PDF.</p>
+        </div>
+        <div class="print-actions">
+          <button class="btn-primary" onclick="window.print()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+            </svg>
+            Imprimer / Exporter en PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- FEUILLE DE RAPPORT STYLISEE POLICE SCIENTIFIQUE -->
+      <article class="report-sheet" id="official-report-card">
+        
+        <header class="report-official-header">
+          <div>
+            <div class="official-motto">RÉPUBLIQUE FRANÇAISE<br>MINISTÈRE DE L'ÉDUCATION NATIONALE<br>COLLÈGE DE BIGUGLIA – SECTION SVT CYCLE 4</div>
+          </div>
+          <div class="official-meta">
+            <div>DOSSIER MÉDICO-LÉGAL : <strong>#PJ-2026-GEN-01</strong></div>
+            <div>DATE : <span id="report-date">08 Novembre 2026</span></div>
+            <div>ENQUÊTEUR : <strong id="report-agent-name">Élève Enquêteur</strong> (<span id="report-agent-class">3ème</span>)</div>
+          </div>
+        </header>
+
+        <div class="report-title-block">
+          <h2>RAPPORT SCIENTIFIQUE D'IDENTIFICATION & DE GÉNÉTIQUE</h2>
+          <p>Affaire : Agression au Parc Zoologique – Analyse comparative des caractères morphologiques & Prélèvements d'ADN</p>
+        </div>
+
+        <!-- SECTION 1 : SOURCES D'ADN RECUEILLIES -->
+        <section class="report-section">
+          <h3>I. Prélèvements Biologiques & Sources d'ADN Exploités</h3>
+          <p>Les prélèvements effectués sur la scène de crime et sur la victime ont fait l'objet d'un examen cytologique préliminaire :</p>
+          <ul>
+            <li><strong>Cheveux humains avec bulbe</strong> (col de la victime) : présence de cellules folliculaires vivantes $\rightarrow$ ADN nucléaire extrait avec succès.</li>
+            <li><strong>Salive</strong> (rebord du gobelet de café) : cellules épithéliales de la muqueuse buccale $\rightarrow$ ADN nucléaire exploitable.</li>
+            <li><strong>Cellules de peau sous les ongles</strong> (griffure de défense) : squames épidermiques $\rightarrow$ profil génétique de l'agresseur isolé.</li>
+            <li><strong>Gouttes de sang au sol</strong> : les globules blancs (leucocytes possédant un noyau) ont permis une extraction d'ADN confirmatoire.</li>
+            <li><strong>Poils d'animaux</strong> (lion, chimpanzé) : identifiés comme provenant des animaux du zoo grâce à leurs caractères spécifiques (cuticule animale). Absence de bulbe pileux $\rightarrow$ pas d'ADN nucléaire, piste animale définitivement écartée.</li>
+          </ul>
+        </section>
+
+        <!-- SECTION 2 : CARACTERES SPECIFIQUES -->
+        <section class="report-section">
+          <h3>II. Détermination de l'Espèce Impliquée (Caractères Spécifiques)</h3>
+          <p>L'agresseur appartient sans équivoque à l'espèce humaine (<em>Homo sapiens</em>), caractérisée par une bipédie exclusive et permanente, un volume crânien important et une absence de toison intégrale.</p>
+          <div class="report-conclusion-box">
+            <strong>Bilan notionnel SVT :</strong> Un <u>caractère spécifique</u> est une caractéristique commune partagée par tous les individus d'une même espèce.
+          </div>
+        </section>
+
+        <!-- SECTION 3 : CARACTERES INDIVIDUELS -->
+        <section class="report-section">
+          <h3>III. Identification des Suspects (Caractères Individuels)</h3>
+          <p>La comparaison des portraits-robots issus de la vidéosurveillance a mis en évidence deux catégories de caractères :</p>
+          <ul>
+            <li><strong>Caractères individuels héréditaires :</strong> Transmis par les parents de génération en génération dès la fécondation (forme du crâne, couleur des iris, morphologie du nez et des oreilles).</li>
+            <li><strong>Caractères modifiés par le mode de vie / environnement :</strong> Non transmissibles aux enfants (barbe taillée en bouc, coupe de cheveux, musculature développée par le métier, bronzage et cicatrices).</li>
+          </ul>
+        </section>
+
+        <!-- SECTION 4 : EVALUATION ET VALIDATION SCIENTIFIQUE -->
+        <section class="report-section">
+          <h3>IV. Évaluation des Compétences d'Investigation</h3>
+          <div style="background:#f1f5f9; padding:12px 16px; border-radius:4px; margin-top:8px; font-family:var(--font-mono); font-size:0.9rem;">
+            VALIDATION DU LABO GÉNÉTIQUE : <strong id="report-score" style="color:#0284c7;">12 / 12</strong> critères correctement attribués.
+          </div>
+        </section>
+
+        <!-- CONCLUSION DE L'ELEVE -->
+        <section class="report-section">
+          <h3>V. Conclusion Personnelle de l'Enquêteur</h3>
+          <textarea id="student-deduction" style="width:100%; height:75px; padding:8px; border:1px solid #cbd5e1; border-radius:4px; font-family:var(--font-main); font-size:0.9rem;" placeholder="Rédigez votre déduction : Les caractères spécifiques définissent l'espèce humaine. Les caractères individuels héréditaires sont transmis par les parents (ADN), alors que les caractères acquis (barbe, musculation) ne se transmettent pas..."></textarea>
+        </section>
+
+        <!-- TAMPON OFFICIEL -->
+        <div class="stamp-box">
+          POLICE SCIENTIFIQUE<br>COLLÈGE BIGUGLIA<br>SVT VALIDÉ
+        </div>
+
+      </article>
+
+      <!-- PASSERELLE VERS ACTIVITE 2 -->
+      <div class="next-chapter-bridge">
+        <div>
+          <h3>🧬 ACTIVITÉ N°2 : Place à la Recherche d'ADN !</h3>
+          <p>Vous avez identifié les cellules qui portent l'ADN sur la scène de crime. Mais <strong>dans quel compartiment de la cellule (membrane, cytoplasme ou noyau)</strong> se situe le programme génétique responsable de nos caractères héréditaires ? Réalisez l'expérience de micromanipulation sur les cellules-œufs de lapines au laboratoire !</p>
+        </div>
+        <a href="activite2.html" class="btn-primary" style="background:linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); text-decoration:none; padding:12px 24px; font-size:0.95rem;">
+          🔬 Démarrer l'Activité N°2 ▶
+        </a>
+      </div>
+
+      <div style="text-align:center; margin-bottom:30px; margin-top:20px;">
+        <button class="btn-secondary" onclick="goToStep(5)">◀ Modifier la classification</button>
+      </div>
+    </section>
+
+  </main>
+
+  
+  <!-- =========================================================================
+       MODAL 1 : AGENDA OUVERT DU DIMANCHE 08 NOVEMBRE
+       ========================================================================= -->
+  <div class="modal-overlay" id="agenda-modal" onclick="closeAgendaModal()">
+    <div class="modal-large-content" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeAgendaModal()">✕</button>
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:16px;">
+        <h3 style="color:#38bdf8; margin:0; display:flex; align-items:center; gap:8px;">
+          <span>📖</span> Agenda de Marc Delorme • Dimanche 08 Novembre
+        </h3>
+        <span style="font-family:var(--font-mono); font-size:0.8rem; color:#94a3b8;">PIÈCE À CONVICTION N°03</span>
+      </div>
+
+            <!-- ORGANISATEUR CUIR OUVERT SUR LE BUREAU DE MARC -->
+      <div class="real-leather-organizer" style="margin-bottom:0;">
+        <div class="organizer-leather-pocket">
+          <div class="card-slot"></div>
+          <div class="card-slot"></div>
+          <div class="card-slot"></div>
+        </div>
+
+        <div class="organizer-spread">
+          <div class="organizer-page calendar-page">
+            <div class="punch-holes-column">
+              <span class="hole"></span>
+              <span class="hole"></span>
+              <span class="hole"></span>
+              <span class="hole"></span>
+              <span class="hole"></span>
+              <span class="hole"></span>
+            </div>
+
+            <div class="cal-header">
+              <div class="cal-header-left">
+                <div class="cal-day-num">8</div>
+                <div class="cal-day-meta">
+                  <span class="cal-day-name">DIMANCHE</span>
+                  <span class="cal-month-year">NOVEMBRE 2026</span>
+                </div>
+              </div>
+              <div class="cal-header-right">
+                <span class="cal-week">Semaine 45</span>
+                <span class="cal-saint">St Geoffroy</span>
+              </div>
+            </div>
+
+            <div class="cal-schedule-table">
+              <div class="cal-row"><span class="cal-hour">08:00</span><span class="cal-handwritten">Prise de service – relève gardien</span></div>
+              <div class="cal-row"><span class="cal-hour">09:00</span><span class="cal-handwritten">Ronde générale du parc</span></div>
+              <div class="cal-row"><span class="cal-hour">10:00</span><span class="cal-handwritten cal-bold">10h : Soin du muntjac (pansement sabot avant)</span></div>
+              <div class="cal-row"><span class="cal-hour">11:00</span><span class="cal-handwritten">Nettoyage enclos cervidés B</span></div>
+              <div class="cal-row"><span class="cal-hour">12:00</span><span class="cal-handwritten cal-bold">12h : Déjeuner avec Laura et Léa</span></div>
+              <div class="cal-row"><span class="cal-hour">13:00</span><span class="cal-handwritten">Pause café cafétéria</span></div>
+              <div class="cal-row"><span class="cal-hour">14:00</span><span class="cal-handwritten cal-bold">14h : Réunion avec Paul le collègue</span></div>
+              <div class="cal-row"><span class="cal-hour">15:00</span><span class="cal-handwritten cal-bold">15h : Soin et surveillance chimpanzés</span></div>
+              <div class="cal-row"><span class="cal-hour">16:00</span><span class="cal-handwritten">Distribution des fruits & enrichissement</span></div>
+              <div class="cal-row"><span class="cal-hour">17:00</span><span class="cal-handwritten">Préparation des rations de viande</span></div>
+              <div class="cal-row"><span class="cal-hour">18:00</span><span class="cal-handwritten cal-bold">18h : Nourrir le lion (fauverie centrale)</span></div>
+              <div class="cal-row"><span class="cal-hour">19:00</span><span class="cal-handwritten">Rangement bureau & registre de soins</span></div>
+              <div class="cal-row"><span class="cal-hour">20:00</span><span class="cal-handwritten cal-bold">20h : Dîner de famille (à la maison)</span></div>
+              <div class="cal-row"><span class="cal-hour">21:00</span><span class="cal-handwritten"></span></div>
+            </div>
+          </div>
+
+          <div class="binder-rings-spine">
+            <div class="ring-group ring-group-top">
+              <div class="metal-ring"></div>
+              <div class="metal-ring"></div>
+              <div class="metal-ring"></div>
+            </div>
+            <div class="ring-group ring-group-bottom">
+              <div class="metal-ring"></div>
+              <div class="metal-ring"></div>
+              <div class="metal-ring"></div>
+            </div>
+          </div>
+
+          <div class="organizer-page notepad-page">
+            <div class="notepad-binding-tape">RÉSERVE BIOLOGIQUE DU PARC • NOTES DE MARC</div>
+            <div class="notepad-grid-area">
+              <div class="note-handwritten note-line-1">Notes & Rappels du jour :</div>
+              <div class="note-handwritten">– Rappeler le vétérinaire pour contrôle annuel fauves</div>
+              <div class="note-handwritten">– Vérifier le loquet du sas n°2 (primates)</div>
+              <div class="note-handwritten">– Pesée muntjac : 14,2 kg (bonne forme)</div>
+              <div class="note-handwritten">– Commander 2 sacs de granulés enrichis</div>
+              <div class="note-handwritten">– Prévoir nouvelle litière copeaux pour jeudi</div>
+
+              <svg class="glasses-overlay-svg" viewBox="0 0 240 120">
+                <ellipse cx="65" cy="55" rx="36" ry="26" fill="rgba(255,255,255,0.25)" stroke="#6b21a8" stroke-width="3.5"/>
+                <ellipse cx="65" cy="55" rx="34" ry="24" fill="none" stroke="#9333ea" stroke-width="1.5"/>
+                <path d="M101 50 Q 120 44, 139 50" fill="none" stroke="#6b21a8" stroke-width="3.5"/>
+                <ellipse cx="175" cy="55" rx="36" ry="26" fill="rgba(255,255,255,0.25)" stroke="#6b21a8" stroke-width="3.5"/>
+                <ellipse cx="175" cy="55" rx="34" ry="24" fill="none" stroke="#9333ea" stroke-width="1.5"/>
+                <path d="M29 55 Q 10 75, 45 95" fill="none" stroke="#581c87" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M211 55 Q 230 75, 195 95" fill="none" stroke="#581c87" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="45" y1="40" x2="65" y2="65" stroke="rgba(255,255,255,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="155" y1="40" x2="175" y2="65" stroke="rgba(255,255,255,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="organizer-pen-loop">
+          <div class="pen-body">
+            <div class="pen-clip"></div>
+            <div class="pen-grip"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <div style="margin-top:16px; text-align:right;">
+        <button class="btn-primary" onclick="closeAgendaModal(); goToStep(3);">Explorer les 6 Fiches d'Espèces (Étape 3) ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 2 : POSTE DE VIDÉOSURVEILLANCE & RECONNAISSANCE FACIALE
+       ========================================================================= -->
+  <div class="modal-overlay" id="cctv-modal" onclick="closeCctvModal()">
+    <div class="modal-large-content" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeCctvModal()">✕</button>
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:16px;">
+        <h3 style="color:#38bdf8; margin:0; display:flex; align-items:center; gap:8px;">
+          <span>📹</span> Poste Vidéo de Sécurité & Reconnaissance Faciale (Portraits-Robots)
+        </h3>
+        <span style="font-family:var(--font-mono); font-size:0.8rem; color:#ef4444;">● LIVE SCAN 19:42:15</span>
+      </div>
+
+            <!-- MONITEUR DANS LE MODAL DE SURVEILLANCE -->
+      <div class="cctv-unified-terminal">
+        <div class="cctv-unified-topbar">
+          <span class="cctv-rec-indicator">
+            <span class="rec-dot-blink"></span>
+            ● REC • EXTRAIT VIDÉO SURVEILLANCE CAM 01
+          </span>
+          <span>2026-11-08 19:42:15</span>
+        </div>
+
+        <div class="cctv-unified-screen">
+          <div class="cctv-video-half">
+            <video id="modal-cctv-video" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay></video>
+            <div class="cctv-scanlines"></div>
+          </div>
+
+          <div class="cctv-facial-half">
+            <div class="facial-half-header">
+              <span>RECONNAISSANCE FACIALE</span>
+              <span style="color:#34d399; font-weight:700;">2 PORTRAITS-ROBOTS CORRESPONDANTS</span>
+            </div>
+
+            <div class="portraits-robots-screen-grid">
+              <div class="screen-sketch-card suspect-a-card">
+                <div class="screen-sketch-header">
+                  <span style="font-weight:700; color:#f1f5f9;">Suspect A</span>
+                  <span style="color:#34d399; font-weight:700;">Match 98.7%</span>
+                </div>
+                <div class="screen-sketch-crop">
+                  <img src="assets/enquete_genetique/suspect1.jpg" alt="Suspect A" class="crop-face-a">
+                  <div class="screen-scan-laser"></div>
+                </div>
+                <div style="font-size:0.7rem; color:#cbd5e1;">Visage allongé, yeux enfoncés, nez fin.</div>
+              </div>
+
+              <div class="screen-sketch-card suspect-b-card">
+                <div class="screen-sketch-header">
+                  <span style="font-weight:700; color:#f1f5f9;">Suspect B</span>
+                  <span style="color:#22d3ee; font-weight:700;">Match 96.2%</span>
+                </div>
+                <div class="screen-sketch-crop">
+                  <img src="assets/enquete_genetique/suspect2.jpg" alt="Suspect B" class="crop-face-b">
+                  <div class="screen-scan-laser" style="background:#22d3ee; box-shadow:0 0 6px #06b6d4;"></div>
+                </div>
+                <div style="font-size:0.7rem; color:#cbd5e1;">Visage carré, yeux clairs, nez droit.</div>
+              </div>
+            </div>
+
+            <button class="btn-secondary" style="padding:4px 8px; font-size:0.75rem; width:100%; margin-top:6px;" onclick="openModal('assets/enquete_genetique/portraits_robots.jpg')">
+              🔍 Voir la planche complète des portraits-robots
+            </button>
+          </div>
+        </div>
+
+        <div class="cctv-controls-strip">
+          <button class="cctv-btn-pill active" onclick="restartCctvVideo()">⏮ Revoir l'extrait</button>
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:#38bdf8;">ANALYSE BIOMÉTRIQUE CONFIRMÉE</span>
+        </div>
+      </div>
+
+      <div style="margin-top:16px; text-align:right;">
+        <button class="btn-primary" onclick="closeCctvModal(); goToStep(4);">Accéder à l'Étape 4 (Vidéosurveillance) ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 3 : GALERIE DES SCELLÉS D'ADN
+       ========================================================================= -->
+  <div class="modal-overlay" id="samples-modal" onclick="closeSamplesModal()">
+    <div class="modal-large-content" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeSamplesModal()">✕</button>
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:10px; margin-bottom:16px;">
+        <h3 style="color:#a855f7; margin:0; display:flex; align-items:center; gap:8px;">
+          <span>🧪</span> Galerie des 8 Scellés d'ADN Prélevés sur la Scène de Crime
+        </h3>
+        <span style="font-family:var(--font-mono); font-size:0.8rem; color:#34d399;">8 / 8 AVEC ADN IDENTIFIÉ</span>
+      </div>
+
+      <p style="font-size:0.85rem; color:#cbd5e1; margin-bottom:16px;">
+        Voici les 8 scellés confectionnés par la police scientifique. <strong>Tous renferment des cellules avec de l'ADN</strong>, prêtes pour l'analyse des caryotypes dans l'Activité N°3 :
+      </p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:10px;">
+        <div style="background:#162032; padding:10px; border-radius:8px; border:1px solid #334155; text-align:center;">
+          <div style="color:#38bdf8; font-size:0.75rem; font-family:var(--font-mono);">#SC-2026-P01</div>
+          <strong style="font-size:0.82rem; color:#fff;">Poils d'animaux (racines)</strong>
+          <div style="color:#34d399; font-size:0.72rem; margin-top:4px;">ADN Présent</div>
+        </div>
+        <div style="background:#162032; padding:10px; border-radius:8px; border:1px solid #334155; text-align:center;">
+          <div style="color:#38bdf8; font-size:0.75rem; font-family:var(--font-mono);">#SC-2026-C01</div>
+          <strong style="font-size:0.82rem; color:#fff;">Cheveux humains (bulbes)</strong>
+          <div style="color:#34d399; font-size:0.72rem; margin-top:4px;">ADN Présent</div>
+        </div>
+        <div style="background:#162032; padding:10px; border-radius:8px; border:1px solid #334155; text-align:center;">
+          <div style="color:#38bdf8; font-size:0.75rem; font-family:var(--font-mono);">#SC-2026-B01</div>
+          <strong style="font-size:0.82rem; color:#fff;">Écouvillon Sang 1 (Sol)</strong>
+          <div style="color:#34d399; font-size:0.72rem; margin-top:4px;">ADN Présent</div>
+        </div>
+        <div style="background:#162032; padding:10px; border-radius:8px; border:1px solid #334155; text-align:center;">
+          <div style="color:#38bdf8; font-size:0.75rem; font-family:var(--font-mono);">#SC-2026-B02</div>
+          <strong style="font-size:0.82rem; color:#fff;">Écouvillon Sang 2 (Bureau)</strong>
+          <div style="color:#34d399; font-size:0.72rem; margin-top:4px;">ADN Présent</div>
+        </div>
+        <div style="background:#162032; padding:10px; border-radius:8px; border:1px solid #334155; text-align:center;">
+          <div style="color:#38bdf8; font-size:0.75rem; font-family:var(--font-mono);">#SC-2026-B03</div>
+          <strong style="font-size:0.82rem; color:#fff;">Écouvillon Sang 3 (Ongles)</strong>
+          <div style="color:#34d399; font-size:0.72rem; margin-top:4px;">ADN Présent</div>
+        </div>
+        <div style="background:#162032; padding:10px; border-radius:8px; border:1px solid #334155; text-align:center;">
+          <div style="color:#38bdf8; font-size:0.75rem; font-family:var(--font-mono);">#SC-2026-B04</div>
+          <strong style="font-size:0.82rem; color:#fff;">Écouvillon Sang 4 (Caisse)</strong>
+          <div style="color:#34d399; font-size:0.72rem; margin-top:4px;">ADN Présent</div>
+        </div>
+        <div style="background:#162032; padding:10px; border-radius:8px; border:1px solid #334155; text-align:center;">
+          <div style="color:#38bdf8; font-size:0.75rem; font-family:var(--font-mono);">#SC-2026-B05</div>
+          <strong style="font-size:0.82rem; color:#fff;">Écouvillon Sang 5 (Téléphone)</strong>
+          <div style="color:#34d399; font-size:0.72rem; margin-top:4px;">ADN Présent</div>
+        </div>
+        <div style="background:#162032; padding:10px; border-radius:8px; border:1px solid #334155; text-align:center;">
+          <div style="color:#38bdf8; font-size:0.75rem; font-family:var(--font-mono);">#SC-2026-S01</div>
+          <strong style="font-size:0.82rem; color:#fff;">Écouvillon Salive 1 (Café)</strong>
+          <div style="color:#34d399; font-size:0.72rem; margin-top:4px;">ADN Présent</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px; text-align:right;">
+        <button class="btn-primary" onclick="closeSamplesModal(); goToStep(2);">Observer au Microscope (Étape 2) ▶</button>
+      </div>
+    </div>
+  </div>
+
+<!-- MODAL ZOOM IMAGES -->
+  <div class="modal-overlay" id="zoom-modal" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+      <div class="modal-body">
+        <img id="modal-img-tag" src="" alt="Zoom image">
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIQUE & INTERACTIVITE -->
+  <script>
+    /* ============================================================
+       AUDIO SYNTHESIZER (WEB AUDIO API - ZERO FICHIER EXTERNE)
+       ============================================================ */
+    let audioCtx = null;
+    let audioEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      const btn = document.getElementById('audio-btn');
+      if (audioEnabled) {
+        btn.innerHTML = '<span id="audio-icon">🔊</span> Son ON';
+        playBeep(600, 0.08);
+      } else {
+        btn.innerHTML = '<span id="audio-icon">🔇</span> Son OFF';
+      }
+    }
+
+    function playBeep(freq = 440, duration = 0.08, type = 'sine') {
+      if (!audioEnabled) return;
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playSuccessChime() {
+      if (!audioEnabled) return;
+      playBeep(523.25, 0.1);
+      setTimeout(() => playBeep(659.25, 0.12), 100);
+      setTimeout(() => playBeep(783.99, 0.18), 220);
+    }
+
+    function playErrorBuzz() {
+      if (!audioEnabled) return;
+      playBeep(180, 0.2, 'sawtooth');
+    }
+
+    /* ============================================================
+       NAVIGATION ETAPE PAR ETAPE (1 à 6)
+       ============================================================ */
+    let currentStep = 1;
+
+    function goToStep(stepNumber) {
+      playBeep(520, 0.05);
+      currentStep = stepNumber;
+
+      for (let i = 1; i <= 6; i++) {
+        const tab = document.getElementById(`tab-${i}`);
+        const panel = document.getElementById(`step-${i}`);
+        if (tab && panel) {
+          if (i === stepNumber) {
+            tab.classList.add('active');
+            panel.classList.add('active');
+          } else {
+            tab.classList.remove('active');
+            panel.classList.remove('active');
+          }
+        }
+      }
+
+      updateReportHeader();
+      const cctvVid = document.getElementById('cctv-video-element');
+      if (cctvVid) {
+        if (stepNumber === 4) {
+          cctvVid.play().catch(e => console.log(e));
+        } else {
+          cctvVid.pause();
+        }
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ============================================================
+       STEP 1 : INSPECTION DE LA SCENE DE CRIME
+       ============================================================ */
+    const cluesData = {
+      victim: {
+        title: "1. Examen Physique de la Victime",
+        type: "Preuve biologique",
+        text: "Marc Delorme, 42 ans, soigneur principal du zoo. Inanimé au sol. L'examen médico-légal relève : une musculature très développée (due au transport quotidien de caisses et aux soins aux animaux), un bronzage et coup de soleil sur la nuque (exposition extérieure prolongée), ainsi qu'une cicatrice ancienne à l'avant-bras gauche (griffure soignée). Yeux marrons foncés, cheveux bruns ondulés.",
+        question: "💡 Réflexion SVT : La musculature et la cicatrice étaient-elles présentes à sa naissance ? Peuvent-elles être transmises à ses enfants ?",
+        actionText: "Examiner les scellés d'ADN ➔",
+        actionStep: 2,
+        checkId: "chk-victim",
+        hotspotId: "hotspot-victim"
+      },
+      samples: {
+        title: "2. Scellés Biologiques & Traces d'ADN",
+        type: "Laboratoire médico-légal",
+        text: "Les techniciens ont prélevé plusieurs traces biologiques sur les lieux : poils d'animaux, cheveux avec bulbe arrachés lors de la lutte, salive sur un gobelet de café, cellules de peau sous les ongles de Marc et gouttes de sang au sol.",
+        question: "💡 Réflexion SVT : Toutes les traces renferment-elles de l'ADN ? Où se cache cet ADN dans la cellule ?",
+        actionText: "Ouvrir la boîte des scellés d'ADN ➔",
+        actionStep: 2,
+        checkId: "chk-samples",
+        hotspotId: "hotspot-samples"
+      },
+      agenda: {
+        title: "3. Agenda de la Journée",
+        type: "Document d'investigation",
+        text: "Agenda ouvert au dimanche 08 novembre. 10h Soin muntjac, 12h Déjeuner Laura et Léa, 14h Réunion Paul, 15h Chimpanzés, 18h Lion, 20h Dîner famille (auquel il ne participera jamais, déclenchant l'alerte à 21h30 et sa découverte au sol à 22h15) ! (Panthera leo) et des cervidés muntjacs, soins du jeune chimpanzé (Pan troglodytes), ronde de surveillance avec le chien de garde (Canis lupus), réunion matinale avec son collègue Thomas et déjeuner avec son épouse et sa fille Léa.",
+        question: "💡 Réflexion SVT : Quels caractères communs permettent de regrouper ces différents êtres vivants dans des espèces distinctes ?",
+        actionText: "Ouvrir l'agenda des espèces ➔",
+        actionStep: 3,
+        checkId: "chk-agenda",
+        hotspotId: "hotspot-agenda"
+      },
+      computer: {
+        title: "4. Terminal Informatique & Vidéosurveillance",
+        type: "Système de sécurité",
+        text: "L'ordinateur est resté en fonctionnement. Le logiciel d'analyse biométrique a enregistré le passage de deux personnes inconnues dans le couloir adjacent à 13h15. Des portraits-robots numériques ont été automatiquement générés à partir des caméras HD.",
+        question: "💡 Réflexion SVT : Comment le logiciel peut-il différencier deux individus appartenant à la même espèce humaine ?",
+        actionText: "Examiner la vidéosurveillance ➔",
+        actionStep: 4,
+        checkId: "chk-computer",
+        hotspotId: "hotspot-computer"
+      },
+      coffee: {
+        title: "5. Balise n°20 & Traces Périphériques",
+        type: "Indice matériel",
+        text: "Un gobelet de café avec traces salivaires a été balisé au sol près du bureau. Des gouttes de sang balisées n°20 mènent vers la porte de secours.",
+        question: "💡 Réflexion SVT : L'ADN contenu dans la salive ou les cellules sanguines est unique à chaque être humain (sauf vrais jumeaux).",
+        actionText: "Analyser les scellés d'ADN ➔",
+        actionStep: 2,
+        checkId: "chk-coffee",
+        hotspotId: "hotspot-coffee"
+      }
+    };
+
+    function inspectClue(clueKey) {
+      playBeep(480, 0.06);
+      const data = cluesData[clueKey];
+      if (!data) return;
+
+      const container = document.getElementById('clue-display');
+      let extraButtons = '';
+      if (clueKey === 'agenda') {
+        extraButtons = `
+          <button class="clue-action-btn" onclick="openAgendaModal()" style="margin-bottom:6px;">📖 Voir l'agenda du Dimanche 08 Novembre</button>
+          <button class="btn-secondary" style="width:100%; font-size:0.8rem; padding:6px;" onclick="goToStep(3)">Passer aux Fiches des Espèces (Étape 3) ➔</button>
+        `;
+      } else if (clueKey === 'computer') {
+        extraButtons = `
+          <button class="clue-action-btn" onclick="openCctvModal()" style="margin-bottom:6px;">📹 Écran de Vidéosurveillance & Biométrie</button>
+          <button class="btn-secondary" style="width:100%; font-size:0.8rem; padding:6px;" onclick="goToStep(4)">Passer aux Portraits-Robots (Étape 4) ➔</button>
+        `;
+      } else if (clueKey === 'samples') {
+        extraButtons = `
+          <button class="clue-action-btn" onclick="openSamplesModal()" style="margin-bottom:6px;">🧪 Galerie des 8 Scellés Judiciaires</button>
+          <button class="btn-secondary" style="width:100%; font-size:0.8rem; padding:6px;" onclick="goToStep(2)">Analyse Microscopique des Cellules (Étape 2) ➔</button>
+        `;
+      } else {
+        extraButtons = `
+          <button class="clue-action-btn" onclick="goToStep(${data.actionStep})">
+            ${data.actionText}
+          </button>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="clue-header">
+          <h4>${data.title}</h4>
+          <span class="clue-type-pill">${data.type}</span>
+        </div>
+        <div class="clue-body">
+          <p>${data.text}</p>
+          <div class="clue-question">${data.question}</div>
+          ${extraButtons}
+        </div>
+      `;
+      const checkItem = document.getElementById(data.checkId);
+      if (checkItem) checkItem.classList.add('discovered');
+      
+      const hotspot = document.getElementById(data.hotspotId);
+      if (hotspot) hotspot.classList.add('visited');
+    }
+
+    /* ============================================================
+       STEP 2 : SCELLÉS & PRELEVEMENTS D'ADN (ANALYSE MICROSCOPIQUE)
+       ============================================================ */
+    const dnaSamplesData = {
+      poils: {
+        title: "Scellé #SC-2026-P01 : Plusieurs poils d'animaux (avec racines)",
+        category: "Trace animale (Lion, Chimpanzé, Muntjac)",
+        hasDna: true,
+        badgeText: "ADN Présent (Cellules folliculaires racinaires)",
+        description: "Plusieurs poils fauves de lion, poils noirs de chimpanzé et poils roux de muntjac prélevés sur la blouse de Marc. Les racines et bulbes sont intacts et renferment des cellules vivantes.",
+        svtConclusion: "🦁 Règle SVT : Contrairement à un poil coupé, un poil arraché avec son bulbe renferme des cellules vivantes avec noyau. Cet ADN permettra dans l'Activité 3 de dresser le caryotype des 3 espèces animales !",
+        svgContent: `
+          <!-- POILS AVEC RACINES -->
+          <path d="M70 20 Q 90 70, 110 140" stroke="#d97706" stroke-width="12" stroke-linecap="round"/>
+          <circle cx="110" cy="140" r="24" fill="#78350f" stroke="#f59e0b" stroke-width="2.5"/>
+          <circle cx="110" cy="140" r="10" fill="#a855f7" stroke="#c084fc" stroke-width="2"/>
+          <text x="110" y="144" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">NOYAU (ADN)</text>
+          <text x="100" y="185" fill="#fde68a" font-size="10" text-anchor="middle" font-family="sans-serif">Bulbe racinaire du poil</text>
+        `
+      },
+      cheveux: {
+        title: "Scellé #SC-2026-C01 : Cheveux humains avec bulbe pileux (lutte)",
+        category: "Trace humaine agresseur",
+        hasDna: true,
+        badgeText: "ADN Humain Complet Présent (Noyaux du bulbe)",
+        description: "Mèche de cheveux bruns arrachée au col de Marc lors de la bagarre. Le bulbe folliculaire est bien développé et contient des centaines de cellules de l'agresseur.",
+        svtConclusion: "🧬 Règle SVT : Chaque cellule du bulbe folliculaire possède un noyau renfermant les 23 paires de chromosomes de l'agresseur. Indice primordial pour le caryotype de l'Activité 3 !",
+        svgContent: `
+          <!-- CHEVEU AVEC BULBE -->
+          <path d="M100 20 L100 120" stroke="#334155" stroke-width="16" stroke-linecap="round"/>
+          <circle cx="100" cy="140" r="32" fill="#0369a1" stroke="#38bdf8" stroke-width="3"/>
+          <circle cx="100" cy="140" r="14" fill="#a855f7" stroke="#c084fc" stroke-width="2"/>
+          <text x="100" y="144" fill="#fff" font-size="9" text-anchor="middle" font-weight="bold">NOYAU (ADN)</text>
+          <text x="100" y="190" fill="#38bdf8" font-size="10" text-anchor="middle" font-family="sans-serif">Bulbe folliculaire humain</text>
+        `
+      },
+      sang1: {
+        title: "Scellé #SC-2026-B01 : Écouvillon Sang n°1 (Sol près du corps)",
+        category: "Fluide biologique",
+        hasDna: true,
+        badgeText: "ADN Présent (Globules blancs / Leucocytes)",
+        description: "Écouvillon stérile imbibé du sang prélevé dans la flaque au sol à 50 cm de Marc. Présence massive de globules rouges et de leucocytes.",
+        svtConclusion: "🩸 Règle d'or SVT : Si les globules rouges n'ont pas de noyau, les globules blancs (leucocytes) possèdent un volumineux noyau rempli d'ADN ! Prêt pour le caryotype de l'Activité 3.",
+        svgContent: `
+          <!-- SANG AU SOL -->
+          <circle cx="65" cy="75" r="22" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/>
+          <circle cx="135" cy="65" r="20" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/>
+          <circle cx="100" cy="120" r="30" fill="rgba(255,255,255,0.2)" stroke="#38bdf8" stroke-width="2.5"/>
+          <path d="M90 110 Q98 105 105 112 Q112 120 105 130 Q95 132 90 120 Z" fill="#7c3aed" stroke="#c084fc" stroke-width="2"/>
+          <text x="100" y="123" fill="#fff" font-size="7" text-anchor="middle" font-weight="bold">NOYAU</text>
+          <text x="100" y="175" fill="#fca5a5" font-size="10" text-anchor="middle" font-family="sans-serif">Leucocyte (Globule blanc)</text>
+        `
+      },
+      sang2: {
+        title: "Scellé #SC-2026-B02 : Écouvillon Sang n°2 (Coin métallique du bureau)",
+        category: "Trace d'impact et choc",
+        hasDna: true,
+        badgeText: "ADN Présent (Globules blancs / Leucocytes)",
+        description: "Prélèvement sur l'arête métallique du bureau où l'un des protagonistes s'est violemment heurté lors de la lutte.",
+        svtConclusion: "🩸 Règle d'or SVT : Les leucocytes prélevés sur l'angle du meuble permettront d'établir le caryotype de la personne blessée à cet endroit.",
+        svgContent: `
+          <circle cx="70" cy="70" r="20" fill="#dc2626"/>
+          <circle cx="100" cy="120" r="28" fill="rgba(255,255,255,0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <circle cx="100" cy="120" r="14" fill="#7c3aed" stroke="#a855f7" stroke-width="2"/>
+          <text x="100" y="124" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">ADN</text>
+          <text x="100" y="175" fill="#fca5a5" font-size="10" text-anchor="middle" font-family="sans-serif">Impact coin de bureau</text>
+        `
+      },
+      sang3: {
+        title: "Scellé #SC-2026-B03 : Écouvillon Sang n°3 (Sous les ongles de Marc)",
+        category: "Défense et griffure de la victime",
+        hasDna: true,
+        badgeText: "ADN Présent (Squames de peau + Leucocytes)",
+        description: "En griffant son agresseur au visage, Marc a piégé des fragments de cellules cutanées et des micro-gouttes de sang sous ses ongles.",
+        svtConclusion: "🖐️ Règle d'or SVT : Cellules épidermiques et globules blancs de l'agresseur avec leurs noyaux intacts ! Preuve directe pour confondre le suspect dans l'Activité 3.",
+        svgContent: `
+          <polygon points="60,60 110,50 140,85 100,120 50,100" fill="rgba(245, 158, 11, 0.25)" stroke="#f59e0b" stroke-width="2"/>
+          <circle cx="95" cy="85" r="14" fill="#6d28d9" stroke="#9333ea" stroke-width="2"/>
+          <text x="95" y="89" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">ADN</text>
+          <text x="100" y="175" fill="#fde68a" font-size="10" text-anchor="middle" font-family="sans-serif">Cellules sous-unguéales</text>
+        `
+      },
+      sang4: {
+        title: "Scellé #SC-2026-B04 : Écouvillon Sang n°4 (Caisse de transport)",
+        category: "Projection sanguine",
+        hasDna: true,
+        badgeText: "ADN Présent (Globules blancs / Leucocytes)",
+        description: "Projection de gouttelettes de sang à 1m20 du sol sur la caisse métallique en bois située derrière le bureau.",
+        svtConclusion: "🩸 Règle d'or SVT : Des globules blancs complets avec noyaux sont isolés dans cette projection. Destinés à l'analyse chromosomique de l'Activité 3.",
+        svgContent: `
+          <circle cx="55" cy="85" r="15" fill="#b91c1c"/>
+          <circle cx="110" cy="115" r="30" fill="rgba(255,255,255,0.2)" stroke="#38bdf8" stroke-width="2.5"/>
+          <circle cx="110" cy="115" r="15" fill="#7c3aed" stroke="#c084fc" stroke-width="2"/>
+          <text x="110" y="119" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">NOYAU</text>
+          <text x="100" y="175" fill="#fca5a5" font-size="10" text-anchor="middle" font-family="sans-serif">Éclaboussure caisse</text>
+        `
+      },
+      sang5: {
+        title: "Scellé #SC-2026-B05 : Écouvillon Sang n°5 (Combiné téléphonique)",
+        category: "Empreinte de transfert",
+        hasDna: true,
+        badgeText: "ADN Présent (Globules blancs / Leucocytes)",
+        description: "Trace de frottement sanglant laissée sur le combiné téléphonique du bureau lorsque Marc a cherché à joindre la sécurité.",
+        svtConclusion: "☎️ Règle d'or SVT : Les leucocytes de ce transfert permettront de déterminer s'il s'agit du sang de la victime ou d'un tiers.",
+        svgContent: `
+          <ellipse cx="100" cy="100" rx="45" ry="30" fill="rgba(220, 38, 38, 0.25)" stroke="#ef4444" stroke-width="2"/>
+          <circle cx="100" cy="100" r="16" fill="#7c3aed" stroke="#c084fc" stroke-width="2"/>
+          <text x="100" y="104" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">ADN</text>
+          <text x="100" y="175" fill="#fca5a5" font-size="10" text-anchor="middle" font-family="sans-serif">Transfert combiné téléphone</text>
+        `
+      },
+      salive: {
+        title: "Scellé #SC-2026-S01 : Écouvillon Salive n°1 (Gobelet de café)",
+        category: "Cellules épithéliales buccales",
+        hasDna: true,
+        badgeText: "ADN Présent (Cellules de la muqueuse buccale)",
+        description: "Prélèvement sur le rebord de la tasse de café jetable posée sur le bureau. Nombreuses cellules détachées lors de la déglutition.",
+        svtConclusion: "☕ Règle d'or SVT : Les cellules buccales possèdent un volumineux noyau très riche en filaments d'ADN. Ce profil sera croisé avec les caryotypes de l'Activité 3 !",
+        svgContent: `
+          <ellipse cx="90" cy="95" rx="55" ry="42" fill="rgba(6, 182, 212, 0.25)" stroke="#06b6d4" stroke-width="2.5"/>
+          <circle cx="95" cy="95" r="18" fill="#7c3aed" stroke="#a855f7" stroke-width="2"/>
+          <text x="95" y="99" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">NOYAU</text>
+          <text x="100" y="175" fill="#a5f3fc" font-size="10" text-anchor="middle" font-family="sans-serif">Cellule épithéliale buccale</text>
+        `
+      }
+    };
+    
+    function selectDnaSample(sampleKey) {
+      playBeep(450, 0.05);
+      const data = dnaSamplesData[sampleKey];
+      if (!data) return;
+
+      // Update active cards
+      document.querySelectorAll('.seal-bag-card, .dna-sample-card').forEach(c => c.classList.remove('active-sample'));
+      const activeCard = document.getElementById(`dna-card-${sampleKey}`);
+      if (activeCard) activeCard.classList.add('active-sample');
+
+      // Update SVG
+      document.getElementById('microscope-svg').innerHTML = data.svgContent;
+
+      // Update Text
+      const textContainer = document.getElementById('dna-analysis-text');
+      textContainer.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--cyan);">${data.category}</span>
+          <span class="sample-badge-dna ${data.hasDna ? 'dna-yes' : 'dna-no'}">${data.badgeText}</span>
+        </div>
+        <h3>${data.title}</h3>
+        <p>${data.description}</p>
+        <div class="dna-verdict-box">${data.svtConclusion}</div>
+      `;
+    }
+
+    /* ============================================================
+       STEP 3 : QUIZ CARACTERE SPECIFIQUE
+       ============================================================ */
+    function checkSpecificQuiz(btn, isCorrect) {
+      const feedback = document.getElementById('specific-quiz-feedback');
+      const allBtns = btn.parentElement.querySelectorAll('.quiz-btn');
+      allBtns.forEach(b => {
+        b.classList.remove('correct', 'incorrect');
+      });
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        playSuccessChime();
+        feedback.className = "feedback-msg show success";
+        feedback.innerHTML = "<strong>Bravo, déduction exacte !</strong> Un <u>caractère spécifique</u> est une caractéristique commune partagée par TOUS les individus d'une même espèce (ex : la bipédie exclusive permanente chez <em>Homo sapiens</em>, les griffes rétractiles chez le lion). Cela permet d'affirmer avec certitude que l'agresseur de Marc est un être humain et non un animal du zoo.";
+      } else {
+        btn.classList.add('incorrect');
+        playErrorBuzz();
+        feedback.className = "feedback-msg show info";
+        feedback.innerHTML = "<strong>Attention aux confusions :</strong> Relisez bien. Un caractère qui n'appartient qu'à une seule personne est un <em>caractère individuel</em>. Un caractère spécifique caractérise <strong>l'ensemble de l'espèce</strong> !";
+      }
+    }
+
+    /* ============================================================
+       STEP 5 : LABORATOIRE DE CLASSIFICATION (DRAG & DROP + BOUTONS)
+       ============================================================ */
+    const traitsList = [
+      { id: 't1', title: 'Bipédie permanente et exclusive', category: 'specifique', icon: '🚶‍♂️', hint: 'Propre à l\'espèce humaine' },
+      { id: 't2', title: 'Grand volume crânien & langage articulé', category: 'specifique', icon: '🧠', hint: 'Propre à l\'espèce humaine' },
+      { id: 't3', title: 'Pouce opposable uniquement aux mains', category: 'specifique', icon: '👍', hint: 'Contrairement au chimpanzé' },
+      { id: 't4', title: 'Absence de fourrure corporelle intégrale', category: 'specifique', icon: '👤', hint: 'Propre à l\'espèce humaine' },
+      
+      { id: 't5', title: 'Couleur des yeux (bleus, marrons, verts)', category: 'hereditaire', icon: '👁️', hint: 'Transmis par les parents' },
+      { id: 't6', title: 'Forme naturelle du visage (allongé ou carré)', category: 'hereditaire', icon: '👤', hint: 'Structure osseuse héritée' },
+      { id: 't7', title: 'Forme du nez et des oreilles', category: 'hereditaire', icon: '👃', hint: 'Morphologie transmise génétiquement' },
+      { id: 't8', title: 'Groupe sanguin & formule chromosomique', category: 'hereditaire', icon: '🧬', hint: 'Transmis par les cellules reproductrices dès la conception' },
+
+      { id: 't9', title: 'Bouc ou barbe taillée au menton', category: 'acquis', icon: '🧔', hint: 'Choix esthétique et mode de vie' },
+      { id: 't10', title: 'Musculature développée par le travail', category: 'acquis', icon: '💪', hint: 'Entraînement physique du soigneur' },
+      { id: 't11', title: 'Coup de soleil / bronzage sur la nuque', category: 'acquis', icon: '☀️', hint: 'Action des rayons UV du soleil' },
+      { id: 't12', title: 'Cicatrice d\'une ancienne griffure', category: 'acquis', icon: '🩹', hint: 'Blessure survenue au cours de la vie' }
+    ];
+
+    let cardPlacement = {};
+
+    function initClassifier() {
+      const reservoir = document.getElementById('reservoir');
+      reservoir.innerHTML = '';
+      cardPlacement = {};
+
+      traitsList.forEach(t => {
+        cardPlacement[t.id] = 'reservoir';
+        const card = createCardElement(t);
+        reservoir.appendChild(card);
+      });
+
+      updateRemainingCount();
+    }
+
+    function createCardElement(trait) {
+      const card = document.createElement('div');
+      card.className = 'trait-card';
+      card.id = `card-${trait.id}`;
+      card.draggable = true;
+      card.setAttribute('data-id', trait.id);
+      card.setAttribute('data-category', trait.category);
+
+      card.innerHTML = `
+        <div style="font-weight:600; display:flex; align-items:center; gap:6px;">
+          <span>${trait.icon}</span> <span>${trait.title}</span>
+        </div>
+        <div style="font-size:0.72rem; color:var(--text-muted); font-style:italic;">${trait.hint}</div>
+        <div class="card-actions">
+          <button class="move-btn" onclick="moveCard('${trait.id}', 'col-specifique')" title="Classer dans Spécifique">Spécifique</button>
+          <button class="move-btn" onclick="moveCard('${trait.id}', 'col-hereditaire')" title="Classer dans Héréditaire">Héréditaire</button>
+          <button class="move-btn" onclick="moveCard('${trait.id}', 'col-acquis')" title="Classer dans Modifié">Modifié</button>
+        </div>
+      `;
+
+      card.addEventListener('dragstart', handleDragStart);
+      card.addEventListener('dragend', handleDragEnd);
+
+      return card;
+    }
+
+    let draggedCardId = null;
+
+    function handleDragStart(e) {
+      draggedCardId = this.getAttribute('data-id');
+      this.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', draggedCardId);
+      e.dataTransfer.effectAllowed = 'move';
+      playBeep(350, 0.04);
+    }
+
+    function handleDragEnd(e) {
+      this.classList.remove('dragging');
+      draggedCardId = null;
+    }
+
+    function allowDrop(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleDrop(e, targetSlotId) {
+      e.preventDefault();
+      const cardId = e.dataTransfer.getData('text/plain') || draggedCardId;
+      if (!cardId) return;
+      moveCard(cardId, targetSlotId);
+    }
+
+    function moveCard(cardId, targetSlotId) {
+      playBeep(440, 0.04);
+      cardPlacement[cardId] = targetSlotId;
+      const cardEl = document.getElementById(`card-${cardId}`);
+      if (!cardEl) return;
+
+      let destinationContainer;
+      if (targetSlotId === 'col-specifique') {
+        destinationContainer = document.getElementById('slot-specifique');
+      } else if (targetSlotId === 'col-hereditaire') {
+        destinationContainer = document.getElementById('slot-hereditaire');
+      } else if (targetSlotId === 'col-acquis') {
+        destinationContainer = document.getElementById('slot-acquis');
+      } else {
+        destinationContainer = document.getElementById('reservoir');
+      }
+
+      destinationContainer.appendChild(cardEl);
+      updateRemainingCount();
+    }
+
+    function updateRemainingCount() {
+      let remaining = 0;
+      for (const id in cardPlacement) {
+        if (cardPlacement[id] === 'reservoir') remaining++;
+      }
+      document.getElementById('cards-remaining-count').innerText = remaining;
+    }
+
+    function resetClassification() {
+      playBeep(300, 0.08);
+      traitsList.forEach(t => {
+        moveCard(t.id, 'reservoir');
+      });
+      document.getElementById('classification-feedback').className = 'feedback-msg';
+      document.getElementById('score-text').innerHTML = `Score : <strong>0 / 12</strong> validés`;
+      document.getElementById('btn-to-report').style.display = 'none';
+    }
+
+    function verifyClassification() {
+      let correctCount = 0;
+      let total = traitsList.length;
+      let mistakes = [];
+
+      traitsList.forEach(t => {
+        const placedSlot = cardPlacement[t.id];
+        let expectedSlot = `col-${t.category}`;
+
+        const cardEl = document.getElementById(`card-${t.id}`);
+
+        if (placedSlot === expectedSlot) {
+          correctCount++;
+          cardEl.style.borderColor = 'var(--green-valid)';
+          cardEl.style.boxShadow = '0 0 8px var(--green-glow)';
+        } else {
+          cardEl.style.borderColor = 'var(--red-alert)';
+          cardEl.style.boxShadow = '0 0 8px var(--red-glow)';
+          mistakes.push(`• <strong>${t.title}</strong>`);
+        }
+      });
+
+      const scoreEl = document.getElementById('score-text');
+      scoreEl.innerHTML = `Score : <strong style="color:${correctCount === total ? 'var(--green-valid)' : 'var(--amber)'}; font-size:1.1rem;">${correctCount} / ${total}</strong> validés`;
+
+      const feedback = document.getElementById('classification-feedback');
+      const btnReport = document.getElementById('btn-to-report');
+
+      if (correctCount === total) {
+        playSuccessChime();
+        feedback.className = 'feedback-msg show success';
+        feedback.innerHTML = `
+          <strong>🌟 EXCELLENT TRAVAIL D'ENQUÊTE ! (12/12)</strong><br>
+          Toutes les caractéristiques ont été correctement distinguées :
+          <br>- Les <strong>caractères spécifiques</strong> définissent l'ensemble de l'espèce humaine (bipédie, volume crânien, pouces opposables).
+          <br>- Les <strong>caractères héréditaires</strong> sont reçus des parents dès la naissance (yeux, forme du crâne, groupe sanguin).
+          <br>- Les <strong>caractères acquis</strong> résultent du mode de vie et de l'environnement (barbe, musculation, cicatrice, bronzage) et ne se transmettent pas aux enfants !
+        `;
+        btnReport.style.display = 'inline-flex';
+        document.getElementById('report-score').innerText = `${correctCount} / ${total}`;
+      } else {
+        playErrorBuzz();
+        feedback.className = 'feedback-msg show info';
+        feedback.innerHTML = `
+          <strong>🔍 Analyse en cours : ${correctCount} / ${total} éléments corrects.</strong><br>
+          Certains éléments en rouge sont mal classés :
+          <br>${mistakes.slice(0, 3).join('<br>')}
+          <br><em>Rappel : Un caractère acquis apparaît au cours de la vie (soleil, rasage, sport, accident), un caractère héréditaire vient des parents, et un caractère spécifique est commun à toute l'espèce !</em>
+        `;
+      }
+    }
+
+    /* ============================================================
+       REPORT SYNC & MODAL
+       ============================================================ */
+    function updateReportHeader() {
+      const agentInput = document.getElementById('agent-name').value || 'Élève Enquêteur';
+      const classInput = document.getElementById('agent-class').value || '3ème';
+      
+      const elName = document.getElementById('report-agent-name');
+      const elClass = document.getElementById('report-agent-class');
+      if (elName) elName.innerText = agentInput;
+      if (elClass) elClass.innerText = classInput;
+      
+      const now = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const elDate = document.getElementById('report-date');
+      if (elDate) elDate.innerText = now.toLocaleDateString('fr-FR', options);
+    }
+
+    document.getElementById('agent-name').addEventListener('input', updateReportHeader);
+    document.getElementById('agent-class').addEventListener('input', updateReportHeader);
+
+    
+    /* ============================================================
+       GESTION DES NOUVEAUX MODALS (AGENDA, CCTV, SCELLÉS)
+       ============================================================ */
+    function openAgendaModal() {
+      playBeep(520, 0.05);
+      document.getElementById('agenda-modal').classList.add('open');
+    }
+    function closeAgendaModal() {
+      document.getElementById('agenda-modal').classList.remove('open');
+    }
+
+    function openCctvModal() {
+      playBeep(560, 0.05);
+      document.getElementById('cctv-modal').classList.add('open');
+      const modalVid = document.getElementById('modal-cctv-video');
+      if (modalVid) {
+        modalVid.currentTime = 0;
+        modalVid.play().catch(e => console.log(e));
+      }
+    }
+    function closeCctvModal() {
+      document.getElementById('cctv-modal').classList.remove('open');
+      const modalVid = document.getElementById('modal-cctv-video');
+      if (modalVid) modalVid.pause();
+    }
+
+    function openSamplesModal() {
+      playBeep(480, 0.05);
+      document.getElementById('samples-modal').classList.add('open');
+    }
+    function closeSamplesModal() {
+      document.getElementById('samples-modal').classList.remove('open');
+    }
+
+    /* ============================================================
+       SIMULATION VIDÉO CCTV & RECONNAISSANCE FACIALE (CANVAS)
+       ============================================================ */
+    let cctvPlaying = true;
+    let cctvFrame = 0;
+    let activeCam = 'cam1';
+
+    function toggleCctvPlay() {
+      const vid = document.getElementById('cctv-video-element');
+      const btn = document.getElementById('btn-cam-play');
+      if (!vid) return;
+      if (vid.paused) {
+        vid.play();
+        if (btn) btn.innerText = "⏸ Pause";
+      } else {
+        vid.pause();
+        if (btn) btn.innerText = "▶ Lecture";
+      }
+    }
+
+    function restartCctvVideo() {
+      const vid = document.getElementById('cctv-video-element');
+      if (vid) {
+        vid.currentTime = 0;
+        vid.play();
+      }
+      const modalVid = document.getElementById('modal-cctv-video');
+      if (modalVid) {
+        modalVid.currentTime = 0;
+        modalVid.play();
+      }
+    }
+
+    function switchCam(camKey) {
+      activeCam = camKey;
+      ['btn-cam1', 'btn-cam2', 'btn-cam3'].forEach(id => {
+        const b = document.getElementById(id);
+        if (b) b.classList.remove('active');
+      });
+      const activeBtn = document.getElementById('btn-' + camKey);
+      if (activeBtn) activeBtn.classList.add('active');
+      cctvFrame = 0;
+    }
+
+    function drawCctvCanvas(canvasId) {
+      const cvs = document.getElementById(canvasId);
+      if (!cvs) return;
+      const ctx = cvs.getContext('2d');
+      const w = cvs.width;
+      const h = cvs.height;
+
+      // Fond sombre vision nocturne
+      ctx.fillStyle = "#030712";
+      ctx.fillRect(0, 0, w, h);
+
+      // Perspective du couloir (murs, sol, plafond)
+      ctx.strokeStyle = "rgba(30, 41, 59, 0.6)";
+      ctx.lineWidth = 1.5;
+      
+      // Lignes de fuite vers porte du fond
+      const vpX = w * 0.5;
+      const vpY = h * 0.45;
+      
+      ctx.beginPath();
+      ctx.moveTo(0, 0); ctx.lineTo(vpX - 40, vpY - 40);
+      ctx.moveTo(w, 0); ctx.lineTo(vpX + 40, vpY - 40);
+      ctx.moveTo(0, h); ctx.lineTo(vpX - 40, vpY + 60);
+      ctx.moveTo(w, h); ctx.lineTo(vpX + 40, vpY + 60);
+      ctx.stroke();
+
+      // Porte du bureau de Marc au fond
+      ctx.fillStyle = "#0f172a";
+      ctx.fillRect(vpX - 35, vpY - 40, 70, 100);
+      ctx.strokeStyle = "#38bdf8";
+      ctx.strokeRect(vpX - 35, vpY - 40, 70, 100);
+
+      // Lumière clignotante néon au plafond
+      const flicker = Math.sin(cctvFrame * 0.2) > 0.8 ? 0.3 : 0.8;
+      ctx.fillStyle = `rgba(56, 189, 248, ${0.08 * flicker})`;
+      ctx.beginPath();
+      ctx.moveTo(vpX, 0); ctx.lineTo(0, h); ctx.lineTo(w, h); ctx.closePath();
+      ctx.fill();
+
+      // Silhouettes animées des deux suspects qui s'approchent
+      if (activeCam === 'cam1') {
+        const cycle = (cctvFrame % 360) / 360;
+        // Suspect A (gauche)
+        const sAX = w * 0.28 + Math.sin(cycle * Math.PI * 2) * 20;
+        const sAY = h * 0.4 + cycle * 40;
+        const scaleA = 0.8 + cycle * 0.4;
+
+        ctx.fillStyle = "#1e293b";
+        // Corps
+        ctx.fillRect(sAX - 18 * scaleA, sAY, 36 * scaleA, 80 * scaleA);
+        // Tête
+        ctx.beginPath();
+        ctx.arc(sAX, sAY - 16 * scaleA, 14 * scaleA, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Cadre de détection biométrique Suspect A (vert)
+        ctx.strokeStyle = "#10b981";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(sAX - 22 * scaleA, sAY - 32 * scaleA, 44 * scaleA, 46 * scaleA);
+        
+        ctx.fillStyle = "#10b981";
+        ctx.font = "10px monospace";
+        ctx.fillText("TARGET #01: 98.7% [SUSPECT A]", sAX - 45 * scaleA, sAY - 36 * scaleA);
+
+        // Suspect B (droite)
+        const sBX = w * 0.68 - Math.sin(cycle * Math.PI * 2) * 15;
+        const sBY = h * 0.42 + cycle * 38;
+        const scaleB = 0.82 + cycle * 0.38;
+
+        ctx.fillStyle = "#1e293b";
+        ctx.fillRect(sBX - 20 * scaleB, sBY, 40 * scaleB, 80 * scaleB);
+        ctx.beginPath();
+        ctx.arc(sBX, sBY - 16 * scaleB, 15 * scaleB, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Cadre détection Suspect B (cyan)
+        ctx.strokeStyle = "#06b6d4";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(sBX - 24 * scaleB, sBY - 32 * scaleB, 48 * scaleB, 46 * scaleB);
+
+        ctx.fillStyle = "#06b6d4";
+        ctx.font = "10px monospace";
+        ctx.fillText("TARGET #02: 96.2% [SUSPECT B]", sBX - 45 * scaleB, sBY - 36 * scaleB);
+      } else {
+        // Enclos lion / issue secours
+        ctx.fillStyle = "#94a3b8";
+        ctx.font = "14px monospace";
+        ctx.fillText(`SIGNAL ${activeCam.toUpperCase()} : AUCUN MOUVEMENT ANORMAL`, w * 0.15, h * 0.5);
+      }
+
+      // Timecode
+      const sec = String(Math.floor((cctvFrame / 30) % 60)).padStart(2, '0');
+      const timeStr = `2026-11-08 19:42:${sec}`;
+      const tc = document.getElementById('cctv-timecode');
+      if (tc) tc.innerText = timeStr;
+    }
+
+    function runCctvLoop() {
+      if (cctvPlaying) {
+        cctvFrame++;
+      }
+      drawCctvCanvas('cctv-video-canvas');
+      drawCctvCanvas('modal-cctv-canvas');
+      requestAnimationFrame(runCctvLoop);
+    }
+
+    let cctvStarted = false;
+    function startCctvAnimation() {
+      if (!cctvStarted) {
+        cctvStarted = true;
+        requestAnimationFrame(runCctvLoop);
+      }
+    }
+
+    function openModal(imgSrc) {
+      playBeep(500, 0.05);
+      document.getElementById('modal-img-tag').src = imgSrc;
+      document.getElementById('zoom-modal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('zoom-modal').classList.remove('open');
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      initClassifier(); selectDnaSample('poils');
+      const cctvVid = document.getElementById('cctv-video-element');
+      if (cctvVid) {
+        cctvVid.addEventListener('timeupdate', () => {
+          const totalSec = Math.floor(cctvVid.currentTime);
+          const sec = String(totalSec % 60).padStart(2, '0');
+          const tc = document.getElementById('cctv-timecode');
+          if (tc) tc.innerText = `2026-11-08 19:42:${sec}`;
+        });
+      }
+      selectDnaSample('poils');
+      updateReportHeader();
+    });
+  </script>
+</body>
+</html>
