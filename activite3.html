@@ -31,6 +31,7 @@
     display: flex;
     flex-direction: column;
     line-height: 1.5;
+    user-select: none;
   }
 
   /* HEADER */
@@ -244,7 +245,6 @@
     transition: all 0.25s ease;
     text-align: left;
     position: relative;
-    user-select: none;
   }
 
   .scelle-tab-btn:hover {
@@ -340,119 +340,104 @@
     border: 1px solid #1e293b;
   }
 
-  /* SVT LOGICIEL CARYOTYPE WORKSPACE (INSPIRED BY SVT CYCLE 4 SOFTWARE) */
-  .svt-software-workspace {
-    display: grid;
-    grid-template-columns: 420px 1fr;
-    gap: 20px;
-    align-items: start;
+  /* UNIFIED 1:1 SCALE SVT WORKSPACE */
+  .svt-workbench-frame {
     background: #000;
     border: 2px solid #334155;
     border-radius: 12px;
     padding: 16px;
-  }
-
-  @media (max-width: 1024px) {
-    .svt-software-workspace {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* LEFT COLUMN: SCATTERED MICROSCOPIC CHROMOSOMES */
-  .svt-col-left {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
   }
 
-  .svt-panel-title {
+  .svt-stage-titles-bar {
+    display: flex;
+    justify-content: space-between;
     font-size: 0.88rem;
     font-weight: 700;
     color: #38bdf8;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    padding: 0 8px;
   }
 
-  .svt-slide-container {
-    background: #ffffff;
-    border: 2px solid #94a3b8;
-    border-radius: 8px;
-    height: 380px;
+  /* UNIFIED CANVAS: 1024 x 460 */
+  .svt-unified-canvas {
     position: relative;
-    overflow: hidden;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
-    cursor: default;
-  }
-
-  .svt-scatter-chr {
-    position: absolute;
-    cursor: grab;
-    transition: transform 0.2s, filter 0.2s;
-    user-select: none;
-  }
-
-  .svt-scatter-chr:hover {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 6px #0284c7);
-  }
-
-  .svt-scatter-chr.selected {
-    outline: 2px dashed #0284c7;
-    filter: drop-shadow(0 0 8px #0284c7);
-  }
-
-  .svt-col-hint {
-    font-size: 0.78rem;
-    color: #cbd5e1;
-    background: #111a2e;
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #1e293b;
-    line-height: 1.4;
-  }
-
-  /* RIGHT COLUMN: KARYOTYPE BOARD & INSTRUCTION */
-  .svt-col-right {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .svt-karyo-board {
-    background: #ffffff;
-    border: 2px solid #94a3b8;
-    border-radius: 8px;
-    min-height: 380px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .karyo-grid-img {
     width: 100%;
-    height: auto;
-    max-height: 375px;
-    object-fit: contain;
-    display: block;
+    max-width: 1024px;
+    height: 460px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 2px solid #94a3b8;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    touch-action: none;
+  }
+
+  /* SEPARATOR LINE BETWEEN SLIDE AND KARYOTYPE */
+  .svt-center-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 512px;
+    width: 2px;
+    background: #cbd5e1;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .svt-zone-label-left {
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: #64748b;
+    background: rgba(255,255,255,0.9);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .svt-zone-label-right {
+    position: absolute;
+    top: 8px;
+    left: 524px;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: #64748b;
+    background: rgba(255,255,255,0.9);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* KARYOTYPE BOARD IMAGE (EXACT 504 x 315) */
+  .karyo-board-bg-img {
+    position: absolute;
+    top: 15px;
+    left: 516px;
+    width: 504px;
+    height: 315px;
+    pointer-events: none;
     user-select: none;
+    z-index: 2;
   }
 
-  /* DROP ZONES OVERLAY ON KARYOTYPE */
-  .karyo-drop-zones-overlay {
+  /* TARGET DROP SLOT */
+  .karyo-target-slot {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: auto;
-  }
-
-  .karyo-slot-target {
-    position: absolute;
-    border: 2px dashed #f59e0b;
-    background: rgba(245, 158, 11, 0.15);
+    border: 2.5px dashed #f59e0b;
+    background: rgba(245, 158, 11, 0.18);
     border-radius: 6px;
+    z-index: 10;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
@@ -460,16 +445,43 @@
     justify-content: center;
   }
 
-  .karyo-slot-target:hover {
+  .karyo-target-slot:hover {
     background: rgba(245, 158, 11, 0.35);
     border-color: #10b981;
     transform: scale(1.05);
   }
 
-  .karyo-slot-target.placed {
-    border: none;
-    background: transparent;
+  .karyo-target-slot.snapped-slot {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.15);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+  }
+
+  /* FREELY DRAGGABLE CHROMOSOMES */
+  .svt-draggable-chr {
+    position: absolute;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    z-index: 20;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+    transition: filter 0.2s;
+  }
+
+  .svt-draggable-chr:hover {
+    filter: drop-shadow(0 0 8px #0284c7) brightness(1.1);
+  }
+
+  .svt-draggable-chr.dragging {
+    cursor: grabbing;
+    z-index: 999 !important;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)) scale(1.05);
+  }
+
+  .svt-draggable-chr.snapped {
     cursor: default;
+    filter: drop-shadow(0 0 6px #10b981);
+    z-index: 30;
   }
 
   /* SVT SOFTWARE INSTRUCTION WITH RED ORB */
@@ -480,7 +492,7 @@
     background: #000;
     padding: 8px 4px;
     color: #fff;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     line-height: 1.4;
   }
 
@@ -841,7 +853,7 @@
     <div class="top-action-bar">
       <div class="mission-title">
         <h2>🔬 Mission : Reconstituer les Caryotypes & Identifier les Propriétaires</h2>
-        <p>Replacez les chromosomes non classés sur leur paire d'homologues (même taille et même forme), puis identifiez l'espèce et le suspect.</p>
+        <p>Faites glisser librement les chromosomes pour compléter les paires manquantes selon leur taille et leur ressemblance, puis déterminez l'espèce et le suspect.</p>
       </div>
       <div class="top-actions-right">
         <button class="btn-species-table" onclick="openSpeciesModal()">
@@ -868,52 +880,49 @@
         <span class="scelle-status-tag" id="active-status-badge">À ANALYSER</span>
       </div>
 
-      <!-- WORKSPACE INSPIRÉ DU LOGICIEL SVT (DOUBLE COLONNE) -->
-      <div class="svt-software-workspace">
+      <!-- WORKBENCH UNIFIÉ 1024x460 (ÉCHELLE 1:1 DU LOGICIEL SVT) -->
+      <div class="svt-workbench-frame">
         
-        <!-- COLONNE GAUCHE : ÉTALEMENT DES CHROMOSOMES NON CLASSÉS -->
-        <div class="svt-col-left">
-          <div class="svt-panel-title">
-            <span>🔬</span> Étalement chromosomique (Microscope)
-          </div>
-          <div class="svt-slide-container" id="scatter-slide-container">
-            <!-- Realistic chromosomes generated here -->
-          </div>
-          <div class="svt-col-hint" id="scatter-hint-text">
-            👉 <strong>Consigne :</strong> Cliquez sur un chromosome ci-dessus pour le sélectionner, puis cliquez sur sa case correspondante dans le caryotype à droite.
-          </div>
+        <div class="svt-stage-titles-bar">
+          <div>🔬 Étalement chromosomique (Non classés)</div>
+          <div>🧬 Caryotype ordonné (Par paires décroissantes de 1 à 22 + Sexuels)</div>
         </div>
 
-        <!-- COLONNE DROITE : CARYOTYPE ORDONNÉ -->
-        <div class="svt-col-right">
-          <div class="svt-panel-title">
-            <span>🧬</span> Caryotype ordonné (Classé par paires décroissantes)
+        <div class="svt-unified-canvas" id="unified-canvas">
+          <!-- Labels -->
+          <div class="svt-zone-label-left">Lame de microscope</div>
+          <div class="svt-zone-label-right">Planche de Caryotype</div>
+
+          <!-- Divider -->
+          <div class="svt-center-divider"></div>
+
+          <!-- Karyotype Board Image Background (504 x 315) -->
+          <img src="assets/enquete_genetique/logiciel_karyotype_grid.png" class="karyo-board-bg-img" alt="Caryotype SVT">
+
+          <!-- Target Drop Slot for Missing Chromosome -->
+          <div class="karyo-target-slot" id="active-karyo-slot" title="Cliquez ou déposez le chromosome homologue ici !">
+            <span style="font-size:1.1rem; color:#f59e0b; font-weight:bold;">?</span>
           </div>
 
-          <div class="svt-karyo-board" id="karyo-board-container">
-            <img src="assets/enquete_genetique/logiciel_karyotype_grid.png" alt="Caryotype ordonné SVT" class="karyo-grid-img" id="karyo-grid-image">
-            <div class="karyo-drop-zones-overlay" id="drop-zones-overlay">
-              <!-- Interactive drop zones for missing chromosomes -->
-            </div>
-          </div>
+          <!-- Chromosomes will be rendered here directly -->
+          <div id="chromosomes-layer"></div>
+        </div>
 
-          <!-- PHRASE EXACTE DU LOGICIEL SVT (AVEC BOULE ROUGE) -->
-          <div class="svt-software-instruction">
-            <span class="svt-red-orb">🔴</span>
-            <p>Replace les chromosomes non classés par l'ordinateur à leur place dans le caryotype, puis clique sur le bouton pour vérifier ton positionnement.</p>
-          </div>
+        <!-- PHRASE EXACTE DU LOGICIEL SVT (AVEC BOULE ROUGE) -->
+        <div class="svt-software-instruction">
+          <span class="svt-red-orb">🔴</span>
+          <p>Replace les chromosomes non classés par l'ordinateur à leur place dans le caryotype, puis clique sur le bouton pour vérifier ton positionnement.</p>
+        </div>
 
-          <!-- BARRE DE VÉRIFICATION -->
-          <div class="svt-verify-bar">
-            <button class="btn-svt-verify" id="btn-verify-placement" onclick="verifyPlacement()">
-              🔍 Vérifier le positionnement
-            </button>
-            <button class="btn-svt-auto" onclick="autoPlaceChromosome()" title="Aide au placement">
-              ⚡ Placer sur sa paire
-            </button>
-            <span class="verify-feedback-pill" id="verify-feedback-pill"></span>
-          </div>
-
+        <!-- BARRE DE VÉRIFICATION -->
+        <div class="svt-verify-bar">
+          <button class="btn-svt-verify" id="btn-verify-placement" onclick="verifyPlacement()">
+            🔍 Vérifier le positionnement
+          </button>
+          <button class="btn-svt-auto" onclick="autoPlaceChromosome()" title="Aide au positionnement">
+            ⚡ Placer sur sa paire
+          </button>
+          <span class="verify-feedback-pill" id="verify-feedback-pill"></span>
         </div>
 
       </div>
@@ -1094,7 +1103,7 @@
 
   <script>
     /* =========================================================================
-       DONNÉES DIDACTIQUES DES 5 SCELLÉS AVEC CHROMOSOMES AUTHENTIQUES DU LOGICIEL SVT
+       DONNÉES DIDACTIQUES DES 5 SCELLÉS À ÉCHELLE 1:1 DU LOGICIEL SVT
        ========================================================================= */
     const scelles = [
       {
@@ -1105,14 +1114,17 @@
         nature: 'Cellules épithéliales buccales avec noyau',
         totalChr: 46,
         targetPair: 'X',
-        targetSlotBbox: { xPct: 69, yPct: 76, wPct: 13, hPct: 22 },
-        missingChrImg: 'assets/enquete_genetique/chr_svt/chr_scatter_0.png',
-        missingChrWidth: 32,
+        // Target slot on the karyotype (516px offset + slot relative)
+        slotBox: { left: 516 + 365, top: 15 + 235, width: 45, height: 75 },
+        missingChrImg: 'assets/enquete_genetique/chr_svt/chr_scatter_1.png',
+        chrWidth: 48,
+        chrHeight: 33,
+        chrInitPos: { left: 240, top: 130 },
         missingChrName: 'Chromosome X (sexe féminin)',
         expectedCount: '46',
         expectedSex: 'XX',
         expectedOwner: 'laura',
-        explanation: 'Caryotype féminin normal : 46 chromosomes (23 paires) avec deux chromosomes XX. La salive appartient à Laura DELORME, qui a bu un café à 12h.'
+        explanation: 'Caryotype féminin normal : 46 chromosomes (23 paires) avec deux chromosomes XX. La salive appartient à Laura DELORME, venue déjeuner à 12h.'
       },
       {
         id: 'C01',
@@ -1122,9 +1134,11 @@
         nature: 'Cellules du bulbe pileux (racine)',
         totalChr: 47,
         targetPair: '21',
-        targetSlotBbox: { xPct: 35, yPct: 76, wPct: 13, hPct: 22 },
+        slotBox: { left: 516 + 205, top: 15 + 235, width: 42, height: 75 },
         missingChrImg: 'assets/enquete_genetique/chr_svt/chr_scatter_3.png',
-        missingChrWidth: 22,
+        chrWidth: 21,
+        chrHeight: 14,
+        chrInitPos: { left: 160, top: 180 },
         missingChrName: '3ème chromosome 21 (Trisomie 21)',
         expectedCount: '47',
         expectedSex: 'XX',
@@ -1139,9 +1153,11 @@
         nature: 'Cellules de la gaine du poil',
         totalChr: 48,
         targetPair: '24',
-        targetSlotBbox: { xPct: 83, yPct: 76, wPct: 15, hPct: 22 },
+        slotBox: { left: 516 + 445, top: 15 + 245, width: 45, height: 65 },
         missingChrImg: 'assets/enquete_genetique/chr_svt/chr_scatter_8.png',
-        missingChrWidth: 26,
+        chrWidth: 35,
+        chrHeight: 20,
+        chrInitPos: { left: 200, top: 220 },
         missingChrName: '24ème paire spécifique du singe',
         expectedCount: '48',
         expectedSex: '24p',
@@ -1156,9 +1172,11 @@
         nature: 'Leucocytes (globules blancs avec noyau)',
         totalChr: 46,
         targetPair: 'Y',
-        targetSlotBbox: { xPct: 84, yPct: 76, wPct: 14, hPct: 22 },
+        slotBox: { left: 516 + 445, top: 15 + 245, width: 42, height: 65 },
         missingChrImg: 'assets/enquete_genetique/chr_svt/chr_scatter_9.png',
-        missingChrWidth: 20,
+        chrWidth: 15,
+        chrHeight: 20,
+        chrInitPos: { left: 220, top: 260 },
         missingChrName: 'Petit chromosome Y (sexe masculin)',
         expectedCount: '46',
         expectedSex: 'XY',
@@ -1173,9 +1191,11 @@
         nature: 'Leucocytes sanguins',
         totalChr: 47,
         targetPair: 'XXY',
-        targetSlotBbox: { xPct: 69, yPct: 76, wPct: 14, hPct: 22 },
+        slotBox: { left: 516 + 365, top: 15 + 235, width: 45, height: 75 },
         missingChrImg: 'assets/enquete_genetique/chr_svt/chr_scatter_1.png',
-        missingChrWidth: 28,
+        chrWidth: 48,
+        chrHeight: 33,
+        chrInitPos: { left: 190, top: 140 },
         missingChrName: 'Chromosome X supplémentaire (Klinefelter)',
         expectedCount: '47',
         expectedSex: 'XXY',
@@ -1187,7 +1207,12 @@
     let currentIdx = 0;
     const resolvedMap = { S01: false, C01: false, P01: false, B01: false, B02: false };
     const placedMap = { S01: false, C01: false, P01: false, B01: false, B02: false };
-    let selectedChrId = null;
+
+    /* DRAG AND DROP CONTROLLER */
+    let isDragging = false;
+    let dragEl = null;
+    let startX = 0, startY = 0;
+    let elemInitX = 0, elemInitY = 0;
 
     /* AUDIO SYNTHESIZER */
     let audioCtx = null;
@@ -1260,7 +1285,6 @@
 
     function selectSample(idx) {
       currentIdx = idx;
-      selectedChrId = null;
       playTone(450, 0.04);
       renderTabs();
       loadActiveSample();
@@ -1282,13 +1306,26 @@
       hideFeedback();
       hideVerifyFeedback();
 
-      // Render Left slide (scattered chromosomes)
-      renderScatterSlide();
+      // Configure Target Slot
+      const slotEl = document.getElementById('active-karyo-slot');
+      slotEl.style.left = `${s.slotBox.left}px`;
+      slotEl.style.top = `${s.slotBox.top}px`;
+      slotEl.style.width = `${s.slotBox.width}px`;
+      slotEl.style.height = `${s.slotBox.height}px`;
 
-      // Render Right Karyotype drop zones overlay
-      renderDropZonesOverlay();
+      if (isPlaced) {
+        slotEl.className = 'karyo-target-slot snapped-slot';
+        slotEl.innerHTML = '';
+      } else {
+        slotEl.className = 'karyo-target-slot';
+        slotEl.innerHTML = '<span style="font-size:1.1rem; color:#f59e0b; font-weight:bold;">?</span>';
+        slotEl.onclick = () => autoPlaceChromosome();
+      }
 
-      // Update form
+      // Render Chromosomes on Stage
+      renderChromosomesLayer();
+
+      // Update Diagnostic form
       const selCount = document.getElementById('diag-count');
       const selSex = document.getElementById('diag-sex');
       const selOwner = document.getElementById('diag-owner');
@@ -1312,109 +1349,157 @@
       }
     }
 
-    /* RENDER SCATTER SLIDE (LEFT COLUMN) */
-    function renderScatterSlide() {
+    /* RENDER CHROMOSOMES WITH 1:1 TRUE SCALE AND FREE DRAGGING */
+    function renderChromosomesLayer() {
       const s = scelles[currentIdx];
       const isPlaced = placedMap[s.id] || resolvedMap[s.id];
-      const container = document.getElementById('scatter-slide-container');
-      container.innerHTML = '';
+      const layer = document.getElementById('chromosomes-layer');
+      layer.innerHTML = '';
 
-      // Authentic scattered chromosomes positions (like in the SVT software)
-      const positions = [
-        { id: 'c0', img: s.missingChrImg, w: s.missingChrWidth, x: 190, y: 150, rot: -25, isTarget: true },
-        { id: 'c1', img: 'assets/enquete_genetique/chr_svt/chr_scatter_1.png', w: 34, x: 80, y: 40, rot: 35 },
-        { id: 'c2', img: 'assets/enquete_genetique/chr_svt/chr_scatter_2.png', w: 24, x: 280, y: 60, rot: -15 },
-        { id: 'c3', img: 'assets/enquete_genetique/chr_svt/chr_scatter_4.png', w: 32, x: 40, y: 160, rot: 50 },
-        { id: 'c4', img: 'assets/enquete_genetique/chr_svt/chr_scatter_6.png', w: 32, x: 120, y: 270, rot: -40 },
-        { id: 'c5', img: 'assets/enquete_genetique/chr_svt/chr_scatter_7.png', w: 42, x: 260, y: 250, rot: 20 }
+      // Authentic unclassified chromosomes at 1:1 TRUE SCALE (exact matching pixel sizes)
+      const chrsConfig = [
+        // The TARGET missing chromosome to place
+        { 
+          id: 'target-chr', 
+          img: s.missingChrImg, 
+          w: s.chrWidth, 
+          h: s.chrHeight, 
+          x: isPlaced ? (s.slotBox.left + (s.slotBox.width - s.chrWidth)/2) : s.chrInitPos.left, 
+          y: isPlaced ? (s.slotBox.top + (s.slotBox.height - s.chrHeight)/2) : s.chrInitPos.top, 
+          isTarget: true,
+          isPlaced: isPlaced
+        },
+        // Decorative background unclassified chromosomes on the slide (1:1 scale)
+        { id: 'bg-chr-1', img: 'assets/enquete_genetique/chr_svt/chr_scatter_0.png', w: 58, h: 71, x: 284, y: 25 },
+        { id: 'bg-chr-7', img: 'assets/enquete_genetique/chr_svt/chr_scatter_1.png', w: 48, h: 33, x: 155, y: 50 },
+        { id: 'bg-chr-14', img: 'assets/enquete_genetique/chr_svt/chr_scatter_2.png', w: 24, h: 33, x: 280, y: 110 },
+        { id: 'bg-chr-8', img: 'assets/enquete_genetique/chr_svt/chr_scatter_4.png', w: 41, h: 40, x: 36, y: 210 },
+        { id: 'bg-chr-11', img: 'assets/enquete_genetique/chr_svt/chr_scatter_6.png', w: 46, h: 34, x: 83, y: 327 },
+        { id: 'bg-chr-2', img: 'assets/enquete_genetique/chr_svt/chr_scatter_7.png', w: 79, h: 51, x: 171, y: 365 }
       ];
 
-      positions.forEach(pos => {
-        // If this is the target chromosome and it is already placed, don't show it on the slide
-        if (pos.isTarget && isPlaced) return;
+      chrsConfig.forEach(c => {
+        const img = document.createElement('img');
+        img.src = c.img;
+        img.className = `svt-draggable-chr ${c.isPlaced ? 'snapped' : ''}`;
+        img.id = c.id;
+        img.style.width = `${c.w}px`;
+        img.style.height = `${c.h}px`;
+        img.style.left = `${c.x}px`;
+        img.style.top = `${c.y}px`;
+        img.title = c.isTarget ? `Chromosome à placer : ${s.missingChrName}` : 'Chromosome métaphasique';
 
-        const imgEl = document.createElement('img');
-        imgEl.src = pos.img;
-        imgEl.className = 'svt-scatter-chr';
-        imgEl.id = `scatter-chr-${pos.id}`;
-        imgEl.style.width = `${pos.w}px`;
-        imgEl.style.left = `${pos.x}px`;
-        imgEl.style.top = `${pos.y}px`;
-        imgEl.style.transform = `rotate(${pos.rot}deg)`;
-        imgEl.title = pos.isTarget ? s.missingChrName : 'Chromosome métaphasique';
+        if (!c.isPlaced) {
+          setupPointerDrag(img, c.isTarget);
+        }
 
-        imgEl.onclick = () => selectScatterChr(pos.id, pos.isTarget);
-        container.appendChild(imgEl);
+        layer.appendChild(img);
       });
     }
 
-    function selectScatterChr(id, isTarget) {
-      playTone(520, 0.05);
-      selectedChrId = id;
+    /* FLUID FREE DRAG AND DROP */
+    function setupPointerDrag(el, isTarget) {
+      el.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        dragEl = el;
+        el.setPointerCapture(e.pointerId);
+        el.classList.add('dragging');
 
-      // Remove selected class from all
-      document.querySelectorAll('.svt-scatter-chr').forEach(el => el.classList.remove('selected'));
-      const targetEl = document.getElementById(`scatter-chr-${id}`);
-      if (targetEl) targetEl.classList.add('selected');
+        const canvas = document.getElementById('unified-canvas');
+        const cRect = canvas.getBoundingClientRect();
 
+        startX = e.clientX;
+        startY = e.clientY;
+        elemInitX = parseFloat(el.style.left) || 0;
+        elemInitY = parseFloat(el.style.top) || 0;
+
+        playTone(520, 0.04);
+      });
+
+      el.addEventListener('pointermove', (e) => {
+        if (!isDragging || dragEl !== el) return;
+        const canvas = document.getElementById('unified-canvas');
+        const cRect = canvas.getBoundingClientRect();
+        
+        const scaleFactor = 1024 / cRect.width; // Account for responsive scaling
+        const dx = (e.clientX - startX) * scaleFactor;
+        const dy = (e.clientY - startY) * scaleFactor;
+
+        let newX = elemInitX + dx;
+        let newY = elemInitY + dy;
+
+        // Keep inside 1024x460 canvas
+        newX = Math.max(0, Math.min(1024 - el.offsetWidth, newX));
+        newY = Math.max(0, Math.min(460 - el.offsetHeight, newY));
+
+        el.style.left = `${newX}px`;
+        el.style.top = `${newY}px`;
+      });
+
+      el.addEventListener('pointerup', (e) => {
+        if (!isDragging || dragEl !== el) return;
+        isDragging = false;
+        dragEl = null;
+        el.releasePointerCapture(e.pointerId);
+        el.classList.remove('dragging');
+
+        // Check drop over target slot
+        if (isTarget) {
+          checkDropSnap(el);
+        }
+      });
+    }
+
+    function checkDropSnap(el) {
       const s = scelles[currentIdx];
-      const hint = document.getElementById('scatter-hint-text');
-      if (isTarget) {
-        hint.innerHTML = `🎯 <strong>${s.missingChrName} sélectionné !</strong> Cliquez sur la zone en pointillé orange dans le caryotype à droite pour le placer.`;
-      } else {
-        hint.innerHTML = `ℹ️ Chromosome sélectionné. Trouvez son homologue dans le caryotype ou sélectionnez le chromosome en attente.`;
+      const slotEl = document.getElementById('active-karyo-slot');
+      if (!slotEl) return;
+
+      const currentX = parseFloat(el.style.left) || 0;
+      const currentY = parseFloat(el.style.top) || 0;
+
+      const chrCenterX = currentX + el.offsetWidth / 2;
+      const chrCenterY = currentY + el.offsetHeight / 2;
+
+      const slotCenterX = s.slotBox.left + s.slotBox.width / 2;
+      const slotCenterY = s.slotBox.top + s.slotBox.height / 2;
+
+      const distance = Math.hypot(chrCenterX - slotCenterX, chrCenterY - slotCenterY);
+
+      // Generous snap radius of 75 pixels
+      if (distance < 75) {
+        snapChromosomeToSlot(el);
       }
     }
 
-    /* RENDER DROP ZONES (RIGHT COLUMN) */
-    function renderDropZonesOverlay() {
+    function snapChromosomeToSlot(el) {
       const s = scelles[currentIdx];
-      const isPlaced = placedMap[s.id] || resolvedMap[s.id];
-      const overlay = document.getElementById('drop-zones-overlay');
-      overlay.innerHTML = '';
+      playSuccessChime();
+      placedMap[s.id] = true;
 
-      const slot = document.createElement('div');
-      slot.className = `karyo-slot-target ${isPlaced ? 'placed' : ''}`;
-      slot.style.left = `${s.targetSlotBbox.xPct}%`;
-      slot.style.top = `${s.targetSlotBbox.yPct}%`;
-      slot.style.width = `${s.targetSlotBbox.wPct}%`;
-      slot.style.height = `${s.targetSlotBbox.hPct}%`;
-      slot.id = 'active-karyo-slot';
+      const targetX = s.slotBox.left + (s.slotBox.width - s.chrWidth) / 2;
+      const targetY = s.slotBox.top + (s.slotBox.height - s.chrHeight) / 2;
 
-      if (isPlaced) {
-        slot.innerHTML = `
-          <img src="${s.missingChrImg}" style="width:${s.missingChrWidth}px; filter:drop-shadow(0 0 2px #000);" alt="Chromosome placé">
-        `;
-      } else {
-        slot.innerHTML = `
-          <span style="font-size:1.1rem; color:#f59e0b; font-weight:bold;">?</span>
-        `;
-        slot.onclick = () => handleSlotClick();
-      }
+      el.style.transition = 'left 0.25s ease, top 0.25s ease';
+      el.style.left = `${targetX}px`;
+      el.style.top = `${targetY}px`;
+      el.classList.add('snapped');
 
-      overlay.appendChild(slot);
-    }
+      const slotEl = document.getElementById('active-karyo-slot');
+      slotEl.className = 'karyo-target-slot snapped-slot';
+      slotEl.innerHTML = '';
 
-    function handleSlotClick() {
-      const s = scelles[currentIdx];
-      if (placedMap[s.id]) return;
-
-      // Place chromosome
-      autoPlaceChromosome();
+      showVerifyFeedback(true, '✓ Chromosome positionné ! Cliquez sur "Vérifier le positionnement".');
     }
 
     function autoPlaceChromosome() {
       const s = scelles[currentIdx];
       if (placedMap[s.id]) return;
 
-      playSuccessChime();
-      placedMap[s.id] = true;
-
-      // Rerender
-      renderScatterSlide();
-      renderDropZonesOverlay();
-
-      showVerifyFeedback(true, '✓ Chromosome positionné ! Cliquez sur "Vérifier le positionnement" ci-dessous.');
+      const targetChr = document.getElementById('target-chr');
+      if (targetChr) {
+        snapChromosomeToSlot(targetChr);
+      }
     }
 
     function verifyPlacement() {
