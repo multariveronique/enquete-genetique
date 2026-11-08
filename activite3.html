@@ -310,6 +310,602 @@
     gap: 6px;
   }
 
+
+  /* STEPPER TIMELINE */
+  .activity-stepper-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .step-nav-item {
+    flex: 1;
+    min-width: 220px;
+    background: #0d1527;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    user-select: none;
+  }
+
+  .step-nav-item:hover {
+    border-color: #38bdf8;
+    transform: translateY(-2px);
+  }
+
+  .step-nav-item.active {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(15, 23, 42, 0.8) 100%);
+    border-color: #10b981;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+  }
+
+  .step-nav-item.completed {
+    border-color: #059669;
+  }
+
+  .step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #1e293b;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    font-family: var(--font-mono);
+    flex-shrink: 0;
+  }
+
+  .step-nav-item.active .step-num {
+    background: #10b981;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  }
+
+  .step-nav-item.completed .step-num {
+    background: #059669;
+    color: #fff;
+  }
+
+  .step-info strong {
+    display: block;
+    font-size: 0.88rem;
+    color: #f1f5f9;
+  }
+
+  .step-info span {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+  }
+
+  /* ETAPE 1 : SECTION OBSERVATION MICROSCOPIQUE */
+  .etape1-section {
+    background: #090e17;
+    border: 2px solid #10b981;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15);
+  }
+
+  .etape-header-card {
+    border-left: 4px solid #10b981;
+    padding-left: 14px;
+    margin-bottom: 20px;
+  }
+
+  .etape-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #fff;
+    background: #059669;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .etape-header-card h2 {
+    font-size: 1.25rem;
+    color: #fff;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .etape-header-card p {
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    line-height: 1.5;
+    max-width: 950px;
+  }
+
+  .microscope-lab-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 20px;
+    align-items: start;
+  }
+
+  @media (max-width: 1024px) {
+    .microscope-lab-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* MICROSCOPE DEVICE BOX */
+  .microscope-device-box {
+    background: #04070d;
+    border: 2px solid #334155;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 6px 20px rgba(0, 0, 0, 0.6);
+  }
+
+  .microscope-top-bar {
+    background: #0f172a;
+    padding: 10px 16px;
+    border-bottom: 1px solid #1e293b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .microscope-model {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #38bdf8;
+    letter-spacing: 0.5px;
+  }
+
+  .microscope-mag-tag {
+    font-size: 0.75rem;
+    background: #1e293b;
+    color: #facc15;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(250, 204, 21, 0.3);
+  }
+
+  .microscope-lens-viewport {
+    position: relative;
+    width: 100%;
+    min-height: 480px;
+    background: radial-gradient(circle at center, #111a2e 0%, #060a12 70%, #020408 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .stage1-svg {
+    width: 100%;
+    height: 100%;
+    max-height: 520px;
+    display: block;
+    user-select: none;
+  }
+
+  .lens-glare-effect {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
+                radial-gradient(circle at center, transparent 75%, rgba(0, 0, 0, 0.85) 100%);
+    border-radius: 8px;
+  }
+
+  .lens-scale-bar {
+    position: absolute;
+    bottom: 14px;
+    left: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #94a3b8;
+    background: rgba(15, 23, 42, 0.75);
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid #334155;
+    pointer-events: none;
+  }
+
+  .scale-ruler {
+    width: 40px;
+    height: 3px;
+    background: #38bdf8;
+    position: relative;
+  }
+
+  .scale-ruler::before, .scale-ruler::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    width: 2px;
+    height: 9px;
+    background: #38bdf8;
+  }
+  .scale-ruler::before { left: 0; }
+  .scale-ruler::after { right: 0; }
+
+  .microscope-controls-bar {
+    background: #0d1527;
+    border-top: 1px solid #1e293b;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .focus-control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+  }
+
+  .focus-control-group input[type="range"] {
+    accent-color: #10b981;
+    cursor: pointer;
+    width: 110px;
+  }
+
+  .mic-counter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .count-badge {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: #facc15;
+    background: rgba(250, 204, 21, 0.12);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(250, 204, 21, 0.3);
+  }
+
+  .btn-micro-action {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-micro-action:hover {
+    background: #334155;
+    color: #fff;
+  }
+
+  /* INVESTIGATION PEDAGOGY CARD */
+  .investigation-pedagogy-card {
+    background: #0d1527;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .investigation-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .investigation-text p {
+    font-size: 0.86rem;
+    color: #cbd5e1;
+    line-height: 1.5;
+  }
+
+  .investigation-question-box {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 14px;
+  }
+
+  .investigation-question-box h5 {
+    font-size: 0.85rem;
+    color: #facc15;
+    margin-bottom: 6px;
+  }
+
+  .investigation-question-box p {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    margin-bottom: 10px;
+  }
+
+  .quiz-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .quiz-btn {
+    text-align: left;
+    background: #111a2e;
+    border: 1px solid #1e293b;
+    color: #cbd5e1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.4;
+  }
+
+  .quiz-btn:hover {
+    background: #1e293b;
+    border-color: #38bdf8;
+    color: #fff;
+  }
+
+  .quiz-btn.correct {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: #10b981;
+    color: #a7f3d0;
+  }
+
+  .quiz-btn.wrong {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+    color: #fca5a5;
+  }
+
+  .quiz-feedback-box {
+    margin-top: 8px;
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .btn-action-karyo {
+    width: 100%;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border: 1px solid #10b981;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    transition: all 0.25s;
+  }
+
+  .btn-action-karyo:hover {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+  }
+
+  .btn-action-sub {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  /* ORDERED KARYOTYPE STATS */
+  .karyo-summary-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 12px 0;
+  }
+
+  .stat-pill {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.78rem;
+  }
+
+  .stat-pill .k {
+    color: var(--text-muted);
+    display: block;
+    font-size: 0.7rem;
+  }
+
+  .stat-pill .v {
+    color: #38bdf8;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .next-step-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .btn-goto-step2 {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    border: 1px solid #38bdf8;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+  }
+
+  .btn-goto-step2:hover {
+    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+  }
+
+  .btn-replay-stage1 {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .btn-replay-stage1:hover {
+    background: #334155;
+    color: #fff;
+  }
+
+  /* STAGE 1 CHR SVG ELEMENTS */
+  .stage1-chr-group {
+    transition: transform 1.25s cubic-bezier(0.25, 1, 0.5, 1), filter 0.2s ease;
+    transform-origin: center center;
+    cursor: pointer;
+  }
+
+  .stage1-chr-group:hover {
+    filter: drop-shadow(0 0 6px #38bdf8) brightness(1.35);
+  }
+
+  .karyo-pair-label {
+    fill: #94a3b8;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    text-anchor: middle;
+    font-weight: 700;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+
+  .karyo-row-line {
+    stroke: rgba(51, 65, 85, 0.4);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+  }
+
+  /* SCELLÉ WORKBENCH VIEW TABS */
+  .scelle-stage-view-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    background: #090e17;
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid #1e293b;
+  }
+
+  .stage-tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .stage-tab-btn.active {
+    background: #1e293b;
+    color: #38bdf8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .stage-tab-btn:hover:not(.active) {
+    color: #f1f5f9;
+  }
+
+  /* SCELLÉ CELL MIXED MICROSCOPE BOX */
+  .scelle-cell-microscope-box {
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .scelle-cell-notice {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid #38bdf8;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    color: #e2e8f0;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .btn-order-scelle-now {
+    background: #059669;
+    border: 1px solid #10b981;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-order-scelle-now:hover {
+    background: #10b981;
+  }
+
   /* SCELLÉS SELECTION TABS */
   .scelles-selector-strip {
     display: grid;
@@ -1107,6 +1703,158 @@
       </div>
     </div>
 
+
+    <!-- STEPPER TIMELINE -->
+    <nav class="activity-stepper-bar">
+      <div class="step-nav-item active" id="nav-step1" onclick="scrollToStep('step1-microscope-section')">
+        <span class="step-num">1</span>
+        <div class="step-info">
+          <strong>Observation Microscopique</strong>
+          <span>Cellule & Chromosomes mélangés</span>
+        </div>
+      </div>
+      <div class="step-nav-item" id="nav-step2" onclick="scrollToStep('step2-scelles-section')">
+        <span class="step-num">2</span>
+        <div class="step-info">
+          <strong>Analyse des Caryotypes</strong>
+          <span>5 scellés judiciaires (<span id="stepper-resolved">0</span>/5)</span>
+        </div>
+      </div>
+      <div class="step-nav-item" id="nav-step3" onclick="scrollToStep('crime-verdict-section')">
+        <span class="step-num">3</span>
+        <div class="step-info">
+          <strong>Élucidation Finale</strong>
+          <span>Résolution de l'agression</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ÉTAPE 1 : OBSERVATION MICROSCOPIQUE DES CHROMOSOMES MELANGES D'UNE CELLULE -->
+    <section class="etape1-section" id="step1-microscope-section">
+      <div class="etape-header-card">
+        <div class="etape-badge">🔬 ÉTAPE 1 SUR 3 • OBSERVATION CELLULAIRE INITIALE</div>
+        <h2>Observation au Microscope : Les 46 Chromosomes Mélangés dans la Cellule</h2>
+        <p>
+          Au laboratoire de cytogénétique, lorsque l'on observe au microscope optique (×1000) une cellule vivante bloquée en division cellulaire (métaphase), 
+          <strong>les chromosomes ne sont pas encore rangés !</strong> Ils sont condensés mais complètement mélangés, dispersés et orientés dans tous les sens dans le cytoplasme.
+          Observez cette cellule réelle, constatez la difficulté d'analyse et découvrez la méthode scientifique du <strong>caryotype</strong> !
+        </p>
+      </div>
+
+      <div class="microscope-lab-layout">
+        
+        <!-- MICROSCOPE WORKSTATION -->
+        <div class="microscope-device-box">
+          <div class="microscope-top-bar">
+            <div class="microscope-model">🔬 MICROSCOPE CYTOGÉNÉTIQUE OPTIQUE • OLYMPUS BX53</div>
+            <div class="microscope-mag-tag">Grossissement : <strong>×1000 (Immersion Giemsa)</strong></div>
+          </div>
+
+          <div class="microscope-lens-viewport" id="microscope-lens-viewport">
+            <svg id="stage1-svg" viewBox="0 0 820 500" class="stage1-svg">
+              <!-- Will be initialized by JavaScript -->
+            </svg>
+
+            <div class="lens-glare-effect"></div>
+            <div class="lens-scale-bar">
+              <div class="scale-ruler"></div>
+              <span>10 µm</span>
+            </div>
+          </div>
+
+          <div class="microscope-controls-bar">
+            <div class="focus-control-group">
+              <label for="mic-focus-slider">🔍 Focus optique :</label>
+              <input type="range" id="mic-focus-slider" min="0" max="10" value="10" oninput="handleFocusSlider(this.value)">
+              <span id="focus-label" style="font-size:0.75rem; color:#10b981; font-weight:bold;">Net (100%)</span>
+            </div>
+            <div class="mic-counter-group">
+              <span class="count-badge">📍 Chromosomes repérés : <strong id="stage1-click-count">0</strong> / 46</span>
+              <button class="btn-micro-action" onclick="resetStage1Markers()" title="Effacer tous les repères de pointage">🔄 Réinitialiser repères</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PEDAGOGICAL INVESTIGATION CARD -->
+        <div class="investigation-pedagogy-card">
+          
+          <div id="phase-observation" style="display:flex; flex-direction:column; gap:14px;">
+            <div class="investigation-title">
+              <span>🧐</span> 1. Constat de l'Élève Enquêteur
+            </div>
+            <div class="investigation-text">
+              <p>
+                Dans l'oculaire du microscope, <strong>cliquez sur les chromosomes</strong> pour tenter de les dénombrer :<br>
+                • Les chromosomes sont <strong>mélangés en désordre</strong>, certains se croisent et ils ont des longueurs différentes.<br>
+                • <em>Est-il facile de savoir s'il y a exactement 46 chromosomes ? De distinguer la paire XX ou XY ? De repérer une anomalie ?</em> Non, c'est presque impossible !
+              </p>
+            </div>
+
+            <div class="investigation-question-box">
+              <h5>❓ Question d'Investigation SVT :</h5>
+              <p>Que doivent faire les cytogénéticiens pour pouvoir analyser avec certitude l'information génétique de cette cellule ?</p>
+              <div class="quiz-options-list">
+                <button class="quiz-btn" onclick="checkStage1Quiz(1, this)">A) Colorer toute la cellule en rouge vif</button>
+                <button class="quiz-btn" onclick="checkStage1Quiz(2, this)">B) Découper la photo et classer les chromosomes par paires d'homologues et par taille décroissante (Fabriquer un caryotype)</button>
+                <button class="quiz-btn" onclick="checkStage1Quiz(3, this)">C) Détruire le noyau et jeter l'échantillon</button>
+              </div>
+              <div class="quiz-feedback-box" id="stage1-quiz-fb"></div>
+            </div>
+
+            <div class="investigation-action-box">
+              <button class="btn-action-karyo" id="btn-trigger-order" onclick="triggerKaryotypeOrdering()">
+                <span>✂️</span> <strong>Ranger les chromosomes par paires (Réaliser le Caryotype)</strong>
+              </button>
+              <div class="btn-action-sub">Animation : observez les chromosomes mélangés se ranger méthodiquement !</div>
+            </div>
+          </div>
+
+          <!-- SUMMARY PHASE AFTER ORDERING -->
+          <div id="phase-ordered-karyotype" style="display:none; flex-direction:column; gap:12px;">
+            <div class="investigation-title" style="color:#10b981;">
+              <span>🎉</span> 2. Caryotype Réalisé avec Succès !
+            </div>
+            <div class="investigation-text">
+              <p>
+                Admirez la transformation : en découpant et en regroupant les chromosomes :<br>
+                1️⃣ <strong>Par paires d'homologues</strong> (même taille, centromère au même niveau, mêmes bandes de coloration Giemsa).<br>
+                2️⃣ <strong>Par taille décroissante</strong> (de la plus grande paire 1 à la plus petite 22).<br>
+                3️⃣ <strong>La 23ème paire</strong> correspond aux chromosomes sexuels (ici deux <strong>XX</strong> : femme).
+              </p>
+            </div>
+            <div class="karyo-summary-stats">
+              <div class="stat-pill"><span class="k">Nombre total :</span> <span class="v">46 chromosomes</span></div>
+              <div class="stat-pill"><span class="k">Organisation :</span> <span class="v">23 paires</span></div>
+              <div class="stat-pill"><span class="k">Sexe génétique :</span> <span class="v">XX (Femme)</span></div>
+              <div class="stat-pill"><span class="k">Diagnostic :</span> <span class="v">46, XX (Normal)</span></div>
+            </div>
+            <div class="next-step-cta">
+              <button class="btn-goto-step2" onclick="scrollToStep('step2-scelles-section')">
+                Passer à l'Étape 2 : Analyser les 5 Scellés du Crime ▶
+              </button>
+              <button class="btn-replay-stage1" onclick="toggleStage1View('scattered')">
+                🔬 Revoir les chromosomes mélangés dans la cellule
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ÉTAPE 2 : BANDEAU TITRE -->
+    <div id="step2-scelles-section" style="margin-top:10px; margin-bottom:16px;">
+      <div class="etape-header-card" style="border-left-color: #0284c7;">
+        <div class="etape-badge" style="background:#0284c7;">🧬 ÉTAPE 2 SUR 3 • LABORATOIRE FORENSIQUE</div>
+        <h2>Identification des Propriétaires des 5 Scellés par leurs Caryotypes</h2>
+        <p>
+          Maintenant que vous avez compris comment un caryotype est fabriqué à partir des chromosomes mélangés d'une cellule, 
+          analysez les 5 scellés de la scène de crime. Pour chaque scellé, observez ses chromosomes et formulez votre diagnostic pour confondre le suspect !
+        </p>
+      </div>
+    </div>
+
     <!-- SCELLÉS SELECTOR STRIP -->
     <div class="scelles-selector-strip" id="scelles-tabs-strip">
       <!-- Generated via JS -->
@@ -1205,8 +1953,29 @@
 
         <!-- CARYOTYPE VIEWER STAGE -->
         <div class="caryotype-stage-container">
+          
+          <!-- VIEW SWITCHER: CARYOTYPE ORDERED vs CELL MIXED -->
+          <div class="scelle-stage-view-tabs">
+            <button class="stage-tab-btn active" id="tab-scelle-karyo" onclick="setScelleDisplayView('karyotype')">
+              🧬 Vue 1 : Caryotype Ordonné (Classé par paires)
+            </button>
+            <button class="stage-tab-btn" id="tab-scelle-cell" onclick="setScelleDisplayView('cell')">
+              🔬 Vue 2 : Cellule au microscope (Chromosomes mélangés)
+            </button>
+          </div>
+
+          <!-- VIEW A: ORDERED CARYOTYPE -->
           <div class="caryotype-canvas-wrapper" id="caryotype-img-box">
             <img id="active-caryotype-img" src="assets/enquete_genetique/caryotypes/caryotype_salive_laura.jpg" alt="Caryotype">
+          </div>
+
+          <!-- VIEW B: MIXED CHROMOSOMES IN CELL -->
+          <div class="scelle-cell-microscope-box" id="scelle-cell-box" style="display:none;">
+            <div class="scelle-cell-notice">
+              <span>🔬 <strong>Étalement cellulaire d'origine :</strong> Tous les chromosomes de cet échantillon sont mélangés dans le cytoplasme avant rangement.</span>
+              <button class="btn-order-scelle-now" onclick="setScelleDisplayView('karyotype')">✂️ Ranger en caryotype ordonné ➔</button>
+            </div>
+            <svg id="scelle-cell-svg" viewBox="0 0 600 380" style="width:100%; max-height:360px;"></svg>
           </div>
 
           <!-- INTERACTIVE PUZZLE MINI-TASK -->
@@ -1573,6 +2342,377 @@
       setTimeout(() => playTone(140, 0.2, 'sawtooth'), 150);
     }
 
+
+    /* =========================================================================
+       ÉTAPE 1 : OBSERVATION MICROSCOPIQUE & TRANSFORMATION EN CARYOTYPE
+       ========================================================================= */
+    const pairHeights = [54, 50, 46, 43, 41, 38, 36, 34, 33, 32, 31, 30, 27, 26, 25, 24, 23, 22, 20, 19, 16, 15, 36];
+    const pairCentromeres = [0.48, 0.38, 0.47, 0.30, 0.30, 0.35, 0.36, 0.34, 0.35, 0.33, 0.40, 0.31, 0.16, 0.16, 0.16, 0.42, 0.33, 0.28, 0.47, 0.47, 0.16, 0.16, 0.38];
+
+    const karyoCoords = {
+      1: [110, 75], 2: [240, 75], 3: [370, 75], 4: [520, 75], 5: [670, 75],
+      6: [80, 180], 7: [175, 180], 8: [270, 180], 9: [365, 180], 10: [460, 180], 11: [555, 180], 12: [650, 180],
+      13: [95, 285], 14: [205, 285], 15: [315, 285], 16: [445, 285], 17: [555, 285], 18: [665, 285],
+      19: [120, 390], 20: [230, 390], 21: [340, 390], 22: [450, 390], 23: [630, 390]
+    };
+
+    let stage1Chrs = [];
+    let stage1ClickCount = 0;
+    let stage1Markers = [];
+    let stage1IsOrdered = false;
+
+    function buildChromosomeShapeSvg(h, cRatio, pairNum) {
+      const yCent = (cRatio - 0.5) * h;
+      const h2 = h / 2.0;
+
+      // Bands
+      let bandsSvg = '';
+      const step = h / 7.0;
+      for (let b = 0; b < 7; b++) {
+        const by = -h2 + b * step;
+        const fill = (b + pairNum) % 2 === 0 ? '#1e1b4b' : '#6d28d9';
+        bandsSvg += `<rect x="-4.2" y="${by.toFixed(1)}" width="8.4" height="${(step * 0.8).toFixed(1)}" rx="1" fill="${fill}" opacity="0.9" />`;
+      }
+
+      // Left & right chromatids paths
+      const leftPath = `M -0.8 -${h2} L -3.8 -${h2} Q -4.6 -${h2} -4.6 -${h2-2} L -4.6 ${yCent-2} Q -4.0 ${yCent} -3.2 ${yCent} Q -4.0 ${yCent} -4.6 ${yCent+2} L -4.6 ${h2-2} Q -4.6 ${h2} -3.8 ${h2} L -0.8 ${h2} Q -0.5 ${h2} -0.5 ${h2-1} L -0.5 -${h2-1} Z`;
+      const rightPath = `M 0.8 -${h2} L 3.8 -${h2} Q 4.6 -${h2} 4.6 -${h2-2} L 4.6 ${yCent-2} Q 4.0 ${yCent} 3.2 ${yCent} Q 4.0 ${yCent} 4.6 ${yCent+2} L 4.6 ${h2-2} Q 4.6 ${h2} 3.8 ${h2} L 0.8 ${h2} Q 0.5 ${h2} 0.5 ${h2-1} L 0.5 -${h2-1} Z`;
+
+      return `
+        <g class="chr-chromatids">
+          <path d="${leftPath}" fill="#7c3aed" stroke="#4c1d95" stroke-width="0.6"/>
+          <path d="${rightPath}" fill="#7c3aed" stroke="#4c1d95" stroke-width="0.6"/>
+          ${bandsSvg}
+          <ellipse cx="0" cy="${yCent.toFixed(1)}" rx="2" ry="1.5" fill="#0f172a" />
+        </g>
+      `;
+    }
+
+    function initStage1Svg() {
+      const svg = document.getElementById('stage1-svg');
+      if (!svg) return;
+      svg.innerHTML = '';
+
+      stage1Chrs = [];
+      let idx = 0;
+
+      for (let p = 1; p <= 23; p++) {
+        const h = pairHeights[p - 1];
+        const c = pairCentromeres[p - 1];
+        const name = p < 23 ? `Paire ${p}` : `Paire 23 (Chromosomes sexuels XX)`;
+
+        ['A', 'B'].forEach((member) => {
+          const angle = (idx * 137.5077) * (Math.PI / 180.0);
+          const r = 20.0 + Math.sqrt(idx + 1) * 21.5;
+          const sx = 410.0 + r * Math.cos(angle);
+          const sy = 250.0 + r * Math.sin(angle);
+          const srot = ((idx * 59) % 350) - 175;
+
+          const offset = member === 'A' ? -11 : 11;
+          const kx = karyoCoords[p][0] + offset;
+          const ky = karyoCoords[p][1];
+
+          stage1Chrs.push({
+            id: idx + 1,
+            pair: p,
+            member: member,
+            height: h,
+            centromere: c,
+            name: name,
+            sx: sx,
+            sy: sy,
+            srot: srot,
+            kx: kx,
+            ky: ky
+          });
+          idx++;
+        });
+      }
+
+      // Background microscope elements
+      let html = `
+        <defs>
+          <radialGradient id="mic-field-grad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1e293b" stop-opacity="0.3"/>
+            <stop offset="65%" stop-color="#0f172a" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#020408" stop-opacity="1"/>
+          </radialGradient>
+          <radialGradient id="cell-cytoplasm-grad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.12"/>
+            <stop offset="70%" stop-color="#6366f1" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.22"/>
+          </radialGradient>
+          <filter id="chr-shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000" flood-opacity="0.6"/>
+          </filter>
+        </defs>
+
+        <!-- MICROSCOPE APERTURE & CELL LAYER -->
+        <g id="stage1-mic-layer" style="transition: opacity 0.8s ease;">
+          <circle cx="410" cy="250" r="195" fill="url(#mic-field-grad)" stroke="#334155" stroke-width="2"/>
+          <!-- Cell membrane contour in metaphase -->
+          <ellipse cx="410" cy="250" rx="180" ry="175" fill="url(#cell-cytoplasm-grad)" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.5" stroke-dasharray="8 4"/>
+          <!-- Faint cell organelles granules -->
+          <circle cx="340" cy="180" r="4" fill="rgba(255,255,255,0.15)"/>
+          <circle cx="480" cy="300" r="5" fill="rgba(255,255,255,0.12)"/>
+          <circle cx="430" cy="140" r="3" fill="rgba(255,255,255,0.18)"/>
+          <circle cx="310" cy="280" r="4" fill="rgba(255,255,255,0.14)"/>
+        </g>
+
+        <!-- KARYOTYPE GRID & LABELS LAYER -->
+        <g id="stage1-karyo-grid" opacity="0" style="transition: opacity 0.8s ease;">
+          <line x1="40" y1="125" x2="780" y2="125" class="karyo-row-line"/>
+          <line x1="40" y1="230" x2="780" y2="230" class="karyo-row-line"/>
+          <line x1="40" y1="335" x2="780" y2="335" class="karyo-row-line"/>
+          <line x1="40" y1="440" x2="780" y2="440" class="karyo-row-line"/>
+      `;
+
+      // Pair labels
+      for (let p = 1; p <= 23; p++) {
+        const coord = karyoCoords[p];
+        const labelText = p < 23 ? `${p}` : '23 (XX)';
+        html += `<text x="${coord[0]}" y="${coord[1] + 36}" class="karyo-pair-label" id="label-pair-${p}">${labelText}</text>`;
+      }
+      html += `</g>`;
+
+      // Chromosomes layer
+      html += `<g id="stage1-chrs-layer">`;
+      stage1Chrs.forEach((chr, i) => {
+        const shape = buildChromosomeShapeSvg(chr.height, chr.centromere, chr.pair);
+        html += `
+          <g class="stage1-chr-group" id="chr-node-${i}" data-idx="${i}" onclick="handleChrClick(${i}, event)"
+             transform="translate(${chr.sx}, ${chr.sy}) rotate(${chr.srot})"
+             filter="url(#chr-shadow)">
+            ${shape}
+          </g>
+        `;
+      });
+      html += `</g>`;
+
+      // Markers layer (for counting)
+      html += `<g id="stage1-markers-layer"></g>`;
+
+      svg.innerHTML = html;
+    }
+
+    function handleChrClick(idx, event) {
+      if (stage1IsOrdered) {
+        const chr = stage1Chrs[idx];
+        playTone(600, 0.05);
+        showStage1QuizFeedback(`🔎 <strong>${chr.name} :</strong> Chromosome homologue ordonné.`);
+        return;
+      }
+
+      playTone(520, 0.05);
+      const chr = stage1Chrs[idx];
+      stage1ClickCount++;
+      document.getElementById('stage1-click-count').innerText = stage1ClickCount;
+
+      // Add marker pin at clicked spot
+      const svg = document.getElementById('stage1-svg');
+      const markersLayer = document.getElementById('stage1-markers-layer');
+      if (markersLayer) {
+        const marker = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        marker.setAttribute('transform', `translate(${chr.sx}, ${chr.sy})`);
+        marker.innerHTML = `
+          <circle cx="0" cy="0" r="10" fill="#10b981" stroke="#ffffff" stroke-width="1.5" opacity="0.95"/>
+          <text cx="0" y="3.5" text-anchor="middle" fill="#000" font-size="9" font-weight="bold" font-family="monospace">${stage1ClickCount}</text>
+        `;
+        markersLayer.appendChild(marker);
+        stage1Markers.push(marker);
+      }
+
+      if (stage1ClickCount >= 10 && stage1ClickCount < 12) {
+        showStage1QuizFeedback(`💡 <em>Vous avez déjà repéré ${stage1ClickCount} chromosomes ! Remarquez la difficulté : certains sont penchés, d'autres se croisent... Rangeons-les par paires pour y voir clair !</em>`);
+      }
+    }
+
+    function resetStage1Markers() {
+      stage1ClickCount = 0;
+      document.getElementById('stage1-click-count').innerText = '0';
+      const markersLayer = document.getElementById('stage1-markers-layer');
+      if (markersLayer) markersLayer.innerHTML = '';
+      stage1Markers = [];
+      playTone(350, 0.05);
+    }
+
+    function handleFocusSlider(val) {
+      const svg = document.getElementById('stage1-svg');
+      const label = document.getElementById('focus-label');
+      const blur = (10 - val) * 0.4;
+      if (svg) svg.style.filter = `blur(${blur}px)`;
+
+      if (val >= 9) {
+        label.innerText = 'Net (100%)';
+        label.style.color = '#10b981';
+      } else if (val >= 5) {
+        label.innerText = 'Légèrement flou';
+        label.style.color = '#f59e0b';
+      } else {
+        label.innerText = 'Très flou';
+        label.style.color = '#ef4444';
+      }
+    }
+
+    function checkStage1Quiz(option, btn) {
+      const fb = document.getElementById('stage1-quiz-fb');
+      const btns = document.querySelectorAll('.quiz-options-list .quiz-btn');
+      btns.forEach(b => b.className = 'quiz-btn');
+
+      if (option === 2) {
+        playSuccessChime();
+        btn.classList.add('correct');
+        fb.innerHTML = `<span style="color:#10b981; font-weight:bold;">✅ Exactement !</span> C'est le principe fondamental du <strong>caryotype</strong> : classer les chromosomes par paires d'homologues et par taille décroissante. Cliquez sur le gros bouton ci-dessous pour lancer le rangement !`;
+      } else {
+        playErrorBuzz();
+        btn.classList.add('wrong');
+        fb.innerHTML = `<span style="color:#ef4444; font-weight:bold;">❌ Incorrect.</span> Réfléchissez : pour identifier des anomalies et compter facilement les chromosomes, il faut les regrouper par paires selon leur taille !`;
+      }
+    }
+
+    function showStage1QuizFeedback(html) {
+      const fb = document.getElementById('stage1-quiz-fb');
+      if (fb) fb.innerHTML = html;
+    }
+
+    function triggerKaryotypeOrdering() {
+      if (stage1IsOrdered) return;
+      stage1IsOrdered = true;
+      playSuccessChime();
+
+      // Reset markers
+      resetStage1Markers();
+
+      // Animate chromosomes to karyotype positions
+      stage1Chrs.forEach((chr, i) => {
+        const node = document.getElementById(`chr-node-${i}`);
+        if (node) {
+          node.setAttribute('transform', `translate(${chr.kx}, ${chr.ky}) rotate(0)`);
+        }
+      });
+
+      // Fade out microscope background, fade in karyotype grid
+      const micLayer = document.getElementById('stage1-mic-layer');
+      const karyoGrid = document.getElementById('stage1-karyo-grid');
+      if (micLayer) micLayer.style.opacity = '0.15';
+      if (karyoGrid) karyoGrid.setAttribute('opacity', '1');
+
+      // Update UI panels after 1.25s
+      setTimeout(() => {
+        document.getElementById('phase-observation').style.display = 'none';
+        const phaseOrdered = document.getElementById('phase-ordered-karyotype');
+        phaseOrdered.style.display = 'flex';
+
+        // Stepper nav status
+        const navStep1 = document.getElementById('nav-step1');
+        navStep1.classList.add('completed');
+        const navStep2 = document.getElementById('nav-step2');
+        navStep2.classList.add('active');
+      }, 1250);
+    }
+
+    function toggleStage1View(mode) {
+      if (mode === 'scattered') {
+        stage1IsOrdered = false;
+        playTone(480, 0.05);
+
+        // Animate chromosomes back to scattered positions
+        stage1Chrs.forEach((chr, i) => {
+          const node = document.getElementById(`chr-node-${i}`);
+          if (node) {
+            node.setAttribute('transform', `translate(${chr.sx}, ${chr.sy}) rotate(${chr.srot})`);
+          }
+        });
+
+        const micLayer = document.getElementById('stage1-mic-layer');
+        const karyoGrid = document.getElementById('stage1-karyo-grid');
+        if (micLayer) micLayer.style.opacity = '1';
+        if (karyoGrid) karyoGrid.setAttribute('opacity', '0');
+
+        document.getElementById('phase-observation').style.display = 'flex';
+        document.getElementById('phase-ordered-karyotype').style.display = 'none';
+      }
+    }
+
+    function scrollToStep(stepId) {
+      playTone(500, 0.04);
+      const el = document.getElementById(stepId);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* SCELLÉ VIEW CONTROLLER (ORDERED vs CELL MIXED) */
+    let scelleDisplayMode = 'karyotype';
+
+    function setScelleDisplayView(mode) {
+      scelleDisplayMode = mode;
+      playTone(460, 0.05);
+
+      const tabKaryo = document.getElementById('tab-scelle-karyo');
+      const tabCell = document.getElementById('tab-scelle-cell');
+      const boxKaryo = document.getElementById('caryotype-img-box');
+      const boxCell = document.getElementById('scelle-cell-box');
+      const puzzleTray = document.getElementById('puzzle-tray');
+
+      if (mode === 'karyotype') {
+        tabKaryo.classList.add('active');
+        tabCell.classList.remove('active');
+        boxKaryo.style.display = 'flex';
+        boxCell.style.display = 'none';
+        if (puzzleTray) puzzleTray.style.display = 'flex';
+      } else {
+        tabKaryo.classList.remove('active');
+        tabCell.classList.add('active');
+        boxKaryo.style.display = 'none';
+        boxCell.style.display = 'flex';
+        if (puzzleTray) puzzleTray.style.display = 'none';
+        renderScelleCellMicroscope();
+      }
+    }
+
+    function renderScelleCellMicroscope() {
+      const s = scellesData[currentScelleIdx];
+      const svg = document.getElementById('scelle-cell-svg');
+      if (!svg) return;
+
+      const totalChr = parseInt(s.expectedCount, 10) || 46;
+      let html = `
+        <defs>
+          <radialGradient id="sc-mic-grad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1e293b" stop-opacity="0.4"/>
+            <stop offset="70%" stop-color="#0f172a" stop-opacity="0.85"/>
+            <stop offset="100%" stop-color="#020408" stop-opacity="1"/>
+          </radialGradient>
+        </defs>
+        <circle cx="300" cy="190" r="160" fill="url(#sc-mic-grad)" stroke="#38bdf8" stroke-width="1.5"/>
+        <ellipse cx="300" cy="190" rx="145" ry="140" fill="rgba(99, 102, 241, 0.12)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1" stroke-dasharray="6 3"/>
+      `;
+
+      // Draw scattered chromosomes for this sample
+      for (let i = 0; i < totalChr; i++) {
+        const angle = (i * 137.5077) * (Math.PI / 180.0);
+        const r = 15.0 + Math.sqrt(i + 1) * 18.0;
+        const x = 300.0 + r * Math.cos(angle);
+        const y = 190.0 + r * Math.sin(angle);
+        const rot = ((i * 67) % 360) - 180;
+        const h = 24 + ((i * 7) % 20);
+
+        html += `
+          <g transform="translate(${x.toFixed(1)}, ${y.toFixed(1)}) rotate(${rot})">
+            <rect x="-3" y="-${(h/2).toFixed(1)}" width="6" height="${h}" rx="2" fill="#8b5cf6" stroke="#4c1d95" stroke-width="0.5"/>
+            <line x1="-3" y1="0" x2="3" y2="0" stroke="#1e1b4b" stroke-width="1.5"/>
+          </g>
+        `;
+      }
+
+      html += `
+        <text x="300" y="340" fill="#facc15" font-size="12" font-family="monospace" text-anchor="middle" font-weight="bold">
+          ${totalChr} chromosomes mélangés observés dans la cellule (${s.tabBadge})
+        </text>
+      `;
+
+      svg.innerHTML = html;
+    }
+
     /* INITIALIZATION */
     function renderTabs() {
       const container = document.getElementById('scelles-tabs-strip');
@@ -1606,6 +2746,9 @@
       playTone(450, 0.05);
       renderTabs();
       loadScelleData();
+      if (scelleDisplayMode === 'cell') {
+        renderScelleCellMicroscope();
+      }
     }
 
     function loadScelleData() {
@@ -1766,8 +2909,14 @@
       });
 
       document.getElementById('resolved-count').innerText = count;
+      const stepperResolved = document.getElementById('stepper-resolved');
+      if (stepperResolved) stepperResolved.innerText = count;
 
       if (count === 5) {
+        const navStep2 = document.getElementById('nav-step2');
+        if (navStep2) navStep2.classList.add('completed');
+        const navStep3 = document.getElementById('nav-step3');
+        if (navStep3) navStep3.classList.add('active');
         // Unlock verdict
         const verdictSection = document.getElementById('crime-verdict-section');
         verdictSection.classList.add('unlocked');
@@ -1892,6 +3041,7 @@
         });
       } catch (e) {}
 
+      initStage1Svg();
       renderTabs();
       loadScelleData();
     });
