@@ -1,0 +1,1900 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activité N°3 : Laboratoire de Cytogénétique – Analyse des Caryotypes | SVT 3ème</title>
+<style>
+  :root {
+    --bg-main: #060b14;
+    --bg-card: #0f172a;
+    --bg-card-hover: #1e293b;
+    --border: #334155;
+    --border-accent: #0284c7;
+    --cyan: #06b6d4;
+    --cyan-glow: rgba(6, 182, 212, 0.35);
+    --green: #10b981;
+    --green-glow: rgba(16, 185, 129, 0.35);
+    --amber: #f59e0b;
+    --amber-glow: rgba(245, 158, 11, 0.3);
+    --red: #ef4444;
+    --red-glow: rgba(239, 68, 68, 0.35);
+    --purple: #a855f7;
+    --purple-glow: rgba(168, 85, 247, 0.35);
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: "SF Mono", Menlo, Monaco, Consolas, monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.25;
+  }
+
+  /* HEADER */
+  header.lab-header {
+    background: linear-gradient(180deg, #0f172a 0%, #090e17 100%);
+    border-bottom: 2px solid #10b981;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .badge-icon {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border: 1px solid #10b981;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 16px var(--green-glow);
+  }
+
+  .brand-text h1 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+  }
+
+  .tag-lab {
+    background: #059669;
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+  }
+
+  .brand-text p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .header-agent {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .header-agent label {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--green);
+    text-transform: uppercase;
+  }
+
+  .header-agent input {
+    background: #090e17;
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    outline: none;
+  }
+
+  .header-agent input:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 8px var(--green-glow);
+  }
+
+  /* TRANSVERSAL NAV BUTTONS */
+  .transversal-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .nav-tab-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+    background: #1e293b;
+  }
+
+  .nav-tab-btn:hover {
+    background: #334155;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .nav-tab-btn.active {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border-color: #10b981;
+    color: #fff;
+    box-shadow: 0 0 12px var(--green-glow);
+  }
+
+  .audio-toggle {
+    background: #1e293b;
+    border: 1px solid #475569;
+    color: #cbd5e1;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* MAIN LAYOUT */
+  main.lab-main {
+    flex: 1;
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 24px 60px 24px;
+  }
+
+  /* MISSION BRIEFING BANNER */
+  .mission-brief-card {
+    background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%);
+    border: 2px solid #10b981;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .mission-brief-text h2 {
+    font-size: 1.3rem;
+    color: #a7f3d0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .mission-brief-text p {
+    font-size: 0.92rem;
+    color: #e2e8f0;
+    max-width: 850px;
+    line-height: 1.5;
+  }
+
+  .mission-progress-box {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid #334155;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 180px;
+  }
+
+  .mission-progress-box .progress-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+  }
+
+  .mission-progress-box .progress-count {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #10b981;
+    margin-top: 2px;
+  }
+
+  /* SCIENTIFIC RECALL PANEL (ACCORDION / DRAWER) */
+  .scientific-recall-drawer {
+    background: #090e17;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+
+  .recall-header {
+    background: #111a2e;
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  .recall-header h3 {
+    font-size: 0.95rem;
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .recall-content {
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .recall-card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+
+  .recall-card h4 {
+    font-size: 0.88rem;
+    color: #facc15;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* SCELLÉS SELECTION TABS */
+  .scelles-selector-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .scelle-tab-card {
+    background: #0d1527;
+    border: 2px solid #1e293b;
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scelle-tab-card:hover {
+    border-color: #38bdf8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.2);
+  }
+
+  .scelle-tab-card.active {
+    background: #132238;
+    border-color: #10b981;
+    box-shadow: 0 0 20px var(--green-glow);
+  }
+
+  .scelle-tab-badge {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .scelle-id {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: #facc15;
+    background: rgba(250, 204, 21, 0.15);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid rgba(250, 204, 21, 0.3);
+  }
+
+  .scelle-status-pill {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background: #334155;
+    color: #cbd5e1;
+  }
+
+  .scelle-status-pill.resolved {
+    background: #059669;
+    color: #fff;
+  }
+
+  .scelle-tab-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 2px;
+  }
+
+  .scelle-tab-sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* WORKBENCH WORKSPACE */
+  .workbench-grid {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 24px;
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: 960px) {
+    .workbench-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* LEFT SIDEBAR: EVIDENCE FILE & SUSPECTS DOSSIER */
+  .evidence-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .evidence-dossier-card {
+    background: #0f172a;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .evidence-dossier-card h4 {
+    font-size: 0.95rem;
+    color: #38bdf8;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .evidence-meta-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .evidence-meta-row .label {
+    color: var(--text-muted);
+  }
+
+  .evidence-meta-row .val {
+    font-weight: 600;
+    color: #f1f5f9;
+    text-align: right;
+  }
+
+  .nucleated-cell-box {
+    background: rgba(14, 165, 233, 0.1);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: #e0f2fe;
+  }
+
+  .nucleated-cell-box strong {
+    color: #38bdf8;
+  }
+
+  /* SUSPECT QUICK COMPARATOR */
+  .suspects-list-card {
+    background: #0f172a;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    max-height: 380px;
+    overflow-y: auto;
+  }
+
+  .suspects-list-card h4 {
+    font-size: 0.9rem;
+    color: #facc15;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .suspect-mini-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 6px;
+    background: #090e17;
+    border: 1px solid #1e293b;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .suspect-mini-row:hover {
+    border-color: #38bdf8;
+  }
+
+  .suspect-mini-row img {
+    width: 42px;
+    height: 42px;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+
+  .suspect-mini-info h5 {
+    font-size: 0.82rem;
+    color: #f1f5f9;
+  }
+
+  .suspect-mini-info p {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+
+  /* RIGHT MAIN WORKBENCH: INTERACTIVE CARYOTYPE & FORM */
+  .workbench-screen {
+    background: #0d1527;
+    border: 2px solid #1e293b;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  .workbench-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 12px;
+  }
+
+  .workbench-header-bar h3 {
+    font-size: 1.15rem;
+    color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sample-badge-tag {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    background: #059669;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+
+  /* CARYOTYPE VIEWER */
+  .caryotype-stage-container {
+    background: #060911;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .caryotype-canvas-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 380px;
+  }
+
+  .caryotype-canvas-wrapper img {
+    max-width: 100%;
+    max-height: 440px;
+    object-fit: contain;
+    border-radius: 6px;
+    filter: contrast(1.1) brightness(1.05);
+    transition: transform 0.3s ease;
+  }
+
+  /* INTERACTIVE CHROMOSOME PUZZLE TRAY */
+  .puzzle-interactive-tray {
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid #0284c7;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .puzzle-tray-info h5 {
+    font-size: 0.88rem;
+    color: #38bdf8;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .puzzle-tray-info p {
+    font-size: 0.78rem;
+    color: #cbd5e1;
+  }
+
+  .chromosome-token-bank {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .draggable-chromosome-btn {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 2px dashed #38bdf8;
+    border-radius: 8px;
+    padding: 10px 16px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .draggable-chromosome-btn:hover {
+    background: #0284c7;
+    border-color: #fff;
+    transform: scale(1.04);
+    box-shadow: 0 0 16px var(--cyan-glow);
+  }
+
+  .draggable-chromosome-btn.placed {
+    background: #065f46;
+    border: 2px solid #10b981;
+    color: #a7f3d0;
+    cursor: default;
+    transform: none;
+    box-shadow: 0 0 12px var(--green-glow);
+  }
+
+  /* DIAGNOSTIC FORM */
+  .forensic-diagnosis-form {
+    background: #0a1120;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 18px;
+  }
+
+  .form-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #facc15;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .diagnosis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .diag-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .diag-field label {
+    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    color: #94a3b8;
+    text-transform: uppercase;
+  }
+
+  .diag-field select {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #f1f5f9;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    outline: none;
+  }
+
+  .diag-field select:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 8px var(--green-glow);
+  }
+
+  .diag-field select.correct {
+    border-color: #10b981;
+    background: #062b1e;
+  }
+
+  .diag-field select.wrong {
+    border-color: #ef4444;
+    background: #3b0d0d;
+  }
+
+  .validate-sample-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn-submit-diag {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border: 1px solid #10b981;
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    box-shadow: 0 0 15px var(--green-glow);
+  }
+
+  .btn-submit-diag:hover {
+    background: #10b981;
+    transform: translateY(-1px);
+    box-shadow: 0 0 20px var(--green-glow);
+  }
+
+  .sample-feedback-alert {
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin-top: 14px;
+    display: none;
+    line-height: 1.5;
+  }
+
+  .sample-feedback-alert.show-success {
+    display: block;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid #10b981;
+    color: #a7f3d0;
+  }
+
+  .sample-feedback-alert.show-error {
+    display: block;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid #ef4444;
+    color: #fca5a5;
+  }
+
+  /* FINAL SYNTHESIS & ENQUÊTE RESOLUTION */
+  .crime-verdict-section {
+    background: linear-gradient(135deg, #1e1b4b 0%, #090e17 100%);
+    border: 2px solid #8b5cf6;
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 30px;
+    box-shadow: 0 0 35px rgba(139, 92, 246, 0.3);
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .crime-verdict-section.unlocked {
+    display: block;
+  }
+
+  .verdict-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.4);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+
+  .verdict-header h3 {
+    font-size: 1.3rem;
+    color: #e9d5ff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .verdict-story-box {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #f1f5f9;
+    margin-bottom: 20px;
+  }
+
+  .verdict-story-box strong {
+    color: #facc15;
+  }
+
+  /* ENCADRÉ LUDIQUE FICHE ÉLÈVE N°3 */
+  .student-notebook-callout {
+    background: #091220;
+    border: 2px solid #10b981;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.25);
+    position: relative;
+  }
+
+  .callout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px dashed rgba(16, 185, 129, 0.4);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+
+  .callout-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .callout-icon {
+    font-size: 1.8rem;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    padding: 6px 10px;
+    border-radius: 8px;
+  }
+
+  .callout-badge h4 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #a7f3d0;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .callout-subtitle {
+    font-size: 0.82rem;
+    color: #cbd5e1;
+    margin-top: 2px;
+  }
+
+  .callout-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 18px;
+  }
+
+  .notebook-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #070e1b;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #334155;
+    font-size: 0.85rem;
+  }
+
+  .notebook-table th {
+    padding: 10px 12px;
+    font-weight: 700;
+    text-align: left;
+    background: #064e3b;
+    color: #a7f3d0;
+    border-bottom: 1px solid #334155;
+    font-family: var(--font-mono);
+  }
+
+  .notebook-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1e293b;
+    vertical-align: middle;
+    line-height: 1.4;
+  }
+
+  .notebook-conclusion-box {
+    background: rgba(14, 165, 233, 0.1);
+    border: 1px solid rgba(14, 165, 233, 0.35);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 14px;
+  }
+
+  .notebook-conclusion-box h5 {
+    color: #38bdf8;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+
+  .notebook-conclusion-box ol {
+    margin-left: 20px;
+    color: #f1f5f9;
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .print-actions-bar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .btn-print {
+    background: #1e293b;
+    border: 1px solid #475569;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .btn-print:hover {
+    background: #334155;
+  }
+
+  /* MODAL ZOOM */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(6px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal-content-box {
+    background: #0f172a;
+    border: 2px solid #38bdf8;
+    border-radius: 12px;
+    max-width: 900px;
+    width: 100%;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 0 40px rgba(56, 189, 248, 0.4);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-close-btn {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: #ef4444;
+    border: none;
+    color: #fff;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media print {
+    body::before, header.lab-header, .scelles-selector-strip, .puzzle-interactive-tray, .validate-sample-actions, .print-actions-bar {
+      display: none !important;
+    }
+    body {
+      background: white !important;
+      color: black !important;
+    }
+    .student-notebook-callout, .crime-verdict-section {
+      border: 1px solid #000 !important;
+      box-shadow: none !important;
+      background: #fff !important;
+      color: #000 !important;
+      display: block !important;
+    }
+    .notebook-table th {
+      background: #eee !important;
+      color: #000 !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="lab-header">
+    <div class="header-brand">
+      <div class="badge-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M8 12h8M12 8v8"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>Laboratoire de Cytogénétique <span class="tag-lab">Activité N°3</span></h1>
+        <p>SVT Classe de 3ème – Collège de Biguglia | Enquête Criminalistique</p>
+      </div>
+    </div>
+
+    <!-- TRANSVERSAL NAV -->
+    <nav class="transversal-nav">
+      <a href="index.html" class="nav-tab-btn" title="Revenir à la scène de crime">
+        📁 Activité 1 : Scène de Crime
+      </a>
+      <a href="activite2.html" class="nav-tab-btn" title="Laboratoire de micromanipulation cellulaire">
+        🔬 Activité 2 : Transfert de Noyau
+      </a>
+      <a href="activite3.html" class="nav-tab-btn active" title="Activité en cours">
+        🧬 Activité 3 : Caryotypes
+      </a>
+    </nav>
+
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <div class="header-agent">
+        <label for="agent-name">Enquêteur :</label>
+        <input type="text" id="agent-name" placeholder="Prénom NOM" value="Élève Enquêteur">
+        <label for="agent-class" style="margin-left:4px;">Classe :</label>
+        <input type="text" id="agent-class" placeholder="3ème..." style="width:65px;" value="3ème">
+      </div>
+      <button class="audio-toggle" id="audio-btn" onclick="toggleAudio()" title="Activer / Couper les bruitages">
+        <span id="audio-icon">🔊</span> Son ON
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="lab-main">
+
+    <!-- MISSION BRIEF CARD -->
+    <section class="mission-brief-card">
+      <div class="mission-brief-text">
+        <h2>🔬 Mission : Identifier les Propriétaires des Scellés par leurs Caryotypes</h2>
+        <p>
+          L'Activité N°2 a prouvé que <strong>le programme génétique est enfermé dans le noyau cellulaire</strong>.
+          Au laboratoire de cytogénétique, les techniciens ont extrait les <strong>chromosomes</strong> des noyaux des cellules présentes dans les 5 scellés de la scène de crime.
+          Analysez chaque caryotype, complétez le classement et déterminez à quel suspect ou proche de la victime appartient chaque échantillon !
+        </p>
+      </div>
+      <div class="mission-progress-box">
+        <div class="progress-label">Scellés Validés</div>
+        <div class="progress-count"><span id="resolved-count">0</span> / 5</div>
+      </div>
+    </section>
+
+    <!-- SCIENTIFIC RECALL ACCORDION -->
+    <div class="scientific-recall-drawer">
+      <div class="recall-header" onclick="toggleRecallDrawer()">
+        <h3>📖 Rappel de Cours SVT (Cycle 4) : Les Règles du Caryotype</h3>
+        <span id="recall-arrow" style="color:#38bdf8; font-weight:bold;">▼ Ouvrir / Fermer le mémo</span>
+      </div>
+      <div class="recall-content" id="recall-content-body">
+        <div class="recall-card">
+          <h4>🧬 Qu'est-ce qu'un caryotype ?</h4>
+          <p>C'est la photographie ordonnée de l'ensemble des <strong>chromosomes</strong> d'une cellule, classés <strong>par paires d'homologues</strong> et par <strong>taille décroissante</strong> lors de la division cellulaire (métaphase).</p>
+        </div>
+        <div class="recall-card">
+          <h4>🔢 Espèce & Nombre de Chromosomes</h4>
+          <p>Chaque espèce vivante possède un nombre fixe de chromosomes :</p>
+          <ul style="margin-left:16px; margin-top:4px;">
+            <li><strong>Espèce humaine (<em>Homo sapiens</em>) :</strong> 46 chromosomes (23 paires).</li>
+            <li><strong>Chimpanzé (<em>Pan troglodytes</em>) :</strong> 48 chromosomes (24 paires).</li>
+          </ul>
+        </div>
+        <div class="recall-card">
+          <h4>🚻 Chromosomes Sexuels (23ème paire)</h4>
+          <p>La dernière paire détermine le sexe biologique de l'individu :</p>
+          <ul style="margin-left:16px; margin-top:4px;">
+            <li><strong>Paire XX :</strong> Sexe féminin (2 grands chromosomes X identiques).</li>
+            <li><strong>Paire XY :</strong> Sexe masculin (1 chromosome X et 1 petit chromosome Y).</li>
+          </ul>
+        </div>
+        <div class="recall-card">
+          <h4>⚠️ Anomalies Chromosomiques</h4>
+          <p>Une anomalie du nombre de chromosomes peut survenir :</p>
+          <ul style="margin-left:16px; margin-top:4px;">
+            <li><strong>Trisomie 21 (47 chr) :</strong> 3 chromosomes au lieu de 2 sur la paire 21.</li>
+            <li><strong>Syndrome de Klinefelter (47 chr) :</strong> 2 chromosomes X et 1 chromosome Y (formule XXY).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCELLÉS SELECTOR STRIP -->
+    <div class="scelles-selector-strip" id="scelles-tabs-strip">
+      <!-- Generated via JS -->
+    </div>
+
+    <!-- WORKBENCH GRID -->
+    <div class="workbench-grid">
+
+      <!-- LEFT SIDEBAR: EVIDENCE FILE & SUSPECTS REFERENCE -->
+      <aside class="evidence-sidebar">
+
+        <!-- DOSSIER DU SCELLÉ ACTIF -->
+        <div class="evidence-dossier-card">
+          <h4>
+            <span>🏷️</span> Dossier Pièce à Conviction
+          </h4>
+          <div class="evidence-meta-row">
+            <span class="label">Numéro :</span>
+            <span class="val" id="dossier-num">Scellé S-01</span>
+          </div>
+          <div class="evidence-meta-row">
+            <span class="label">Nature :</span>
+            <span class="val" id="dossier-nature">Salive séchée</span>
+          </div>
+          <div class="evidence-meta-row">
+            <span class="label">Localisation :</span>
+            <span class="val" id="dossier-loc">Gobelet sur le bureau</span>
+          </div>
+          <div class="evidence-meta-row">
+            <span class="label">Cellules isolées :</span>
+            <span class="val" id="dossier-cells">Cellules épithéliales</span>
+          </div>
+
+          <div class="nucleated-cell-box" id="dossier-explanation">
+            <strong>Examen cytologique :</strong> Présence de noyaux cellulaires intacts. L'ADN a pu être extrait et les chromosomes ont été étalés en métaphase.
+          </div>
+        </div>
+
+        <!-- CONTACTS & SUSPECTS DU ZOO -->
+        <div class="suspects-list-card">
+          <h4>👥 Contacts & Fiches de l'Enquête</h4>
+          
+          <div class="suspect-mini-row" onclick="viewSuspectModal('marc')">
+            <img src="assets/enquete_genetique/suspect1.jpg" alt="Marc">
+            <div class="suspect-mini-info">
+              <h5>Marc DELORME (Victime)</h5>
+              <p>Soigneur en chef • Homme <em>Homo sapiens</em></p>
+            </div>
+          </div>
+
+          <div class="suspect-mini-row" onclick="viewSuspectModal('laura')">
+            <img src="assets/enquete_genetique/espece_6.jpg" alt="Laura">
+            <div class="suspect-mini-info">
+              <h5>Laura DELORME (Épouse)</h5>
+              <p>Femme <em>Homo sapiens</em> • Déjeuner à 12h</p>
+            </div>
+          </div>
+
+          <div class="suspect-mini-row" onclick="viewSuspectModal('lea')">
+            <img src="assets/enquete_genetique/espece_6.jpg" alt="Léa">
+            <div class="suspect-mini-info">
+              <h5>Léa DELORME (Fille)</h5>
+              <p>Fille de Marc • Trisomie 21 (47, XX, +21)</p>
+            </div>
+          </div>
+
+          <div class="suspect-mini-row" onclick="viewSuspectModal('paul')">
+            <img src="assets/enquete_genetique/espece_3.jpg" alt="Paul">
+            <div class="suspect-mini-info">
+              <h5>Paul VIALA (Collègue soigneur)</h5>
+              <p>Homme • Syndrome XXY (Klinefelter)</p>
+            </div>
+          </div>
+
+          <div class="suspect-mini-row" onclick="viewSuspectModal('chimpanze')">
+            <img src="assets/enquete_genetique/espece_4.jpg" alt="Chimpanzé">
+            <div class="suspect-mini-info">
+              <h5>Chimpanzé du Zoo (Animal)</h5>
+              <p>Espèce <em>Pan troglodytes</em> (2n = 48 chr)</p>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- RIGHT WORKBENCH: CARYOTYPE & FORM -->
+      <section class="workbench-screen">
+
+        <div class="workbench-header-bar">
+          <div>
+            <h3 id="workbench-title">🧬 Analyse du Caryotype : Scellé S-01 (Salive)</h3>
+            <span style="font-size:0.8rem; color:var(--text-muted);" id="workbench-subtitle">Observation microscopique après coloration Giemsa</span>
+          </div>
+          <span class="sample-badge-tag" id="sample-status-tag">À ANALYSER</span>
+        </div>
+
+        <!-- CARYOTYPE VIEWER STAGE -->
+        <div class="caryotype-stage-container">
+          <div class="caryotype-canvas-wrapper" id="caryotype-img-box">
+            <img id="active-caryotype-img" src="assets/enquete_genetique/caryotypes/caryotype_salive_laura.jpg" alt="Caryotype">
+          </div>
+
+          <!-- INTERACTIVE PUZZLE MINI-TASK -->
+          <div class="puzzle-interactive-tray" id="puzzle-tray">
+            <div class="puzzle-tray-info">
+              <h5 id="puzzle-task-title">🎯 Défi Cytogénétique : Compléter le caryotype</h5>
+              <p id="puzzle-task-desc">Un chromosome extrait de la métaphase est en attente. Cliquez dessus pour l'insérer sur la paire correspondante !</p>
+            </div>
+            <div class="chromosome-token-bank">
+              <button class="draggable-chromosome-btn" id="btn-insert-chromosome" onclick="handlePlaceChromosome()">
+                <span id="chromosome-icon">🧬</span> <span id="chromosome-btn-label">Insérer le chromosome X manquant</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DIAGNOSTIC FORM -->
+        <div class="forensic-diagnosis-form">
+          <div class="form-title">
+            <span>📋</span> Diagnostic Criminalistique du Scellé
+          </div>
+
+          <div class="diagnosis-grid">
+            
+            <div class="diag-field">
+              <label for="diag-count">1. Nombre total de chromosomes :</label>
+              <select id="diag-count">
+                <option value="">-- Sélectionner le total --</option>
+                <option value="46">46 chromosomes (23 paires)</option>
+                <option value="47">47 chromosomes (Nombre impair / anomalie)</option>
+                <option value="48">48 chromosomes (24 paires)</option>
+              </select>
+            </div>
+
+            <div class="diag-field">
+              <label for="diag-sex">2. Chromosomes sexuels (Paire 23 ou spécifique) :</label>
+              <select id="diag-sex">
+                <option value="">-- Sélectionner les chromosomes sexuels --</option>
+                <option value="XX">Paire XX (Sexe féminin)</option>
+                <option value="XY">Paire XY (Sexe masculin)</option>
+                <option value="XXY">Formule XXY (Anomalie des chr sexuels)</option>
+                <option value="24p">24 paires d'autosomes & gonosomes (Non-humain)</option>
+              </select>
+            </div>
+
+            <div class="diag-field">
+              <label for="diag-anomaly">3. Anomalie chromosomique constatée :</label>
+              <select id="diag-anomaly">
+                <option value="">-- Détecter une anomalie éventuelle --</option>
+                <option value="none">Aucune anomalie (Caryotype normal)</option>
+                <option value="trisomie21">Trisomie 21 (3 chromosomes sur la paire 21)</option>
+                <option value="klinefelter">Syndrome de Klinefelter (Deux X et un Y)</option>
+                <option value="species_diff">Nombre spécifique à une autre espèce (24 paires)</option>
+              </select>
+            </div>
+
+            <div class="diag-field">
+              <label for="diag-owner">4. Espèce & Propriétaire identifié :</label>
+              <select id="diag-owner">
+                <option value="">-- Identifier le propriétaire --</option>
+                <option value="laura">Laura DELORME (Épouse de Marc - Femme 46, XX)</option>
+                <option value="lea">Léa DELORME (Fille de Marc - Trisomie 21)</option>
+                <option value="chimpanze">Chimpanzé du zoo (Pan troglodytes - 48 chr)</option>
+                <option value="marc">Marc DELORME (Victime - Homme normal 46, XY)</option>
+                <option value="paul">Paul VIALA (Collègue soigneur - Profil XXY)</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="validate-sample-actions">
+            <button class="btn-submit-diag" onclick="validateActiveSample()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Valider l'Analyse du Scellé
+            </button>
+          </div>
+
+          <div class="sample-feedback-alert" id="sample-feedback-box"></div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- FINAL VERDICT & POLICE RESOLUTION (Unlocks when 5/5 are resolved) -->
+    <section class="crime-verdict-section" id="crime-verdict-section">
+      <div class="verdict-header">
+        <h3>🚨 ÉLUCIDATION OFFICIELLE : LE COUPABLE EST DÉMASQUÉ !</h3>
+        <span style="background:#8b5cf6; color:#fff; font-size:0.75rem; font-weight:800; padding:4px 10px; border-radius:4px; font-family:var(--font-mono);">
+          ENQUÊTE DE POLICE SCIENTIFIQUE RÉSOLUE (5/5 SCELLÉS)
+        </span>
+      </div>
+
+      <div class="verdict-story-box">
+        <p>
+          Grâce à la cytogénétique et à la comparaison méticuleuse des <strong>caryotypes</strong>, la chronologie exacte de l'agression a pu être reconstituée :
+        </p>
+        <ul style="margin-left:20px; margin-top:8px; line-height:1.7;">
+          <li>🍽️ <strong>12h00 - Déjeuner familial :</strong> Les scellés <strong>S-01</strong> (salive de Laura, 46 XX) et <strong>C-01</strong> (cheveu de Léa, 47 XX +21) confirment la présence normale de l'épouse et de la fille de Marc pour le déjeuner prévu à l'agenda.</li>
+          <li>🐒 <strong>15h00 - Soins aux animaux :</strong> Le scellé <strong>P-01</strong> (poil de chimpanzé à 48 chromosomes) provient simplement des soins de routine de l'après-midi. L'agression n'est <u>absolument pas</u> due à une attaque animale !</li>
+          <li>🩸 <strong>14h00 - L'Altercation Violente :</strong> Le sang <strong>B-01</strong> (46, XY) appartient à Marc, blessé au sol. Mais le sang <strong>B-02</strong> retrouvé sur l'angle métallique du bureau porte le profil chromosomique rarissime <strong>47, XXY (Syndrome de Klinefelter)</strong>.</li>
+          <li>⚖️ <strong>La Preuve Irréfutable :</strong> Lors de son audition, <strong>Paul VIALA</strong> (le collègue soigneur) affirmait ne jamais être entré dans le bureau de Marc ce dimanche. Or, son caryotype correspond exactement au sang B-02 ! Paul s'est coupé contre le meuble lors d'une violente dispute avec Marc à 14h avant de s'enfuir en le laissant inconscient.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ENCADRÉ LUDIQUE FICHE ÉLÈVE N°3
+         ============================================================ -->
+    <section class="student-notebook-callout" id="student-notebook-box-act3">
+      <div class="callout-header">
+        <div class="callout-badge">
+          <span class="callout-icon">📋</span>
+          <div>
+            <h4>À NOTER SUR TA FICHE ÉLÈVE (ACTIVITÉ 3)</h4>
+            <p class="callout-subtitle">Tableau récapitulatif des caryotypes & Conclusion notionnelle Cycle 4</p>
+          </div>
+        </div>
+        <span style="background:#10b981; color:#064e3b; font-weight:800; font-size:0.75rem; padding:4px 10px; border-radius:4px; font-family:var(--font-mono);">
+          SVT 3ÈME • COLLÈGE DE BIGUGLIA
+        </span>
+      </div>
+
+      <div class="callout-table-wrapper">
+        <table class="notebook-table">
+          <thead>
+            <tr>
+              <th>N° Scellé</th>
+              <th>Échantillon analysé</th>
+              <th>Cellules & Noyau</th>
+              <th>Nombre de Chromosomes</th>
+              <th>Chromosomes Sexuels / Anomalie</th>
+              <th>Espèce & Propriétaire Identifié</th>
+            </tr>
+          </thead>
+          <tbody id="notebook-table-tbody">
+            <!-- Rows dynamically updated as student solves samples -->
+            <tr id="row-S01">
+              <td><strong>S-01</strong></td>
+              <td>Salive (gobelet de café)</td>
+              <td>Cellules épithéliales de la bouche</td>
+              <td><span class="td-count">46 chromosomes</span></td>
+              <td><span class="td-sex">Paire XX (Féminin normal)</span></td>
+              <td><strong style="color:#38bdf8;" class="td-owner">Laura DELORME (Épouse)</strong></td>
+            </tr>
+            <tr id="row-C01">
+              <td><strong>C-01</strong></td>
+              <td>Cheveu (col de la victime)</td>
+              <td>Cellules folliculaires (bulbe)</td>
+              <td><span class="td-count">47 chromosomes</span></td>
+              <td><span class="td-sex">XX + Trisomie 21 (3 chr 21)</span></td>
+              <td><strong style="color:#d8b4fe;" class="td-owner">Léa DELORME (Fille de Marc)</strong></td>
+            </tr>
+            <tr id="row-P01">
+              <td><strong>P-01</strong></td>
+              <td>Poil animal (manche de veste)</td>
+              <td>Cellules de la racine du poil</td>
+              <td><span class="td-count">48 chromosomes (24 paires)</span></td>
+              <td><span class="td-sex">Espèce différente</span></td>
+              <td><strong style="color:#facc15;" class="td-owner">Chimpanzé du Zoo (<em>Pan troglodytes</em>)</strong></td>
+            </tr>
+            <tr id="row-B01">
+              <td><strong>B-01</strong></td>
+              <td>Sang au sol (près du corps)</td>
+              <td>Leucocytes (globules blancs nucléés)</td>
+              <td><span class="td-count">46 chromosomes</span></td>
+              <td><span class="td-sex">Paire XY (Masculin normal)</span></td>
+              <td><strong style="color:#f43f5e;" class="td-owner">Marc DELORME (Victime)</strong></td>
+            </tr>
+            <tr id="row-B02">
+              <td><strong>B-02</strong></td>
+              <td>Sang sur l'angle du meuble (lutte)</td>
+              <td>Leucocytes</td>
+              <td><span class="td-count">47 chromosomes</span></td>
+              <td><span class="td-sex">Formule XXY (Klinefelter)</span></td>
+              <td><strong style="color:#ef4444;" class="td-owner">Paul VIALA (Collègue soigneur - Agresseur !)</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="notebook-conclusion-box">
+        <h5>💡 Bilan notionnel SVT à retenir et noter sur ta fiche :</h5>
+        <ol>
+          <li>Les chromosomes sont le <strong>support universel de l'information génétique</strong>, contenus dans le <strong>noyau</strong> de chaque cellule nucléée.</li>
+          <li>Le <strong>nombre de chromosomes est fixe et caractéristique d'une espèce</strong> donnée (ex : 46 chez <em>Homo sapiens</em>, 48 chez le chimpanzé).</li>
+          <li>Chez l'être humain, les 46 chromosomes sont regroupés en <strong>23 paires d'homologues</strong> : 22 paires d'autosomes et 1 paire de chromosomes sexuels (<strong>XX chez la femme, XY chez l'homme</strong>).</li>
+          <li>Un <strong>nombre anormal de chromosomes</strong> (comme un chromosome surnuméraire : trisomie 21 ou formule XXY) modifie les caractères de l'individu et peut entraîner des troubles du développement.</li>
+        </ol>
+      </div>
+
+      <div class="print-actions-bar">
+        <button class="btn-print" onclick="window.print()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          Imprimer ma Fiche d'Enquête Activité 3
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL SUSPECT -->
+  <div class="modal-overlay" id="suspect-modal" onclick="closeSuspectModal()">
+    <div class="modal-content-box" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeSuspectModal()">✕</button>
+      <div id="modal-suspect-body"></div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+       DONNÉES DES 5 SCELLÉS
+       ========================================================================= */
+    const scellesData = [
+      {
+        id: 'S01',
+        tabBadge: 'SCELLÉ S-01',
+        name: 'Salive prélevée sur le gobelet',
+        location: 'Bureau de Marc (sur la table)',
+        cellType: 'Cellules de la muqueuse buccale (épithéliales avec noyau)',
+        img: 'assets/enquete_genetique/caryotypes/caryotype_salive_laura.jpg',
+        puzzleTitle: 'Défi : Compléter la paire sexuelle 23',
+        puzzleDesc: 'Le second chromosome X de la paire 23 est en attente dans la coupelle.',
+        chromosomeBtnLabel: 'Positionner le 2ème chromosome X sur la paire 23',
+        expectedCount: '46',
+        expectedSex: 'XX',
+        expectedAnomaly: 'none',
+        expectedOwner: 'laura',
+        ownerName: 'Laura DELORME (Épouse)',
+        explanation: 'Ce caryotype montre 23 paires d’homologues (46 chromosomes) et une paire de chromosomes sexuels XX. Il s’agit d’une femme normale sans anomalie chromosomique. Laura est venue déjeuner avec Marc à 12h.'
+      },
+      {
+        id: 'C01',
+        tabBadge: 'SCELLÉ C-01',
+        name: 'Cheveu retrouvé sur le col de Marc',
+        location: 'Veste de travail de la victime',
+        cellType: 'Cellules folliculaires de la racine pileuse (bulbe)',
+        img: 'assets/enquete_genetique/caryotypes/caryotype_cheveu_lea_trisomie.jpg',
+        puzzleTitle: 'Défi : Identifier l’anomalie sur la paire 21',
+        puzzleDesc: 'Un 3ème chromosome 21 surnuméraire a été isolé.',
+        chromosomeBtnLabel: 'Ajouter le 3ème chromosome 21 (Trisomie 21)',
+        expectedCount: '47',
+        expectedSex: 'XX',
+        expectedAnomaly: 'trisomie21',
+        expectedOwner: 'lea',
+        ownerName: 'Léa DELORME (Fille de Marc)',
+        explanation: 'Ce caryotype compte 47 chromosomes : la paire 21 possède 3 chromosomes au lieu de 2 (Trisomie 21). Les chromosomes sexuels sont XX. Ce cheveu appartient à Léa, la fille de Marc, qui l’a embrassé lors du déjeuner.'
+      },
+      {
+        id: 'P01',
+        tabBadge: 'SCELLÉ P-01',
+        name: 'Poil animal retrouvé sur la manche',
+        location: 'Manche de la chemise de Marc',
+        cellType: 'Cellules de la gaine du poil',
+        img: 'assets/enquete_genetique/caryotypes/caryotype_poil_chimpanze.jpg',
+        puzzleTitle: 'Défi : Déterminer le nombre spécifique de chromosomes',
+        puzzleDesc: 'Ce caryotype présente 24 paires distinctes.',
+        chromosomeBtnLabel: 'Valider la 24ème paire spécifique du chimpanzé',
+        expectedCount: '48',
+        expectedSex: '24p',
+        expectedAnomaly: 'species_diff',
+        expectedOwner: 'chimpanze',
+        ownerName: 'Chimpanzé du Zoo (Pan troglodytes)',
+        explanation: 'Ce caryotype compte 48 chromosomes (24 paires). Ce n’est pas un être humain ! C’est le caryotype typique du Chimpanzé (Pan troglodytes). Marc s’est occupé d’eux à 15h selon son agenda.'
+      },
+      {
+        id: 'B01',
+        tabBadge: 'SCELLÉ B-01',
+        name: 'Goutte de sang au sol',
+        location: 'Flaque au sol près du corps inanimé',
+        cellType: 'Leucocytes (Globules blancs nucléés du sang)',
+        img: 'assets/enquete_genetique/caryotypes/caryotype_sang_marc_victime.jpg',
+        puzzleTitle: 'Défi : Compléter la paire sexuelle masculine XY',
+        puzzleDesc: 'Le petit chromosome Y doit être associé au chromosome X.',
+        chromosomeBtnLabel: 'Placer le chromosome Y avec le chromosome X',
+        expectedCount: '46',
+        expectedSex: 'XY',
+        expectedAnomaly: 'none',
+        expectedOwner: 'marc',
+        ownerName: 'Marc DELORME (La Victime)',
+        explanation: 'Caryotype masculin humain normal (46, XY) : 22 paires d’autosomes + 1 paire XY. C’est le sang de Marc qui a été blessé à la tête lors de son agression.'
+      },
+      {
+        id: 'B02',
+        tabBadge: 'SCELLÉ B-02',
+        name: 'Trace de sang séché sur l’angle du meuble',
+        location: 'Coin tranchant du bureau métallique (choc de lutte)',
+        cellType: 'Leucocytes (Globules blancs avec noyau)',
+        img: 'assets/enquete_genetique/caryotypes/caryotype_sang_paul_xxy.jpg',
+        puzzleTitle: 'Défi : Détecter l’anomalie des chromosomes sexuels',
+        puzzleDesc: 'Un chromosome X supplémentaire est présent avec la paire XY.',
+        chromosomeBtnLabel: 'Révéler la formule chromosomique XXY',
+        expectedCount: '47',
+        expectedSex: 'XXY',
+        expectedAnomaly: 'klinefelter',
+        expectedOwner: 'paul',
+        ownerName: 'Paul VIALA (Collègue soigneur - Agresseur !)',
+        explanation: 'Caryotype anormal comptant 47 chromosomes avec deux chromosomes X et un chromosome Y (Syndrome de Klinefelter). C’est le profil génétique de Paul ! Il s’est blessé lors de l’altercation à 14h, prouvant sa présence sur la scène de crime !'
+      }
+    ];
+
+    let currentScelleIdx = 0;
+    const resolvedStatus = {
+      S01: false,
+      C01: false,
+      P01: false,
+      B01: false,
+      B02: false
+    };
+    const puzzlePlaced = {
+      S01: false,
+      C01: false,
+      P01: false,
+      B01: false,
+      B02: false
+    };
+
+    /* AUDIO SYNTHESIZER (WEB AUDIO API) */
+    let audioCtx = null;
+    let audioEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      document.getElementById('audio-icon').innerText = audioEnabled ? '🔊' : '🔇';
+      if (audioEnabled) playTone(580, 0.08);
+    }
+
+    function playTone(freq = 440, duration = 0.08, type = 'sine') {
+      if (!audioEnabled) return;
+      initAudio();
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playSuccessChime() {
+      if (!audioEnabled) return;
+      playTone(523.25, 0.1); // C5
+      setTimeout(() => playTone(659.25, 0.1), 100); // E5
+      setTimeout(() => playTone(783.99, 0.2), 200); // G5
+    }
+
+    function playErrorBuzz() {
+      if (!audioEnabled) return;
+      playTone(180, 0.15, 'sawtooth');
+      setTimeout(() => playTone(140, 0.2, 'sawtooth'), 150);
+    }
+
+    /* INITIALIZATION */
+    function renderTabs() {
+      const container = document.getElementById('scelles-tabs-strip');
+      container.innerHTML = '';
+
+      scellesData.forEach((s, idx) => {
+        const isResolved = resolvedStatus[s.id];
+        const isActive = idx === currentScelleIdx;
+
+        const card = document.createElement('div');
+        card.className = `scelle-tab-card ${isActive ? 'active' : ''}`;
+        card.onclick = () => selectScelle(idx);
+
+        card.innerHTML = `
+          <div class="scelle-tab-badge">
+            <span class="scelle-id">${s.id}</span>
+            <span class="scelle-status-pill ${isResolved ? 'resolved' : ''}">
+              ${isResolved ? '✓ IDENTIFIÉ' : 'À ANALYSER'}
+            </span>
+          </div>
+          <div class="scelle-tab-title">${s.name}</div>
+          <div class="scelle-tab-sub">📍 ${s.location}</div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function selectScelle(idx) {
+      currentScelleIdx = idx;
+      playTone(450, 0.05);
+      renderTabs();
+      loadScelleData();
+    }
+
+    function loadScelleData() {
+      const s = scellesData[currentScelleIdx];
+      const isResolved = resolvedStatus[s.id];
+
+      // Update sidebar dossier
+      document.getElementById('dossier-num').innerText = s.tabBadge;
+      document.getElementById('dossier-nature').innerText = s.name;
+      document.getElementById('dossier-loc').innerText = s.location;
+      document.getElementById('dossier-cells').innerText = s.cellType;
+
+      // Update Workbench header
+      document.getElementById('workbench-title').innerText = `🧬 Analyse du Caryotype : ${s.tabBadge} (${s.name})`;
+      document.getElementById('sample-status-tag').innerText = isResolved ? '✓ IDENTIFIÉ' : 'EN COURS D\'ANALYSE';
+      document.getElementById('sample-status-tag').style.background = isResolved ? '#059669' : '#0284c7';
+
+      // Update Image
+      const imgEl = document.getElementById('active-caryotype-img');
+      imgEl.src = s.img;
+      imgEl.alt = s.name;
+
+      // Update Puzzle Button
+      const btnPuzzle = document.getElementById('btn-insert-chromosome');
+      const isPlaced = puzzlePlaced[s.id];
+      document.getElementById('puzzle-task-title').innerText = s.puzzleTitle;
+      document.getElementById('puzzle-task-desc').innerText = s.puzzleDesc;
+      document.getElementById('chromosome-btn-label').innerText = isPlaced ? '✓ Chromosome correctement ordonné' : s.chromosomeBtnLabel;
+      
+      if (isPlaced) {
+        btnPuzzle.classList.add('placed');
+      } else {
+        btnPuzzle.classList.remove('placed');
+      }
+
+      // Reset / Fill form fields
+      const selCount = document.getElementById('diag-count');
+      const selSex = document.getElementById('diag-sex');
+      const selAnomaly = document.getElementById('diag-anomaly');
+      const selOwner = document.getElementById('diag-owner');
+
+      selCount.className = '';
+      selSex.className = '';
+      selAnomaly.className = '';
+      selOwner.className = '';
+
+      if (isResolved) {
+        selCount.value = s.expectedCount;
+        selSex.value = s.expectedSex;
+        selAnomaly.value = s.expectedAnomaly;
+        selOwner.value = s.expectedOwner;
+        selCount.classList.add('correct');
+        selSex.classList.add('correct');
+        selAnomaly.classList.add('correct');
+        selOwner.classList.add('correct');
+
+        showFeedback(true, `✅ <strong>Scellé validé !</strong> ${s.explanation}`);
+      } else {
+        selCount.value = '';
+        selSex.value = '';
+        selAnomaly.value = '';
+        selOwner.value = '';
+        hideFeedback();
+      }
+    }
+
+    function handlePlaceChromosome() {
+      const s = scellesData[currentScelleIdx];
+      if (puzzlePlaced[s.id]) return;
+
+      playSuccessChime();
+      puzzlePlaced[s.id] = true;
+
+      const btn = document.getElementById('btn-insert-chromosome');
+      btn.classList.add('placed');
+      document.getElementById('chromosome-btn-label').innerText = '✓ Chromosome correctement ordonné !';
+
+      // Visual flash on image
+      const img = document.getElementById('active-caryotype-img');
+      img.style.filter = 'drop-shadow(0 0 15px #10b981) contrast(1.15)';
+      setTimeout(() => {
+        img.style.filter = 'contrast(1.1) brightness(1.05)';
+      }, 700);
+    }
+
+    function validateActiveSample() {
+      const s = scellesData[currentScelleIdx];
+      const selCount = document.getElementById('diag-count');
+      const selSex = document.getElementById('diag-sex');
+      const selAnomaly = document.getElementById('diag-anomaly');
+      const selOwner = document.getElementById('diag-owner');
+
+      const valCount = selCount.value;
+      const valSex = selSex.value;
+      const valAnomaly = selAnomaly.value;
+      const valOwner = selOwner.value;
+
+      if (!valCount || !valSex || !valAnomaly || !valOwner) {
+        playErrorBuzz();
+        showFeedback(false, '⚠️ Veuillez renseigner l’ensemble des 4 critères avant de soumettre l’analyse.');
+        return;
+      }
+
+      let countOk = valCount === s.expectedCount;
+      let sexOk = valSex === s.expectedSex;
+      let anomalyOk = valAnomaly === s.expectedAnomaly;
+      let ownerOk = valOwner === s.expectedOwner;
+
+      selCount.className = countOk ? 'correct' : 'wrong';
+      selSex.className = sexOk ? 'correct' : 'wrong';
+      selAnomaly.className = anomalyOk ? 'correct' : 'wrong';
+      selOwner.className = ownerOk ? 'correct' : 'wrong';
+
+      if (countOk && sexOk && anomalyOk && ownerOk) {
+        playSuccessChime();
+        resolvedStatus[s.id] = true;
+        puzzlePlaced[s.id] = true;
+
+        showFeedback(true, `🌟 <strong>EXCELLENT ! Scellé ${s.id} Résolu :</strong> ${s.explanation}`);
+        renderTabs();
+        updateProgress();
+
+        // If next scelle not resolved, offer jump
+        const nextUnresolved = scellesData.findIndex(item => !resolvedStatus[item.id]);
+        if (nextUnresolved !== -1) {
+          setTimeout(() => {
+            selectScelle(nextUnresolved);
+          }, 1800);
+        }
+      } else {
+        playErrorBuzz();
+        let hints = [];
+        if (!countOk) hints.push('le nombre de chromosomes');
+        if (!sexOk) hints.push('la formule sexuelle');
+        if (!anomalyOk) hints.push('l’anomalie');
+        if (!ownerOk) hints.push('l’identité du propriétaire');
+
+        showFeedback(false, `❌ <strong>Erreur de diagnostic :</strong> Vérifiez particulièrement ${hints.join(', ')}.`);
+      }
+    }
+
+    function showFeedback(isSuccess, html) {
+      const fb = document.getElementById('sample-feedback-box');
+      fb.className = isSuccess ? 'sample-feedback-alert show-success' : 'sample-feedback-alert show-error';
+      fb.innerHTML = html;
+    }
+
+    function hideFeedback() {
+      const fb = document.getElementById('sample-feedback-box');
+      fb.className = 'sample-feedback-alert';
+      fb.innerHTML = '';
+    }
+
+    function updateProgress() {
+      let count = 0;
+      Object.keys(resolvedStatus).forEach(k => {
+        if (resolvedStatus[k]) count++;
+      });
+
+      document.getElementById('resolved-count').innerText = count;
+
+      if (count === 5) {
+        // Unlock verdict
+        const verdictSection = document.getElementById('crime-verdict-section');
+        verdictSection.classList.add('unlocked');
+        setTimeout(() => {
+          verdictSection.scrollIntoView({ behavior: 'smooth' });
+        }, 600);
+      }
+    }
+
+    function toggleRecallDrawer() {
+      const body = document.getElementById('recall-content-body');
+      const arrow = document.getElementById('recall-arrow');
+      if (body.style.display === 'none') {
+        body.style.display = 'grid';
+        arrow.innerText = '▲ Fermer le mémo';
+      } else {
+        body.style.display = 'none';
+        arrow.innerText = '▼ Ouvrir le mémo';
+      }
+    }
+
+    /* SUSPECTS MODAL */
+    function viewSuspectModal(suspectKey) {
+      playTone(500, 0.04);
+      const modal = document.getElementById('suspect-modal');
+      const body = document.getElementById('modal-suspect-body');
+
+      let content = '';
+      if (suspectKey === 'marc') {
+        content = `
+          <div style="display:flex; gap:16px; align-items:center; margin-bottom:14px;">
+            <img src="assets/enquete_genetique/suspect1.jpg" style="width:90px; height:90px; border-radius:8px; object-fit:cover;">
+            <div>
+              <h3 style="color:#facc15; margin-bottom:4px;">Marc DELORME (Victime)</h3>
+              <p style="color:#94a3b8; font-size:0.85rem;">Soigneur animalier en chef • Homme (Homo sapiens)</p>
+            </div>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.5; color:#cbd5e1;">
+            Marc est un homme en bonne santé. Son caryotype comprend <strong>46 chromosomes (23 paires)</strong> avec une paire de chromosomes sexuels <strong>XY</strong>.<br>
+            Il a été retrouvé inconscient sur le sol de son bureau dimanche soir.
+          </p>
+        `;
+      } else if (suspectKey === 'laura') {
+        content = `
+          <div style="display:flex; gap:16px; align-items:center; margin-bottom:14px;">
+            <img src="assets/enquete_genetique/espece_6.jpg" style="width:90px; height:90px; border-radius:8px; object-fit:cover;">
+            <div>
+              <h3 style="color:#38bdf8; margin-bottom:4px;">Laura DELORME (Épouse)</h3>
+              <p style="color:#94a3b8; font-size:0.85rem;">Épouse de Marc • Femme (Homo sapiens)</p>
+            </div>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.5; color:#cbd5e1;">
+            Laura est venue déjeuner avec Marc à 12h00 dans son bureau avec leur fille Léa. Elle a bu un café.<br>
+            Son caryotype est féminin normal : <strong>46 chromosomes (23 paires)</strong> avec deux chromosomes <strong>XX</strong>.
+          </p>
+        `;
+      } else if (suspectKey === 'lea') {
+        content = `
+          <div style="display:flex; gap:16px; align-items:center; margin-bottom:14px;">
+            <img src="assets/enquete_genetique/espece_6.jpg" style="width:90px; height:90px; border-radius:8px; object-fit:cover;">
+            <div>
+              <h3 style="color:#d8b4fe; margin-bottom:4px;">Léa DELORME (Fille de Marc)</h3>
+              <p style="color:#94a3b8; font-size:0.85rem;">Enfant • Fille avec Trisomie 21 (Homo sapiens)</p>
+            </div>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.5; color:#cbd5e1;">
+            Léa est née avec une <strong>Trisomie 21</strong> : ses cellules possèdent 3 exemplaires du chromosome 21 au lieu de 2.<br>
+            Son caryotype compte donc <strong>47 chromosomes</strong> (formule : 47, XX, +21).
+          </p>
+        `;
+      } else if (suspectKey === 'paul') {
+        content = `
+          <div style="display:flex; gap:16px; align-items:center; margin-bottom:14px;">
+            <img src="assets/enquete_genetique/espece_3.jpg" style="width:90px; height:90px; border-radius:8px; object-fit:cover;">
+            <div>
+              <h3 style="color:#ef4444; margin-bottom:4px;">Paul VIALA (Collègue soigneur)</h3>
+              <p style="color:#94a3b8; font-size:0.85rem;">Homme soigneur • Syndrome de Klinefelter (47, XXY)</p>
+            </div>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.5; color:#cbd5e1;">
+            Paul avait rendez-vous avec Marc à 14h00. Lors de l'enquête, Paul affirmait ne pas être venu.<br>
+            Dossier médical : Paul possède une anomalie des chromosomes sexuels appelée <strong>Syndrome de Klinefelter</strong> (deux chromosomes X et un chromosome Y, soit <strong>47, XXY</strong>).
+          </p>
+        `;
+      } else if (suspectKey === 'chimpanze') {
+        content = `
+          <div style="display:flex; gap:16px; align-items:center; margin-bottom:14px;">
+            <img src="assets/enquete_genetique/espece_4.jpg" style="width:90px; height:90px; border-radius:8px; object-fit:cover;">
+            <div>
+              <h3 style="color:#10b981; margin-bottom:4px;">Chimpanzé du Zoo (Pan troglodytes)</h3>
+              <p style="color:#94a3b8; font-size:0.85rem;">Primate pensionnaire du parc</p>
+            </div>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.5; color:#cbd5e1;">
+            Le chimpanzé appartient à une espèce distincte d'Homo sapiens.<br>
+            Son caryotype présente <strong>48 chromosomes</strong> soit <strong>24 paires</strong> d'homologues. Marc s'est occupé de lui à 15h.
+          </p>
+        `;
+      }
+
+      body.innerHTML = content;
+      modal.classList.add('active');
+    }
+
+    function closeSuspectModal() {
+      document.getElementById('suspect-modal').classList.remove('active');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Sync Agent Name & Class from localStorage
+      try {
+        const savedName = localStorage.getItem('enquete_agent_name');
+        if (savedName) document.getElementById('agent-name').value = savedName;
+        const savedClass = localStorage.getItem('enquete_agent_class');
+        if (savedClass) document.getElementById('agent-class').value = savedClass;
+
+        document.getElementById('agent-name').addEventListener('input', (e) => {
+          localStorage.setItem('enquete_agent_name', e.target.value);
+        });
+        document.getElementById('agent-class').addEventListener('input', (e) => {
+          localStorage.setItem('enquete_agent_class', e.target.value);
+        });
+      } catch (e) {}
+
+      renderTabs();
+      loadScelleData();
+    });
+  </script>
+</body>
+</html>

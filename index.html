@@ -180,6 +180,181 @@
     box-shadow: 0 0 16px var(--purple-glow);
   }
 
+  .nav-btn-act3 {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border: 1px solid #10b981;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 0 12px var(--green-glow);
+    transition: all 0.2s;
+  }
+
+  .nav-btn-act3:hover {
+    background: #10b981;
+    transform: translateY(-1px);
+    box-shadow: 0 0 16px var(--green-glow);
+  }
+
+  /* ENCADRÉ LUDIQUE FICHE ÉLÈVE */
+  .student-notebook-callout {
+    background: #0d192e;
+    border: 2px solid #eab308;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-top: 24px;
+    box-shadow: 0 0 24px rgba(234, 179, 8, 0.25);
+    position: relative;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .callout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px dashed rgba(234, 179, 8, 0.4);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+
+  .callout-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .callout-icon {
+    font-size: 1.8rem;
+    background: rgba(234, 179, 8, 0.15);
+    border: 1px solid rgba(234, 179, 8, 0.4);
+    padding: 6px 10px;
+    border-radius: 8px;
+  }
+
+  .callout-badge h4 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #fef08a;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .callout-subtitle {
+    font-size: 0.82rem;
+    color: #cbd5e1;
+    margin-top: 2px;
+  }
+
+  .callout-alert-tip {
+    background: rgba(6, 182, 212, 0.12);
+    border-left: 3px solid var(--cyan);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.84rem;
+    color: #e0f2fe;
+    margin-bottom: 14px;
+  }
+
+  .callout-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 16px;
+  }
+
+  .notebook-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #070e1b;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #334155;
+    font-size: 0.85rem;
+  }
+
+  .notebook-table th {
+    padding: 10px 12px;
+    font-weight: 700;
+    text-align: left;
+    border-bottom: 1px solid #334155;
+  }
+
+  .notebook-table th.th-specifique {
+    background: rgba(14, 165, 233, 0.2);
+    color: #7dd3fc;
+    border-top: 3px solid #0284c7;
+  }
+
+  .notebook-table th.th-hereditaire {
+    background: rgba(168, 85, 247, 0.2);
+    color: #d8b4fe;
+    border-top: 3px solid #a855f7;
+  }
+
+  .notebook-table th.th-acquis {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fde047;
+    border-top: 3px solid #eab308;
+  }
+
+  .notebook-table td {
+    padding: 12px;
+    vertical-align: top;
+    border-right: 1px solid #1e293b;
+    line-height: 1.5;
+  }
+
+  .notebook-table td:last-child {
+    border-right: none;
+  }
+
+  .notebook-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+  }
+
+  .notebook-list li {
+    padding: 3px 0;
+    color: #f1f5f9;
+  }
+
+  .notebook-def {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-size: 0.78rem;
+    color: #94a3b8;
+    border-left: 2px solid #64748b;
+  }
+
+  .notebook-hypothesis-box {
+    background: rgba(234, 179, 8, 0.1);
+    border: 1px solid rgba(234, 179, 8, 0.35);
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+
+  .hypo-title {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: #facc15;
+    margin-bottom: 6px;
+  }
+
+  .hypo-content {
+    font-size: 0.88rem;
+    color: #f8fafc;
+    line-height: 1.5;
+    font-style: italic;
+  }
+
   .audio-toggle {
     background: #1e293b;
     border: 1px solid #475569;
@@ -2633,8 +2808,11 @@
         <label for="agent-class" style="margin-left:6px;">Classe :</label>
         <input type="text" id="agent-class" placeholder="3ème..." style="width:70px;" value="3ème">
       </div>
-      <a href="activite2.html" class="nav-btn-act2" title="Passer à l'Activité 2 (Laboratoire Cellulaire)">
-        🧬 Activité N°2 ▶
+      <a href="activite2.html" class="nav-btn-act2" title="Passer à l'Activité 2 (Laboratoire Cellulaire & Transfert de Noyau)">
+        🔬 Activité N°2 ▶
+      </a>
+      <a href="activite3.html" class="nav-btn-act3" title="Passer à l'Activité 3 (Laboratoire de Cytogénétique & Analyse des Caryotypes)">
+        🧬 Activité N°3 ▶
       </a>
       <button class="audio-toggle" id="audio-btn" onclick="toggleAudio()" title="Activer / Couper les bruitages">
         <span id="audio-icon">🔊</span> Son ON
@@ -3420,6 +3598,80 @@
         <!-- FEEDBACK DETAILLES DE CORRECTION -->
         <div class="feedback-msg" id="classification-feedback"></div>
 
+        <!-- ============================================================
+             ENCADRÉ LUDIQUE FICHE ÉLÈVE N°1
+             ============================================================ -->
+        <div class="student-notebook-callout" id="student-notebook-box-act1">
+          <div class="callout-header">
+            <div class="callout-badge">
+              <span class="callout-icon">📋</span>
+              <div>
+                <h4>À NOTER SUR TA FICHE ÉLÈVE (ACTIVITÉ 1)</h4>
+                <p class="callout-subtitle">Recopie ces éléments sur ton document papier au fur et à mesure !</p>
+              </div>
+            </div>
+            <span style="background:#eab308; color:#0f172a; font-weight:800; font-size:0.75rem; padding:3px 8px; border-radius:4px; font-family:var(--font-mono);">
+              COLLÈGE DE BIGUGLIA • CYCLE 4
+            </span>
+          </div>
+
+          <div class="callout-alert-tip">
+            💡 <strong>Aide à la copie :</strong> Valide le tri ci-dessus (12/12) pour vérifier tes réponses, puis complète ton tableau papier à 3 colonnes à l'aide de cette synthèse officielle :
+          </div>
+
+          <!-- TABLEAU 3 COLONNES CONFORME A LA FICHE ELEVE -->
+          <div class="callout-table-wrapper">
+            <table class="notebook-table">
+              <thead>
+                <tr>
+                  <th class="th-specifique">🧬 Caractère spécifique</th>
+                  <th class="th-hereditaire">👨‍👩‍👧 Caractère individuel héréditaire</th>
+                  <th class="th-acquis">✂️ Caractère modifié par les conditions de vie</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <ul class="notebook-list">
+                      <li>• <strong>Bipédie exclusive et permanente</strong></li>
+                      <li>• <strong>Volume crânien important</strong></li>
+                      <li>• <strong>Pouces opposables</strong> aux mains</li>
+                      <li>• <strong>Absence de toison intégrale</strong></li>
+                    </ul>
+                    <div class="notebook-def"><strong>Définition :</strong> Caractère partagé par TOUS les individus de l'espèce humaine (<em>Homo sapiens</em>).</div>
+                  </td>
+                  <td>
+                    <ul class="notebook-list">
+                      <li>• <strong>Couleur des yeux</strong> (iris clair ou sombre)</li>
+                      <li>• <strong>Forme du crâne et du visage</strong> (allongé / carré)</li>
+                      <li>• <strong>Morphologie du nez</strong> (droit, aquilin...)</li>
+                      <li>• <strong>Groupe sanguin</strong> (système ABO, Rhésus)</li>
+                    </ul>
+                    <div class="notebook-def"><strong>Définition :</strong> Caractère propre à chaque individu, transmis par les parents dès la fécondation.</div>
+                  </td>
+                  <td>
+                    <ul class="notebook-list">
+                      <li>• <strong>Musculature développée</strong> par le travail physique</li>
+                      <li>• <strong>Bronzage</strong> et coups de soleil</li>
+                      <li>• <strong>Cicatrice</strong> sur la joue ou coupure</li>
+                      <li>• <strong>Barbe taillée</strong> en bouc / Coiffure</li>
+                    </ul>
+                    <div class="notebook-def"><strong>Définition :</strong> Caractère acquis au cours de la vie sous l'effet du milieu. <u>NON transmissible</u> aux enfants !</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- HYPOTHESE A FORMULER -->
+          <div class="notebook-hypothesis-box">
+            <div class="hypo-title">💡 Hypothèse à inscrire sur ta fiche élève :</div>
+            <div class="hypo-content">
+              « Je formule l'hypothèse que les <strong>caractères individuels héréditaires</strong> sont gouvernés par une <strong>information biologique (programme génétique)</strong> contenue dans les cellules dès le stade cellule-œuf et transmise de génération en génération. »
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -3514,15 +3766,20 @@
 
       </article>
 
-      <!-- PASSERELLE VERS ACTIVITE 2 -->
+      <!-- PASSERELLE VERS ACTIVITE 2 ET ACTIVITE 3 -->
       <div class="next-chapter-bridge">
         <div>
-          <h3>🧬 ACTIVITÉ N°2 : Place à la Recherche d'ADN !</h3>
-          <p>Vous avez identifié les cellules qui portent l'ADN sur la scène de crime. Mais <strong>dans quel compartiment de la cellule (membrane, cytoplasme ou noyau)</strong> se situe le programme génétique responsable de nos caractères héréditaires ? Réalisez l'expérience de micromanipulation sur les cellules-œufs de lapines au laboratoire !</p>
+          <h3>🧬 Suite de l'Enquête : Activités N°2 & N°3</h3>
+          <p>Vous avez identifié les cellules qui portent l'ADN sur la scène de crime. Mais <strong>dans quel compartiment de la cellule (membrane, cytoplasme ou noyau)</strong> se situe le programme génétique ? Réalisez l'expérience de transfert de noyau (Activité 2), puis identifiez les propriétaires des scellés grâce à l'analyse de leurs caryotypes (Activité 3) !</p>
         </div>
-        <a href="activite2.html" class="btn-primary" style="background:linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); text-decoration:none; padding:12px 24px; font-size:0.95rem;">
-          🔬 Démarrer l'Activité N°2 ▶
-        </a>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+          <a href="activite2.html" class="btn-primary" style="background:linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); text-decoration:none; padding:12px 20px; font-size:0.95rem; display:inline-flex; align-items:center; gap:8px;">
+            🔬 Activité N°2 : Transfert de Noyau ▶
+          </a>
+          <a href="activite3.html" class="btn-primary" style="background:linear-gradient(135deg, #059669 0%, #047857 100%); text-decoration:none; padding:12px 20px; font-size:0.95rem; display:inline-flex; align-items:center; gap:8px;">
+            🧬 Activité N°3 : Analyse des Caryotypes ▶
+          </a>
+        </div>
       </div>
 
       <div style="text-align:center; margin-bottom:30px; margin-top:20px;">
@@ -3884,6 +4141,13 @@
           }
         }
       }
+
+      try {
+        const savedName = localStorage.getItem('enquete_agent_name');
+        if (savedName) document.getElementById('agent-name').value = savedName;
+        const savedClass = localStorage.getItem('enquete_agent_class');
+        if (savedClass) document.getElementById('agent-class').value = savedClass;
+      } catch (e) {}
 
       updateReportHeader();
       const cctvVid = document.getElementById('cctv-video-element');
@@ -4364,6 +4628,11 @@
       const agentInput = document.getElementById('agent-name').value || 'Élève Enquêteur';
       const classInput = document.getElementById('agent-class').value || '3ème';
       
+      try {
+        localStorage.setItem('enquete_agent_name', agentInput);
+        localStorage.setItem('enquete_agent_class', classInput);
+      } catch (e) {}
+
       const elName = document.getElementById('report-agent-name');
       const elClass = document.getElementById('report-agent-class');
       if (elName) elName.innerText = agentInput;
@@ -4594,6 +4863,13 @@
         });
       }
       selectDnaSample('poils');
+      try {
+        const savedName = localStorage.getItem('enquete_agent_name');
+        if (savedName) document.getElementById('agent-name').value = savedName;
+        const savedClass = localStorage.getItem('enquete_agent_class');
+        if (savedClass) document.getElementById('agent-class').value = savedClass;
+      } catch (e) {}
+
       updateReportHeader();
     });
   </script>

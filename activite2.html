@@ -140,6 +140,157 @@
     color: #fff;
   }
 
+  .nav-btn-act3 {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border: 1px solid #10b981;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 0 12px var(--green-glow);
+    transition: all 0.2s;
+  }
+
+  .nav-btn-act3:hover {
+    background: #10b981;
+    transform: translateY(-1px);
+    box-shadow: 0 0 16px var(--green-glow);
+  }
+
+  /* ENCADRÉ LUDIQUE FICHE ÉLÈVE N°2 */
+  .student-notebook-callout {
+    background: #0d192e;
+    border: 2px solid #a855f7;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 0 24px rgba(168, 85, 247, 0.25);
+    position: relative;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .callout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px dashed rgba(168, 85, 247, 0.4);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+
+  .callout-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .callout-icon {
+    font-size: 1.8rem;
+    background: rgba(168, 85, 247, 0.15);
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    padding: 6px 10px;
+    border-radius: 8px;
+  }
+
+  .callout-badge h4 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #e9d5ff;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .callout-subtitle {
+    font-size: 0.82rem;
+    color: #cbd5e1;
+    margin-top: 2px;
+  }
+
+  .callout-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 16px;
+  }
+
+  .notebook-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #070e1b;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #334155;
+    font-size: 0.85rem;
+  }
+
+  .notebook-table th {
+    padding: 10px 12px;
+    font-weight: 700;
+    text-align: left;
+    background: #1e1b4b;
+    color: #c4b5fd;
+    border-bottom: 1px solid #334155;
+    font-family: var(--font-mono);
+  }
+
+  .notebook-table td {
+    padding: 12px;
+    border-bottom: 1px solid #1e293b;
+    line-height: 1.5;
+  }
+
+  .notebook-conclusion-box {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 14px;
+  }
+
+  .notebook-conclusion-box h5 {
+    color: #6ee7b7;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+
+  .notebook-conclusion-box p {
+    color: #f1f5f9;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .next-bridge-act3 {
+    background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%);
+    border: 2px solid #10b981;
+    border-radius: 12px;
+    padding: 22px;
+    margin-top: 25px;
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .next-bridge-act3 h4 {
+    font-size: 1.15rem;
+    color: #6ee7b7;
+  }
+
+  .next-bridge-act3 p {
+    font-size: 0.88rem;
+    color: #cbd5e1;
+    margin-top: 4px;
+    max-width: 650px;
+    line-height: 1.5;
+  }
+
   .audio-toggle {
     background: #1e293b;
     border: 1px solid #475569;
@@ -648,9 +799,12 @@
       </div>
     </div>
 
-    <div style="display:flex; align-items:center; gap:12px;">
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
       <a href="index.html" class="nav-btn-act1" title="Revenir à la scène de crime">
-        ◀ Retour Scène de Crime (Activité 1)
+        ◀ Scène de Crime (Activité 1)
+      </a>
+      <a href="activite3.html" class="nav-btn-act3" title="Passer à l'Activité 3 (Laboratoire de Cytogénétique & Analyse des Caryotypes)">
+        🧬 Activité N°3 (Caryotypes) ▶
       </a>
       <button class="audio-toggle" id="audio-btn" onclick="toggleAudio()" title="Bruitages">
         <span id="audio-icon">🔊</span> Son ON
@@ -987,6 +1141,77 @@
           <!-- Dynamically added rows -->
         </tbody>
       </table>
+
+      <!-- ============================================================
+           ENCADRÉ LUDIQUE FICHE ÉLÈVE N°2
+           ============================================================ -->
+      <div class="student-notebook-callout" id="student-notebook-box-act2">
+        <div class="callout-header">
+          <div class="callout-badge">
+            <span class="callout-icon">📋</span>
+            <div>
+              <h4>À NOTER SUR TA FICHE ÉLÈVE (ACTIVITÉ 2)</h4>
+              <p class="callout-subtitle">Complète le tableau de ton document papier à partir des résultats de micromanipulation !</p>
+            </div>
+          </div>
+          <span style="background:#a855f7; color:#fff; font-weight:800; font-size:0.75rem; padding:3px 8px; border-radius:4px; font-family:var(--font-mono);">
+            SVT 3ÈME • COLLÈGE DE BIGUGLIA
+          </span>
+        </div>
+
+        <div class="callout-table-wrapper">
+          <table class="notebook-table">
+            <thead>
+              <tr>
+                <th>Constituant cellulaire prélevé</th>
+                <th>Origine du constituant (Donneur)</th>
+                <th>Rôle observé sur la couleur du lapereau</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Membrane plasmique</strong></td>
+                <td>Lapine A (pelage blanc)</td>
+                <td><span style="color:#94a3b8;">Aucun effet sur la couleur du pelage</span></td>
+              </tr>
+              <tr>
+                <td><strong>Cytoplasme</strong></td>
+                <td>Lapine B (pelage blanc)</td>
+                <td><span style="color:#94a3b8;">Aucun effet sur la couleur du pelage</span></td>
+              </tr>
+              <tr>
+                <td><strong>Noyau cellulaire</strong></td>
+                <td>Lapine C (pelage noir)</td>
+                <td><strong style="color:#f43f5e;">Le lapereau né est NOIR (identique au donneur de noyau C !)</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Utérus de gestation</strong></td>
+                <td>Lapine porteuse (grise)</td>
+                <td><span style="color:#94a3b8;">Simple abri nutritif, aucun caractère transmis</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="notebook-conclusion-box">
+          <h5>💡 Conclusion scientifique à noter sur ta fiche :</h5>
+          <p>
+            « L'expérience de transfert de noyau démontre que le <strong>programme génétique</strong> (qui détermine l'ensemble des <strong>caractères héréditaires</strong> d'un être vivant) est <strong>localisé dans le NOYAU</strong> de la cellule.<br>
+            La membrane et le cytoplasme n'interviennent pas dans la transmission de ces caractères. »
+          </p>
+        </div>
+      </div>
+
+      <!-- PASSERELLE VERS ACTIVITÉ 3 -->
+      <div class="next-bridge-act3">
+        <div>
+          <h4>🧬 Étape Suivante : Découvrir les Caryotypes dans le Noyau !</h4>
+          <p>Maintenant que vous savez que l'information génétique est enfermée dans le noyau, il est temps d'ouvrir les noyaux des cellules des scellés prélevés sur la scène de crime. À l'intérieur, les <strong>chromosomes</strong> vont révéler l'identité exacte de chaque individu grâce à leur <strong>caryotype</strong> !</p>
+        </div>
+        <a href="activite3.html" class="nav-btn-act3" style="font-size:0.95rem; padding:12px 22px; text-decoration:none;">
+          🔬 Démarrer l'Activité N°3 (Caryotypes) ▶
+        </a>
+      </div>
 
     </div>
 
