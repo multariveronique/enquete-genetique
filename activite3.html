@@ -570,6 +570,44 @@
     box-shadow: 0 1px 4px rgba(0,0,0,0.3);
   }
 
+    .svt-slide-status-bar {
+    position: absolute;
+    top: 36px;
+    left: 12px;
+    right: 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #0369a1;
+    background: rgba(224, 242, 254, 0.9);
+    border: 1px solid #7dd3fc;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 15;
+    pointer-events: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .svt-slide-empty-banner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(16, 185, 129, 0.95);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    pointer-events: none;
+    z-index: 20;
+    line-height: 1.4;
+  }
+
   /* SVT SOFTWARE INSTRUCTION WITH RED ORB */
   .svt-software-instruction {
     display: flex;
@@ -984,6 +1022,7 @@
 
           <!-- Slide area (left half) -->
           <div class="svt-slide-area">
+            <div class="svt-slide-status-bar" id="slide-status-bar">🔬 Chromosomes restants sur la lame : <strong>5 / 5</strong></div>
             <div class="svt-slide-lens-ring"></div>
           </div>
 
@@ -1110,75 +1149,67 @@
           Consultez ce tableau comparatif issu des données de référence (<a href="https://fr.wikipedia.org/wiki/Nombre_de_chromosomes_de_diff%C3%A9rentes_esp%C3%A8ces" target="_blank" style="color:#38bdf8; text-decoration:underline;">Source Wikipédia : Nombre de chromosomes des espèces</a>) combiné à l'agenda de Marc pour identifier l'origine des scellés :
         </p>
 
-        <table class="species-ref-table">
-          <thead>
+        <div style="max-height: 440px; overflow-y: auto; border: 1px solid #334155; border-radius: 6px;">
+        <table class="species-ref-table" style="margin: 0; width: 100%;">
+          <thead style="position: sticky; top: 0; background: #0f172a; z-index: 10;">
             <tr>
-              <th>Espèce</th>
-              <th>Nom Scientifique</th>
-              <th>Total (2n)</th>
-              <th>Paires (n)</th>
-              <th>Contact dans la journée de Marc (Agenda)</th>
+              <th style="width: 15%;">Total (2n)</th>
+              <th style="width: 15%;">Paires (n)</th>
+              <th style="width: 40%;">Exemples d'Espèces (Max 2 par nombre)</th>
+              <th style="width: 30%;">Contact Agenda de Marc</th>
             </tr>
           </thead>
           <tbody>
-            <tr style="background:rgba(56, 189, 248, 0.12); font-weight:bold;">
-              <td>🧑 Être Humain</td>
-              <td><em>Homo sapiens</em></td>
-              <td><strong>46 chr</strong></td>
-              <td>23 paires</td>
-              <td>Marc (victime), Laura (12h), Léa (12h), Paul (14h)</td>
+            <tr><td><strong>2n = 2</strong></td><td>n = 1</td><td>Fourmi sauteuse (<em>Myrmecia pilosula</em>) • Nématode (<em>Parascaris univalens</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 4</strong></td><td>n = 2</td><td>Ascaris intestinal (<em>Ascaris lumbricoides</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 6</strong></td><td>n = 3</td><td>Moustique commun (<em>Culex pipiens</em>) • Safran / Crocus (<em>Crocus sativus</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 8</strong></td><td>n = 4</td><td>Drosophile / Mouche du vinaigre (<em>Drosophila</em>) • Fève (<em>Vicia faba</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 10</strong></td><td>n = 5</td><td>Arabette des dames (<em>Arabidopsis thaliana</em>) • Épine-vinette (<em>Berberis</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 12</strong></td><td>n = 6</td><td>Mouche domestique (<em>Musca domestica</em>) • Épinard (<em>Spinacia oleracea</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 14</strong></td><td>n = 7</td><td>Pois cultivé de Mendel (<em>Pisum sativum</em>) • Seigle (<em>Secale cereale</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 16</strong></td><td>n = 8</td><td>Oignon commun (<em>Allium cepa</em>) • Ver solitaire / Ténia (<em>Taenia solium</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 18</strong></td><td>n = 9</td><td>Chou potager (<em>Brassica oleracea</em>) • Radis cultivé (<em>Raphanus sativus</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 20</strong></td><td>n = 10</td><td>Maïs cultivé (<em>Zea mays</em>) • Pinson des arbres (<em>Fringilla coelebs</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 22</strong></td><td>n = 11</td><td>Haricot commun (<em>Phaseolus vulgaris</em>) • Chêne rouge (<em>Quercus rubra</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 24</strong></td><td>n = 12</td><td>Tomate (<em>Solanum lycopersicum</em>) • Riz cultivé (<em>Oryza sativa</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 26</strong></td><td>n = 13</td><td>Grenouille rousse (<em>Rana temporaria</em>) • Cèdre de l'Atlas (<em>Cedrus</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 28</strong></td><td>n = 14</td><td>Blé dur (<em>Triticum durum</em>) • Éléphant d'Afrique (<em>Loxodonta africana</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 30</strong></td><td>n = 15</td><td>Renard roux (<em>Vulpes vulpes</em>) • Vison d'Amérique (<em>Neovison vison</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 32</strong></td><td>n = 16</td><td>Luciole commune (<em>Lampyris noctiluca</em>) • Levure (<em>Candida albicans</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 34</strong></td><td>n = 17</td><td>Tournesol (<em>Helianthus annuus</em>) • Porc-épic (<em>Hystrix cristata</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 36</strong></td><td>n = 18</td><td>Écureuil roux (<em>Sciurus vulgaris</em>) • Étoile de mer (<em>Asterias rubens</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 38</strong></td><td>n = 19</td><td>Chat domestique (<em>Felis catus</em>) • Sanglier / Porc (<em>Sus scrofa</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 40</strong></td><td>n = 20</td><td>Souris grise (<em>Mus musculus</em>) • Furet domestique (<em>Mustela putorius furo</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 42</strong></td><td>n = 21</td><td>Rat noir (<em>Rattus rattus</em>) • Blé tendre de farine (<em>Triticum aestivum</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 44</strong></td><td>n = 22</td><td>Lapin de garenne (<em>Oryctolagus cuniculus</em>) • Dauphin (<em>Delphinus</em>)</td><td>Non rencontré</td></tr>
+            <tr style="background: rgba(56, 189, 248, 0.2); font-weight: bold; border-left: 4px solid #38bdf8;">
+              <td><strong>2n = 46</strong></td>
+              <td>n = 23 paires</td>
+              <td>🧑 <strong>Être humain (<em>Homo sapiens</em>)</strong> • Cerf muntjac (<em>Muntiacus</em>)</td>
+              <td>📍 <strong>Marc DELORME</strong> (victime) & <strong>Laura DELORME</strong> (12h)</td>
             </tr>
-            <tr style="background:rgba(234, 179, 8, 0.12);">
-              <td>🐵 Chimpanzé commun</td>
-              <td><em>Pan troglodytes</em></td>
-              <td><strong>48 chr</strong></td>
-              <td>24 paires</td>
-              <td>Soigné et surveillé par Marc à <strong>15h00</strong></td>
+            <tr style="background: rgba(234, 179, 8, 0.2); font-weight: bold; border-left: 4px solid #f59e0b;">
+              <td><strong>2n = 48</strong></td>
+              <td>n = 24 paires</td>
+              <td>🐵 <strong>Chimpanzé commun (<em>Pan troglodytes</em>)</strong> • Pomme de terre (<em>Solanum tuberosum</em>)</td>
+              <td>📍 <strong>Chimpanzés du parc soignés à 15h00</strong></td>
             </tr>
-            <tr>
-              <td>🦁 Lion d'Afrique</td>
-              <td><em>Panthera leo</em></td>
-              <td><strong>38 chr</strong></td>
-              <td>19 paires</td>
-              <td>Nourri à la fauverie centrale à 18h00</td>
-            </tr>
-            <tr>
-              <td>🐕 Chien de garde</td>
-              <td><em>Canis lupus familiaris</em></td>
-              <td><strong>78 chr</strong></td>
-              <td>39 paires</td>
-              <td>Ronde de sécurité générale du parc à 09h00</td>
-            </tr>
-            <tr>
-              <td>🦌 Muntjac de Reeves</td>
-              <td><em>Muntiacus reevesi</em></td>
-              <td><strong>46 chr</strong></td>
-              <td>23 paires</td>
-              <td>Pansement au sabot avant réalisé à 10h00</td>
-            </tr>
-            <tr>
-              <td>🐱 Chat domestique</td>
-              <td><em>Felis catus</em></td>
-              <td><strong>38 chr</strong></td>
-              <td>19 paires</td>
-              <td>Non rencontré dimanche</td>
-            </tr>
-            <tr>
-              <td>🐴 Cheval</td>
-              <td><em>Equus caballus</em></td>
-              <td><strong>64 chr</strong></td>
-              <td>32 paires</td>
-              <td>Non rencontré dimanche</td>
-            </tr>
-            <tr>
-              <td>🐂 Bœuf domestique</td>
-              <td><em>Bos taurus</em></td>
-              <td><strong>60 chr</strong></td>
-              <td>30 paires</td>
-              <td>Non rencontré dimanche</td>
-            </tr>
+            <tr><td><strong>2n = 50</strong></td><td>n = 25</td><td>Lièvre d'Europe (<em>Lepus europaeus</em>) • Béluga (<em>Delphinapterus</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 52</strong></td><td>n = 26</td><td>Chèvre des montagnes (<em>Oreamnos</em>) • Ornithorynque (<em>Ornithorhynchus</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 54</strong></td><td>n = 27</td><td>Mouton domestique (<em>Ovis aries</em>) • Vison d'Europe (<em>Mustela lutreola</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 56</strong></td><td>n = 28</td><td>Singe capucin (<em>Cebus</em>) • Fraisier cultivé (<em>Fragaria ×ananassa</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 58</strong></td><td>n = 29</td><td>Orque marine (<em>Orcinus orca</em>) • Renard polaire (<em>Vulpes lagopus</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 60</strong></td><td>n = 30</td><td>Bœuf / Vache (<em>Bos taurus</em>) • Chèvre domestique (<em>Capra hircus</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 62</strong></td><td>n = 31</td><td>Âne domestique (<em>Equus asinus</em>) • Mule (<em>Equus mulus</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 64</strong></td><td>n = 32</td><td>Cheval (<em>Equus caballus</em>) • Cochon d'Inde / Cobaye (<em>Cavia porcellus</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 78</strong></td><td>n = 39</td><td>Chien domestique (<em>Canis lupus familiaris</em>) • Loup gris (<em>Canis lupus</em>)</td><td>Ronde de garde à 09h00</td></tr>
+            <tr><td><strong>2n = 80</strong></td><td>n = 40</td><td>Canard colvert (<em>Anas platyrhynchos</em>) • Dindon (<em>Meleagris gallopavo</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 90</strong></td><td>n = 45</td><td>Pigeon biset (<em>Columba livia</em>) • Moineau friquet (<em>Passer montanus</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 100</strong></td><td>n = 50</td><td>Carpe commune (<em>Cyprinus carpio</em>)</td><td>Non rencontré</td></tr>
+            <tr><td><strong>2n = 1440</strong></td><td>n = 720</td><td>Fougère ophioglosse (<em>Ophioglossum reticulatum</em>) [Record mondial]</td><td>Non rencontré</td></tr>
           </tbody>
         </table>
+        </div>
 
         <div style="background:rgba(15,23,42,0.8); border:1px solid #334155; border-radius:6px; padding:10px 14px; margin-top:12px; font-size:0.8rem; color:#94a3b8;">
           💡 <strong>Rappel SVT :</strong> Chez l'être humain (46 chromosomes), les femmes possèdent la paire de chromosomes sexuels <strong>XX</strong> et les hommes la paire <strong>XY</strong>. Un chromosome en plus sur la 21ème paire donne une <strong>Trisomie 21</strong> (47 chr). Une formule <strong>XXY</strong> correspond au syndrome de Klinefelter (47 chr).
@@ -1223,7 +1254,7 @@
       '24': { h: 22, c: 0.35, b: [0.25, 0.60] }
     };
 
-    function createChromosomeSVG(chrKey, rotate = 0, isGhost = false, uid = '') {
+    function createChromosomeSVG(chrKey, rotate = 0, uid = '') {
       const def = chrDefs[chrKey] || chrDefs['1'];
       const w = 16;
       const cw = 5.0;
@@ -1231,10 +1262,6 @@
       const x2 = 9.0;
       const h = def.h;
       const cy = Math.max(4.0, Math.min(h - 4.0, h * def.c));
-
-      if (isGhost) {
-        return `<div class="karyo-target-slot" id="active-karyo-slot" style="width:${w}px; height:${h}px;" title="Dépose le chromosome homologue ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
-      }
 
       let bandsSvg = '';
       def.b.forEach(b => {
@@ -1269,6 +1296,7 @@
       </svg>`;
     }
 
+    /* 5 SAMPLES DATA: EACH WITH EXACTLY 5 CHROMOSOMES TO ARRANGE */
     const scelles = [
       {
         id: 'S01',
@@ -1277,15 +1305,17 @@
         location: 'Table du bureau de Marc',
         nature: 'Cellules épithéliales buccales avec noyau',
         totalChr: 46,
-        targetPair: 'X',
-        missingChrKey: 'X',
-        missingChrRotation: 28,
-        chrInitPos: { left: 210, top: 160 },
-        missingChrName: 'Chromosome X (sexe féminin)',
         expectedCount: '46',
         expectedSex: 'XX',
         expectedOwner: 'laura',
-        explanation: 'Caryotype féminin normal : 46 chromosomes (23 paires) avec deux chromosomes XX. La salive appartient à Laura DELORME, venue déjeuner à 12h.'
+        explanation: 'Caryotype féminin normal : 46 chromosomes (23 paires) avec formule sexuelle XX. La salive appartient à Laura DELORME, venue déjeuner à 12h.',
+        missingChrs: [
+          { slotKey: '2', chrKey: '2', rot: 25, x: 110, y: 80, name: 'Chromosome de la paire 2 (58px)' },
+          { slotKey: '7', chrKey: '7', rot: -35, x: 270, y: 90, name: 'Chromosome de la paire 7 (41px)' },
+          { slotKey: '14', chrKey: '14', rot: 50, x: 170, y: 175, name: 'Chromosome de la paire 14 (28px)' },
+          { slotKey: '21', chrKey: '21', rot: -20, x: 310, y: 210, name: 'Chromosome de la paire 21 (17px)' },
+          { slotKey: 'X', chrKey: 'X', rot: 30, x: 210, y: 295, name: 'Deuxième chromosome X (41px)' }
+        ]
       },
       {
         id: 'C01',
@@ -1294,15 +1324,17 @@
         location: 'Veste déchirée de la victime',
         nature: 'Cellules du bulbe pileux (racine)',
         totalChr: 47,
-        targetPair: '21',
-        missingChrKey: '21',
-        missingChrRotation: -35,
-        chrInitPos: { left: 180, top: 200 },
-        missingChrName: '3ème chromosome 21 (Trisomie 21)',
         expectedCount: '47',
         expectedSex: 'XX',
         expectedOwner: 'lea',
-        explanation: 'Caryotype à 47 chromosomes avec 3 chromosomes sur la paire 21 (Trisomie 21) et formule XX. Ce cheveu appartient à Léa, la fille de Marc venue déjeuner à 12h.'
+        explanation: 'Caryotype à 47 chromosomes avec 3 chromosomes sur la paire 21 (Trisomie 21) et formule XX. Ce cheveu appartient à Léa DELORME, la fille de Marc venue déjeuner à 12h.',
+        missingChrs: [
+          { slotKey: '1', chrKey: '1', rot: -40, x: 110, y: 70, name: 'Chromosome de la paire 1 (62px)' },
+          { slotKey: '8', chrKey: '8', rot: 30, x: 280, y: 85, name: 'Chromosome de la paire 8 (39px)' },
+          { slotKey: '16', chrKey: '16', rot: -25, x: 160, y: 170, name: 'Chromosome de la paire 16 (25px)' },
+          { slotKey: 'X', chrKey: 'X', rot: 45, x: 320, y: 215, name: 'Chromosome X (41px)' },
+          { slotKey: '21_extra', chrKey: '21', rot: 15, x: 210, y: 300, name: '3ème chromosome de la paire 21 (17px)' }
+        ]
       },
       {
         id: 'P01',
@@ -1311,32 +1343,36 @@
         location: 'Chemise de travail de Marc',
         nature: 'Cellules de la gaine du poil',
         totalChr: 48,
-        targetPair: '24',
-        missingChrKey: '24',
-        missingChrRotation: 42,
-        chrInitPos: { left: 220, top: 220 },
-        missingChrName: '24ème paire spécifique du singe',
         expectedCount: '48',
         expectedSex: '24p',
         expectedOwner: 'chimpanze',
-        explanation: 'Caryotype à 48 chromosomes (24 paires). Ce n’est pas un être humain mais un Chimpanzé (Pan troglodytes). Marc s’est occupé d’eux à 15h selon son agenda !'
+        explanation: 'Caryotype à 48 chromosomes (24 paires). Ce n’est pas un être humain mais un Chimpanzé (Pan troglodytes). Marc s’est occupé d’eux à 15h selon son agenda !',
+        missingChrs: [
+          { slotKey: '3', chrKey: '3', rot: 35, x: 110, y: 80, name: 'Chromosome de la paire 3 (53px)' },
+          { slotKey: '10', chrKey: '10', rot: -30, x: 270, y: 90, name: 'Chromosome de la paire 10 (35px)' },
+          { slotKey: '18', chrKey: '18', rot: 40, x: 170, y: 175, name: 'Chromosome de la paire 18 (23px)' },
+          { slotKey: '22', chrKey: '22', rot: -15, x: 310, y: 215, name: 'Chromosome de la paire 22 (16px)' },
+          { slotKey: '24', chrKey: '24', rot: 25, x: 210, y: 295, name: '2ème chromosome de la 24ème paire (22px)' }
+        ]
       },
       {
         id: 'B01',
         tabBadge: 'SCELLÉ B-01',
         name: 'Goutte de sang au sol',
         location: 'Flaque près du corps inanimé',
-        nature: 'Leucocytes (globules blancs avec noyau)',
+        nature: 'Leucocytes sanguins avec noyau',
         totalChr: 46,
-        targetPair: 'Y',
-        missingChrKey: 'Y',
-        missingChrRotation: -20,
-        chrInitPos: { left: 240, top: 250 },
-        missingChrName: 'Petit chromosome Y (sexe masculin)',
         expectedCount: '46',
         expectedSex: 'XY',
         expectedOwner: 'marc',
-        explanation: 'Caryotype masculin normal à 46 chromosomes (23 paires) avec la paire sexuelle XY. C’est le sang de Marc DELORME, blessé à la tête.'
+        explanation: 'Caryotype masculin normal à 46 chromosomes (23 paires) avec la paire sexuelle XY. C’est le sang de Marc DELORME, blessé à la tête.',
+        missingChrs: [
+          { slotKey: '4', chrKey: '4', rot: -30, x: 110, y: 80, name: 'Chromosome de la paire 4 (49px)' },
+          { slotKey: '9', chrKey: '9', rot: 35, x: 275, y: 90, name: 'Chromosome de la paire 9 (37px)' },
+          { slotKey: '15', chrKey: '15', rot: -20, x: 165, y: 175, name: 'Chromosome de la paire 15 (27px)' },
+          { slotKey: '20', chrKey: '20', rot: 45, x: 315, y: 210, name: 'Chromosome de la paire 20 (19px)' },
+          { slotKey: 'Y', chrKey: 'Y', rot: 10, x: 210, y: 295, name: 'Petit chromosome Y (17px)' }
+        ]
       },
       {
         id: 'B02',
@@ -1345,21 +1381,31 @@
         location: 'Coin métallique du bureau (lutte)',
         nature: 'Leucocytes sanguins',
         totalChr: 47,
-        targetPair: 'XXY',
-        missingChrKey: 'X',
-        missingChrRotation: 32,
-        chrInitPos: { left: 190, top: 150 },
-        missingChrName: 'Chromosome X supplémentaire (Klinefelter)',
         expectedCount: '47',
         expectedSex: 'XXY',
         expectedOwner: 'paul',
-        explanation: 'Caryotype anormal à 47 chromosomes avec 2 chromosomes X et 1 chromosome Y (Syndrome de Klinefelter). C’est le profil génétique de Paul VIALA ! Il a menti en disant ne pas être venu : c’est lui qui s’est coupé lors de la dispute !'
+        explanation: 'Caryotype anormal à 47 chromosomes avec 2 chromosomes X et 1 chromosome Y (Syndrome de Klinefelter). C’est le profil génétique de Paul VIALA ! Il a menti en disant ne pas être venu : c’est lui qui s’est coupé lors de la dispute !',
+        missingChrs: [
+          { slotKey: '5', chrKey: '5', rot: 25, x: 110, y: 80, name: 'Chromosome de la paire 5 (46px)' },
+          { slotKey: '11', chrKey: '11', rot: -35, x: 270, y: 90, name: 'Chromosome de la paire 11 (33px)' },
+          { slotKey: '17', chrKey: '17', rot: 50, x: 170, y: 175, name: 'Chromosome de la paire 17 (24px)' },
+          { slotKey: '19', chrKey: '19', rot: -20, x: 310, y: 205, name: 'Chromosome de la paire 19 (20px)' },
+          { slotKey: 'X_extra', chrKey: 'X', rot: 30, x: 210, y: 295, name: 'Chromosome X supplémentaire (41px)' }
+        ]
       }
     ];
 
     let currentIdx = 0;
     const resolvedMap = { S01: false, C01: false, P01: false, B01: false, B02: false };
-    const placedMap = { S01: false, C01: false, P01: false, B01: false, B02: false };
+    
+    // Track sets of placed chromosome slotKeys for each sample (all 5 must be placed!)
+    const samplePlacedSets = {
+      S01: new Set(),
+      C01: new Set(),
+      P01: new Set(),
+      B01: new Set(),
+      B02: new Set()
+    };
 
     /* DRAG AND DROP CONTROLLER */
     let isDragging = false;
@@ -1399,9 +1445,9 @@
 
     function playSuccessChime() {
       if (!audioEnabled) return;
-      playTone(523.25, 0.1);
-      setTimeout(() => playTone(659.25, 0.1), 100);
-      setTimeout(() => playTone(783.99, 0.2), 200);
+      playTone(523.25, 0.09);
+      setTimeout(() => playTone(659.25, 0.09), 90);
+      setTimeout(() => playTone(783.99, 0.16), 180);
     }
 
     function playErrorBuzz() {
@@ -1446,15 +1492,15 @@
     /* RENDER KARYOTYPE BOARD GRID */
     function renderKaryotypeBoard(s) {
       const board = document.getElementById('karyo-board-container');
-      const isPlaced = placedMap[s.id] || resolvedMap[s.id];
+      const placedSet = samplePlacedSets[s.id];
       board.innerHTML = '';
 
-      // Rows layout:
-      // Row 1: 1, 2, 3, 4, 5
-      // Row 2: 6, 7, 8, 9, 10, 11, 12
-      // Row 3: 13, 14, 15, 16, 17, 18
-      // Row 4: 19, 20, 21, 22
-      // Row 5: Sex chromosomes and pair 24 (if chimpanzee)
+      // Find which of the 5 missing chromosomes apply to each pair
+      const missingMap = {};
+      s.missingChrs.forEach(item => {
+        missingMap[item.slotKey] = item;
+      });
+
       const rows = [
         ['1', '2', '3', '4', '5'],
         ['6', '7', '8', '9', '10', '11', '12'],
@@ -1473,20 +1519,28 @@
           const chrsDiv = document.createElement('div');
           chrsDiv.className = 'karyo-pair-chrs';
 
-          // Special check for Trisomy 21 (Scellé C01)
+          // Check if Pair 21 in C01 (Trisomie 21)
           if (pairNum === '21' && s.id === 'C01') {
-            // Pair 21 has 2 chromosomes placed + 1 target slot
-            chrsDiv.innerHTML += createChromosomeSVG('21', 0, false, 'board_21_a');
-            chrsDiv.innerHTML += createChromosomeSVG('21', 0, false, 'board_21_b');
-            if (isPlaced) {
-              chrsDiv.innerHTML += `<div class="karyo-target-slot snapped-slot" id="active-karyo-slot" style="width:16px; height:${chrDefs['21'].h}px;">${createChromosomeSVG('21', 0, false, 'snapped_21')}</div>`;
+            // Pair 21 has 2 regular chromosomes + 1 extra slot
+            chrsDiv.innerHTML += createChromosomeSVG('21', 0, 'board_21_a');
+            chrsDiv.innerHTML += createChromosomeSVG('21', 0, 'board_21_b');
+            if (placedSet.has('21_extra')) {
+              chrsDiv.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs['21'].h}px;">${createChromosomeSVG('21', 0, 'snapped_21_extra')}</div>`;
             } else {
-              chrsDiv.innerHTML += createChromosomeSVG('21', 0, true, 'slot_21');
+              chrsDiv.innerHTML += `<div class="karyo-target-slot" data-slot-key="21_extra" data-chr-key="21" style="width:16px; height:${chrDefs['21'].h}px;" title="Dépose le 3ème chromosome 21 ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
+            }
+          } else if (missingMap[pairNum]) {
+            // One regular chromosome + one target slot
+            chrsDiv.innerHTML += createChromosomeSVG(pairNum, 0, `board_${pairNum}_a`);
+            if (placedSet.has(pairNum)) {
+              chrsDiv.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs[pairNum].h}px;">${createChromosomeSVG(pairNum, 0, `snapped_${pairNum}`)}</div>`;
+            } else {
+              chrsDiv.innerHTML += `<div class="karyo-target-slot" data-slot-key="${pairNum}" data-chr-key="${pairNum}" style="width:16px; height:${chrDefs[pairNum].h}px;" title="Dépose le chromosome homologue ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
             }
           } else {
-            // Normal 2 chromosomes
-            chrsDiv.innerHTML += createChromosomeSVG(pairNum, 0, false, `board_${pairNum}_a`);
-            chrsDiv.innerHTML += createChromosomeSVG(pairNum, 0, false, `board_${pairNum}_b`);
+            // Normal 2 chromosomes fully in place
+            chrsDiv.innerHTML += createChromosomeSVG(pairNum, 0, `board_${pairNum}_a`);
+            chrsDiv.innerHTML += createChromosomeSVG(pairNum, 0, `board_${pairNum}_b`);
           }
 
           const label = document.createElement('div');
@@ -1505,7 +1559,6 @@
       const row5 = document.createElement('div');
       row5.className = 'karyo-row';
 
-      // SEX PAIR
       const sexBox = document.createElement('div');
       sexBox.className = 'karyo-pair-box';
       const sexChrs = document.createElement('div');
@@ -1516,41 +1569,45 @@
       if (s.id === 'S01') {
         // Female XX: 1 placed X + 1 slot X
         sexLabel.innerText = 'X   X';
-        sexChrs.innerHTML += createChromosomeSVG('X', 0, false, 'board_X_1');
-        if (isPlaced) {
-          sexChrs.innerHTML += `<div class="karyo-target-slot snapped-slot" id="active-karyo-slot" style="width:16px; height:${chrDefs['X'].h}px;">${createChromosomeSVG('X', 0, false, 'snapped_X')}</div>`;
+        sexChrs.innerHTML += createChromosomeSVG('X', 0, 'board_X_1');
+        if (placedSet.has('X')) {
+          sexChrs.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs['X'].h}px;">${createChromosomeSVG('X', 0, 'snapped_X')}</div>`;
         } else {
-          sexChrs.innerHTML += createChromosomeSVG('X', 0, true, 'slot_X');
+          sexChrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="X" data-chr-key="X" style="width:16px; height:${chrDefs['X'].h}px;" title="Dépose le second chromosome X ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
         }
       } else if (s.id === 'C01') {
-        // Léa: Female XX (both placed)
+        // Léa: Female XX (both X placed, X slot is in missingChrs)
         sexLabel.innerText = 'X   X';
-        sexChrs.innerHTML += createChromosomeSVG('X', 0, false, 'board_X_1');
-        sexChrs.innerHTML += createChromosomeSVG('X', 0, false, 'board_X_2');
+        sexChrs.innerHTML += createChromosomeSVG('X', 0, 'board_X_1');
+        if (placedSet.has('X')) {
+          sexChrs.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs['X'].h}px;">${createChromosomeSVG('X', 0, 'snapped_X')}</div>`;
+        } else {
+          sexChrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="X" data-chr-key="X" style="width:16px; height:${chrDefs['X'].h}px;" title="Dépose le chromosome X ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
+        }
       } else if (s.id === 'P01') {
-        // Chimpanzee: Pair 23 (XX) placed, Pair 24 has target slot
+        // Chimpanzee: Pair 23 (XX) fully placed
         sexLabel.innerText = '23 (X X)';
-        sexChrs.innerHTML += createChromosomeSVG('X', 0, false, 'board_X_1');
-        sexChrs.innerHTML += createChromosomeSVG('X', 0, false, 'board_X_2');
+        sexChrs.innerHTML += createChromosomeSVG('X', 0, 'board_X_1');
+        sexChrs.innerHTML += createChromosomeSVG('X', 0, 'board_X_2');
       } else if (s.id === 'B01') {
         // Male XY: 1 placed X + 1 slot Y
         sexLabel.innerText = 'X   Y';
-        sexChrs.innerHTML += createChromosomeSVG('X', 0, false, 'board_X_1');
-        if (isPlaced) {
-          sexChrs.innerHTML += `<div class="karyo-target-slot snapped-slot" id="active-karyo-slot" style="width:16px; height:${chrDefs['Y'].h}px;">${createChromosomeSVG('Y', 0, false, 'snapped_Y')}</div>`;
+        sexChrs.innerHTML += createChromosomeSVG('X', 0, 'board_X_1');
+        if (placedSet.has('Y')) {
+          sexChrs.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs['Y'].h}px;">${createChromosomeSVG('Y', 0, 'snapped_Y')}</div>`;
         } else {
-          sexChrs.innerHTML += createChromosomeSVG('Y', 0, true, 'slot_Y');
+          sexChrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="Y" data-chr-key="Y" style="width:16px; height:${chrDefs['Y'].h}px;" title="Dépose le petit chromosome Y ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
         }
       } else if (s.id === 'B02') {
         // Klinefelter XXY: 1 X and 1 Y placed + 1 slot for extra X
         sexLabel.innerText = 'X   X   Y';
-        sexChrs.innerHTML += createChromosomeSVG('X', 0, false, 'board_X_1');
-        if (isPlaced) {
-          sexChrs.innerHTML += `<div class="karyo-target-slot snapped-slot" id="active-karyo-slot" style="width:16px; height:${chrDefs['X'].h}px;">${createChromosomeSVG('X', 0, false, 'snapped_X2')}</div>`;
+        sexChrs.innerHTML += createChromosomeSVG('X', 0, 'board_X_1');
+        if (placedSet.has('X_extra')) {
+          sexChrs.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs['X'].h}px;">${createChromosomeSVG('X', 0, 'snapped_X_extra')}</div>`;
         } else {
-          sexChrs.innerHTML += createChromosomeSVG('X', 0, true, 'slot_X2');
+          sexChrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="X_extra" data-chr-key="X" style="width:16px; height:${chrDefs['X'].h}px;" title="Dépose le chromosome X supplémentaire ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
         }
-        sexChrs.innerHTML += createChromosomeSVG('Y', 0, false, 'board_Y_1');
+        sexChrs.innerHTML += createChromosomeSVG('Y', 0, 'board_Y_1');
       }
 
       sexBox.appendChild(sexChrs);
@@ -1567,11 +1624,11 @@
         p24Label.className = 'karyo-pair-label';
         p24Label.innerText = '24 (Singe)';
 
-        p24Chrs.innerHTML += createChromosomeSVG('24', 0, false, 'board_24_1');
-        if (isPlaced) {
-          p24Chrs.innerHTML += `<div class="karyo-target-slot snapped-slot" id="active-karyo-slot" style="width:16px; height:${chrDefs['24'].h}px;">${createChromosomeSVG('24', 0, false, 'snapped_24')}</div>`;
+        p24Chrs.innerHTML += createChromosomeSVG('24', 0, 'board_24_1');
+        if (placedSet.has('24')) {
+          p24Chrs.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs['24'].h}px;">${createChromosomeSVG('24', 0, 'snapped_24')}</div>`;
         } else {
-          p24Chrs.innerHTML += createChromosomeSVG('24', 0, true, 'slot_24');
+          p24Chrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="24" data-chr-key="24" style="width:16px; height:${chrDefs['24'].h}px;" title="Dépose le chromosome 24 ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
         }
 
         p24Box.appendChild(p24Chrs);
@@ -1580,12 +1637,6 @@
       }
 
       board.appendChild(row5);
-
-      // If slot exists and not placed, bind click to helper
-      const slotEl = document.getElementById('active-karyo-slot');
-      if (slotEl && !isPlaced) {
-        slotEl.onclick = () => autoPlaceChromosome();
-      }
     }
 
     /* LOAD ACTIVE SAMPLE */
@@ -1603,7 +1654,7 @@
       hideFeedback();
       hideVerifyFeedback();
 
-      // Render Karyotype Board & Chromosomes
+      // Render Karyotype Board & Chromosomes on Slide
       renderKaryotypeBoard(s);
       renderChromosomesLayer();
 
@@ -1631,60 +1682,69 @@
       }
     }
 
-    /* RENDER CHROMOSOMES LAYER ON SLIDE (WITH 1:1 TRUE SCALE AND FREE DRAGGING) */
+    /* RENDER CHROMOSOMES LAYER ON SLIDE: ONLY UNPLACED CHROMOSOMES (EXACTLY 5 AT START, 0 AT FINISH) */
     function renderChromosomesLayer() {
       const s = scelles[currentIdx];
-      const isPlaced = placedMap[s.id] || resolvedMap[s.id];
+      const placedSet = samplePlacedSets[s.id];
       const layer = document.getElementById('chromosomes-layer');
       layer.innerHTML = '';
 
-      // Decorative unclassified chromosomes on the slide
-      const bgChrs = [
-        { key: '1', rot: -40, x: 280, y: 40 },
-        { key: '7', rot: 35, x: 120, y: 70 },
-        { key: '14', rot: 65, x: 340, y: 150 },
-        { key: '8', rot: -25, x: 80, y: 220 },
-        { key: '11', rot: 45, x: 140, y: 340 },
-        { key: '2', rot: 15, x: 260, y: 360 }
-      ];
+      // Filter remaining unplaced chromosomes
+      const unplaced = s.missingChrs.filter(c => !placedSet.has(c.slotKey));
+      const remainingCount = unplaced.length;
 
-      bgChrs.forEach((c, idx) => {
+      // Update Slide Status Bar
+      const statusBar = document.getElementById('slide-status-bar');
+      if (statusBar) {
+        if (remainingCount > 0) {
+          statusBar.innerHTML = `🔬 Chromosomes non classés sur la lame : <strong>${remainingCount} / 5</strong>`;
+          statusBar.style.color = '#0369a1';
+          statusBar.style.background = 'rgba(224, 242, 254, 0.9)';
+        } else {
+          statusBar.innerHTML = `✅ <strong>Lame vide :</strong> Tous les chromosomes sont classés dans le caryotype !`;
+          statusBar.style.color = '#065f46';
+          statusBar.style.background = 'rgba(209, 250, 229, 0.95)';
+        }
+      }
+
+      // If all chromosomes are placed, display satisfaction banner on slide
+      if (remainingCount === 0) {
+        const banner = document.createElement('div');
+        banner.className = 'svt-slide-empty-banner';
+        banner.innerHTML = `🎉 <strong>Tous les chromosomes ont été rangés !</strong><br><span style="font-size:0.78rem; font-weight:normal; opacity:0.95;">La lame est vide. Tu peux maintenant compter et analyser le caryotype complet.</span>`;
+        layer.appendChild(banner);
+        return;
+      }
+
+      // Render each unplaced chromosome with interactive drag & drop
+      unplaced.forEach(c => {
         const el = document.createElement('div');
         el.className = 'svt-draggable-chr';
+        el.id = `draggable_${c.slotKey}`;
+        el.dataset.slotKey = c.slotKey;
+        el.dataset.chrKey = c.chrKey;
         el.style.left = `${c.x}px`;
         el.style.top = `${c.y}px`;
-        el.title = `Chromosome non classé (étalement métaphasique)`;
-        el.innerHTML = createChromosomeSVG(c.key, c.rot, false, `bg_${idx}`);
-        setupPointerDrag(el, false);
+        el.title = `${c.name} - Glisse-le vers sa paire homologue !`;
+
+        el.innerHTML = `
+          <div class="chr-drag-pill">À ranger ✋</div>
+          ${createChromosomeSVG(c.chrKey, c.rot, `slide_${c.slotKey}`)}
+        `;
+
+        setupPointerDrag(el);
         layer.appendChild(el);
       });
-
-      // TARGET UNCLASSIFIED CHROMOSOME TO PLACE
-      if (!isPlaced) {
-        const targetEl = document.createElement('div');
-        targetEl.className = 'svt-draggable-chr target-hint';
-        targetEl.id = 'target-chr';
-        targetEl.style.left = `${s.chrInitPos.left}px`;
-        targetEl.style.top = `${s.chrInitPos.top}px`;
-        targetEl.title = `Chromosome à classer : ${s.missingChrName}`;
-        targetEl.innerHTML = `
-          <div class="chr-drag-pill">À ranger ✋</div>
-          ${createChromosomeSVG(s.missingChrKey, s.missingChrRotation, false, 'target_active')}
-        `;
-        setupPointerDrag(targetEl, true);
-        layer.appendChild(targetEl);
-      }
     }
 
-    /* FLUID FREE DRAG AND DROP */
-    function setupPointerDrag(el, isTarget) {
+    /* FLUID FREE DRAG AND DROP FOR ALL 5 CHROMOSOMES */
+    function setupPointerDrag(el) {
       el.addEventListener('pointerdown', (e) => {
         isDragging = true;
         dragEl = el;
         el.setPointerCapture(e.pointerId);
         el.classList.add('dragging');
 
-        const canvas = document.getElementById('unified-canvas');
         startX = e.clientX;
         startY = e.clientY;
         elemInitX = parseFloat(el.style.left) || 0;
@@ -1712,23 +1772,25 @@
         el.style.left = `${newX}px`;
         el.style.top = `${newY}px`;
 
-        // Proximity highlight on target slot
-        if (isTarget) {
-          const slotEl = document.getElementById('active-karyo-slot');
-          if (slotEl) {
-            const slotRect = slotEl.getBoundingClientRect();
-            const chrRect = el.getBoundingClientRect();
-            const dist = Math.hypot(
-              (chrRect.left + chrRect.width/2) - (slotRect.left + slotRect.width/2),
-              (chrRect.top + chrRect.height/2) - (slotRect.top + slotRect.height/2)
-            );
-            if (dist < 55) {
-              slotEl.classList.add('slot-hover');
-            } else {
-              slotEl.classList.remove('slot-hover');
-            }
+        // Highlight matching slot when close
+        const targetSlotKey = el.dataset.slotKey;
+        const slots = document.querySelectorAll('.karyo-target-slot[data-slot-key]');
+        const chrRect = el.getBoundingClientRect();
+        const chrCenterX = chrRect.left + chrRect.width / 2;
+        const chrCenterY = chrRect.top + chrRect.height / 2;
+
+        slots.forEach(slot => {
+          const sRect = slot.getBoundingClientRect();
+          const sCenterX = sRect.left + sRect.width / 2;
+          const sCenterY = sRect.top + sRect.height / 2;
+          const dist = Math.hypot(chrCenterX - sCenterX, chrCenterY - sCenterY);
+
+          if (dist < 55 && slot.dataset.slotKey === targetSlotKey) {
+            slot.classList.add('slot-hover');
+          } else {
+            slot.classList.remove('slot-hover');
           }
-        }
+        });
       });
 
       el.addEventListener('pointerup', (e) => {
@@ -1738,69 +1800,96 @@
         el.releasePointerCapture(e.pointerId);
         el.classList.remove('dragging');
 
-        const slotEl = document.getElementById('active-karyo-slot');
-        if (slotEl) slotEl.classList.remove('slot-hover');
+        // Clear all slot hover states
+        document.querySelectorAll('.karyo-target-slot').forEach(s => s.classList.remove('slot-hover'));
 
-        // Check drop over target slot
-        if (isTarget) {
-          checkDropSnap(el);
-        }
+        // Check drop over target slots
+        checkDropSnap(el);
       });
     }
 
     function checkDropSnap(el) {
       const s = scelles[currentIdx];
-      const slotEl = document.getElementById('active-karyo-slot');
-      if (!slotEl) return;
-
-      const slotRect = slotEl.getBoundingClientRect();
+      const targetSlotKey = el.dataset.slotKey;
+      const slots = document.querySelectorAll('.karyo-target-slot[data-slot-key]');
+      
       const chrRect = el.getBoundingClientRect();
+      const chrCenterX = chrRect.left + chrRect.width / 2;
+      const chrCenterY = chrRect.top + chrRect.height / 2;
 
-      const dist = Math.hypot(
-        (chrRect.left + chrRect.width/2) - (slotRect.left + slotRect.width/2),
-        (chrRect.top + chrRect.height/2) - (slotRect.top + slotRect.height/2)
-      );
+      let matchedSlot = null;
+      let wrongSlot = false;
 
-      // Generous snap radius of 55 pixels
-      if (dist < 55) {
-        snapChromosomeToSlot(el);
+      slots.forEach(slot => {
+        const sRect = slot.getBoundingClientRect();
+        const sCenterX = sRect.left + sRect.width / 2;
+        const sCenterY = sRect.top + sRect.height / 2;
+        const dist = Math.hypot(chrCenterX - sCenterX, chrCenterY - sCenterY);
+
+        if (dist < 55) {
+          if (slot.dataset.slotKey === targetSlotKey) {
+            matchedSlot = slot;
+          } else {
+            wrongSlot = true;
+          }
+        }
+      });
+
+      if (matchedSlot) {
+        // Successful drop on matching pair!
+        playSuccessChime();
+        samplePlacedSets[s.id].add(targetSlotKey);
+
+        renderKaryotypeBoard(s);
+        renderChromosomesLayer();
+
+        const placedCount = samplePlacedSets[s.id].size;
+        showVerifyFeedback(true, `✓ Chromosome rangé avec succès ! (${placedCount}/5 rangés)`);
+
+        if (placedCount === 5) {
+          showFeedback(true, `🌟 <strong>Tous les 5 chromosomes sont rangés !</strong> La cellule est complète. Remplissez le diagnostic ci-dessous.`);
+        }
+      } else if (wrongSlot) {
+        playErrorBuzz();
+        showVerifyFeedback(false, `❌ Ce chromosome ne correspond pas à cette paire : compare sa taille et ses bandes sombres !`);
       }
-    }
-
-    function snapChromosomeToSlot(el) {
-      const s = scelles[currentIdx];
-      playSuccessChime();
-      placedMap[s.id] = true;
-
-      // Re-render karyotype board and chromosomes layer to lock position cleanly
-      renderKaryotypeBoard(s);
-      renderChromosomesLayer();
-
-      showVerifyFeedback(true, '✓ Chromosome positionné ! Cliquez sur "Vérifier le positionnement".');
     }
 
     function autoPlaceChromosome() {
       const s = scelles[currentIdx];
-      if (placedMap[s.id]) return;
+      const placedSet = samplePlacedSets[s.id];
+      const unplaced = s.missingChrs.filter(c => !placedSet.has(c.slotKey));
 
+      if (unplaced.length === 0) return;
+
+      // Auto-place next unplaced chromosome
+      const nextChr = unplaced[0];
       playSuccessChime();
-      placedMap[s.id] = true;
+      placedSet.add(nextChr.slotKey);
+
       renderKaryotypeBoard(s);
       renderChromosomesLayer();
-      showVerifyFeedback(true, '✓ Chromosome placé sur sa paire homologue !');
+
+      const placedCount = placedSet.size;
+      showVerifyFeedback(true, `✓ Chromosome rangé sur sa paire ! (${placedCount}/5 rangés)`);
+
+      if (placedCount === 5) {
+        showFeedback(true, `🌟 <strong>Tous les 5 chromosomes sont rangés !</strong> La cellule est complète. Remplissez le diagnostic ci-dessous.`);
+      }
     }
 
     function verifyPlacement() {
       const s = scelles[currentIdx];
-      const isPlaced = placedMap[s.id] || resolvedMap[s.id];
+      const placedCount = samplePlacedSets[s.id].size;
 
-      if (isPlaced) {
+      if (placedCount === 5) {
         playSuccessChime();
-        showVerifyFeedback(true, '✅ Positionnement exact ! Les chromosomes homologues sont parfaitement associés.');
+        showVerifyFeedback(true, '✅ Exact ! Tous les 5 chromosomes sont parfaitement rangés par paires homologues.');
         showFeedback(true, `🌟 <strong>Caryotype complété avec succès !</strong> Remplissez le diagnostic ci-dessous pour valider ce scellé.`);
       } else {
         playErrorBuzz();
-        showVerifyFeedback(false, '❌ Il reste un chromosome à ranger sur sa paire homologue !');
+        const remaining = 5 - placedCount;
+        showVerifyFeedback(false, `❌ Il reste encore ${remaining} chromosome(s) sur la lame à ranger dans le caryotype !`);
       }
     }
 
@@ -1819,11 +1908,12 @@
     /* VALIDATION DU SCELLÉ */
     function validateCurrentSample() {
       const s = scelles[currentIdx];
-      const isPlaced = placedMap[s.id] || resolvedMap[s.id];
+      const placedCount = samplePlacedSets[s.id].size;
 
-      if (!isPlaced) {
+      if (placedCount < 5) {
         playErrorBuzz();
-        showFeedback(false, `⚠️ Veuillez d'abord terminer le caryotype en plaçant le chromosome manquant sur sa paire !`);
+        const remaining = 5 - placedCount;
+        showFeedback(false, `⚠️ Veuillez d'abord terminer le caryotype : il reste ${remaining} chromosome(s) sur la lame à ranger !`);
         return;
       }
 
