@@ -735,81 +735,93 @@
     font-weight: 700;
   }
 
-  /* --- BOUTONS PULSEURS VISIBLES SUR LA SCÈNE (AGENDA ET VIDÉOSURVEILLANCE) --- */
+  /* --- BOUTONS PULSEURS COMPACTS ET DISCRETS (AGENDA ET VIDÉOSURVEILLANCE) --- */
   .scene-pulsing-btn {
     position: absolute;
     transform: translate(-50%, -50%);
-    background: rgba(15, 23, 42, 0.92);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(4px);
     border: 2px solid var(--cyan);
     color: #ffffff;
-    font-size: 0.78rem;
-    font-weight: 800;
-    font-family: var(--font-sans);
-    padding: 6px 14px;
-    border-radius: 20px;
+    font-size: 1.05rem;
     cursor: pointer;
     z-index: 30;
     display: flex;
     align-items: center;
-    gap: 8px;
-    box-shadow: 0 0 16px rgba(56, 189, 248, 0.6);
+    justify-content: center;
+    padding: 0;
     transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
     user-select: none;
-    animation: btnPulseGlow 2.2s infinite ease-in-out;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
   }
 
-  .scene-pulsing-btn:hover {
-    transform: translate(-50%, -50%) scale(1.1);
-    background: #1e293b;
-    box-shadow: 0 0 25px rgba(56, 189, 248, 0.95);
+  .scene-pulsing-btn::after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    border: 2px solid inherit;
+    animation: beaconPulse 2s infinite ease-out;
+    pointer-events: none;
+  }
+
+  @keyframes beaconPulse {
+    0% { transform: scale(1); opacity: 0.9; }
+    70% { transform: scale(1.6); opacity: 0; }
+    100% { transform: scale(1.6); opacity: 0; }
   }
 
   .scene-pulsing-btn.btn-pulse-agenda {
     border-color: #f59e0b;
-    box-shadow: 0 0 18px rgba(245, 158, 11, 0.7);
+    box-shadow: 0 0 14px rgba(245, 158, 11, 0.7);
   }
-  .scene-pulsing-btn.btn-pulse-agenda:hover {
-    border-color: #fbbf24;
-    box-shadow: 0 0 28px rgba(245, 158, 11, 0.95);
+  .scene-pulsing-btn.btn-pulse-agenda::after {
+    border-color: #f59e0b;
   }
 
   .scene-pulsing-btn.btn-pulse-cctv {
     border-color: #ef4444;
-    box-shadow: 0 0 18px rgba(239, 68, 68, 0.7);
+    box-shadow: 0 0 14px rgba(239, 68, 68, 0.7);
   }
-  .scene-pulsing-btn.btn-pulse-cctv:hover {
-    border-color: #f87171;
-    box-shadow: 0 0 28px rgba(239, 68, 68, 0.95);
-  }
-
-  @keyframes btnPulseGlow {
-    0% {
-      transform: translate(-50%, -50%) scale(1);
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
-    }
-    50% {
-      transform: translate(-50%, -50%) scale(1.07);
-      box-shadow: 0 0 24px rgba(56, 189, 248, 0.95);
-    }
-    100% {
-      transform: translate(-50%, -50%) scale(1);
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
-    }
+  .scene-pulsing-btn.btn-pulse-cctv::after {
+    border-color: #ef4444;
   }
 
-  .pulse-dot-ring {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    display: inline-block;
+  .scene-pulsing-btn:hover {
+    transform: translate(-50%, -50%) scale(1.22);
+    background: rgba(15, 23, 42, 0.95);
   }
-  .pulse-dot-ring.amber {
-    background: #f59e0b;
-    box-shadow: 0 0 8px #f59e0b;
+
+  /* TOOLTIP FLOTTANT AU SURVOL */
+  .scene-pulsing-btn .btn-pulse-tooltip {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0f172a;
+    border: 1px solid #38bdf8;
+    color: #f8fafc;
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: var(--font-sans);
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    z-index: 45;
   }
-  .pulse-dot-ring.red {
-    background: #ef4444;
-    box-shadow: 0 0 8px #ef4444;
+  .scene-pulsing-btn:hover .btn-pulse-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-2px);
   }
 
   /* LOUPE SCIENTIFIQUE D'INVESTIGATION AVEC ZOOM OPTIQUE RÉEL (GROSSISSEMENT X2.5) */
@@ -930,6 +942,55 @@
     0% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.9; }
     50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.4; }
     100% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.9; }
+  }
+
+  .radar-hint-label {
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0f172a;
+    border: 1.5px solid #f59e0b;
+    color: #fef08a;
+    font-size: 10px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+    pointer-events: none;
+    letter-spacing: 0.3px;
+  }
+
+  .clue-checklist-guide {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+    text-align: left;
+  }
+  .guide-item {
+    font-size: 0.76rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .guide-item.done {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: #10b981;
+    color: #34d399;
+    font-weight: 700;
+  }
+  .guide-item.missing {
+    border-color: rgba(245, 158, 11, 0.5);
+    color: #fde68a;
   }
 
   /* BALISES DE SCELLÉS PLACÉES UNIQUEMENT APRÈS DÉCOUVERTE */
@@ -3314,15 +3375,15 @@
           <!-- SURBRILLANCES D'AIDE TEMPORAIRES (ACTIVABLES PAR LE BOUTON AIDE) -->
           <div id="radar-hints-container" style="display:none;"></div>
 
-          <!-- BOUTONS PULSEURS INTERACTIFS SUR LE BUREAU (ACCÈS DIRECTS ÉTAPES 2 & 4) -->
-          <button type="button" class="scene-pulsing-btn btn-pulse-agenda" id="btn-scene-agenda" style="top: 38.4%; left: 36.1%;" onclick="event.stopPropagation(); goToStep(2);" title="Consulter l'Agenda de Marc du Dimanche 08 Novembre">
-            <span class="pulse-dot-ring amber"></span>
-            <span>📔 Agenda de Marc</span>
+          <!-- BOUTONS PULSEURS DISCRETS SUR LE BUREAU (SANS MASQUER L'IMAGE) -->
+          <button type="button" class="scene-pulsing-btn btn-pulse-agenda" id="btn-scene-agenda" style="top: 15.0%; left: 34.0%;" onclick="event.stopPropagation(); goToStep(2);" title="Consulter l'Agenda de Marc du Dimanche 08 Novembre">
+            <span>📔</span>
+            <span class="btn-pulse-tooltip">Consulter l'Agenda de Marc (Onglet 2)</span>
           </button>
 
-          <button type="button" class="scene-pulsing-btn btn-pulse-cctv" id="btn-scene-cctv" style="top: 27.0%; left: 48.3%;" onclick="event.stopPropagation(); goToStep(4);" title="Visionner la Vidéosurveillance et les portraits-robots">
-            <span class="pulse-dot-ring red"></span>
-            <span>📹 Vidéosurveillance</span>
+          <button type="button" class="scene-pulsing-btn btn-pulse-cctv" id="btn-scene-cctv" style="top: 11.5%; left: 52.0%;" onclick="event.stopPropagation(); goToStep(4);" title="Visionner la Vidéosurveillance et les portraits-robots">
+            <span>📹</span>
+            <span class="btn-pulse-tooltip">Vidéosurveillance & Biométrie (Onglet 4)</span>
           </button>
 
           <!-- LES BALISES DE SCELLÉS N'APPARAISSENT QU'APRÈS DÉCOUVERTE -->
@@ -4364,46 +4425,46 @@
     // Coordonnées visuelles précises calquées sur assets/enquete_genetique/scene_de_crime.jpg (1024x612)
     const clueLocations = {
       salive: { 
-        x: 31.8, 
-        y: 70.0, 
-        radius: 9.0, 
+        x: 35.0, 
+        y: 35.0, 
+        radius: 6.5, 
         name: "Gobelet de café au sol (Salive)",
         hint: "Gobelet posé sur la moquette à gauche de Marc, près du tiroir ouvert"
       },
       sang_sol: { 
-        x: 65.5, 
-        y: 61.5, 
-        radius: 9.0, 
+        x: 64.0, 
+        y: 32.0, 
+        radius: 7.0, 
         name: "Gouttes de sang au sol",
         hint: "Taches et gouttes de sang au sol à proximité des jambes de Marc"
       },
       poil: { 
-        x: 56.5, 
-        y: 65.5, 
-        radius: 8.5, 
+        x: 54.0, 
+        y: 32.0, 
+        radius: 6.5, 
         name: "Poil animal sur la manche",
         hint: "Poil animal accroché sur la manche de chemise de Marc"
       },
       cheveu: { 
-        x: 47.5, 
-        y: 67.5, 
-        radius: 8.5, 
+        x: 48.5, 
+        y: 35.5, 
+        radius: 6.5, 
         name: "Cheveu sur le col de la veste",
         hint: "Cheveu humain avec bulbe au niveau du col/tête de la victime"
       },
       empreinte: { 
-        x: 41.5, 
-        y: 76.0, 
-        radius: 8.5, 
+        x: 42.5, 
+        y: 38.5, 
+        radius: 6.5, 
         name: "Empreinte digitale au sol",
         hint: "Empreinte papillaire au sol près de la main droite de Marc"
       },
       sang_meuble: { 
-        x: 38.5, 
-        y: 43.5, 
+        x: 37.5, 
+        y: 23.5, 
         radius: 8.5, 
         name: "Sang séché sur l'angle du bureau",
-        hint: "Sang séché sur l'angle avant en bois du grand bureau de travail"
+        hint: "Angle avant gauche en bois du bureau de Marc (lutte violente)"
       }
     };
 
@@ -4447,15 +4508,20 @@
 
         // Vérifier si la loupe survole un indice non découvert
         let nearbyClue = null;
-        Object.keys(clueLocations).forEach(key => {
-          if (!discoveredClues.has(key)) {
-            const loc = clueLocations[key];
-            const dist = Math.hypot(percentX - loc.x, percentY - loc.y);
-            if (dist < loc.radius) {
-              nearbyClue = key;
+        if (!discoveredClues.has('sang_meuble') && percentX >= 30 && percentX <= 45 && percentY >= 14 && percentY <= 31) {
+          nearbyClue = 'sang_meuble';
+        }
+        if (!nearbyClue) {
+          Object.keys(clueLocations).forEach(key => {
+            if (!discoveredClues.has(key)) {
+              const loc = clueLocations[key];
+              const dist = Math.hypot(percentX - loc.x, percentY - loc.y);
+              if (dist < loc.radius) {
+                nearbyClue = key;
+              }
             }
-          }
-        });
+          });
+        }
 
         if (nearbyClue) {
           loupe.classList.add('detecting');
@@ -4484,7 +4550,9 @@
           if (discoveredClues.has(key)) return '';
           const loc = clueLocations[key];
           return `
-            <div class="radar-hint-zone" style="left:${loc.x}%; top:${loc.y}%; width:${loc.radius * 2}%; height:${loc.radius * 2 * (1024/612)}%;"></div>
+            <div class="radar-hint-zone" style="left:${loc.x}%; top:${loc.y}%; width:${loc.radius * 2}%; height:${loc.radius * 2 * (1024/612)}%;">
+              <span class="radar-hint-label">${loc.name}</span>
+            </div>
           `;
         }).join('');
         if (btn) btn.innerHTML = '💡 Masquer les zones suspectes';
@@ -4492,6 +4560,48 @@
         container.style.display = 'none';
         if (btn) btn.innerHTML = '💡 Aide : Révéler les zones d\'indices';
       }
+    }
+
+    function renderClueExplorerGuide() {
+      const container = document.getElementById('clue-display');
+      if (!container) return;
+      container.innerHTML = `
+        <div class="clue-header">
+          <h4>🔎 Relevé des 6 Indices d'Investigation</h4>
+          <span class="clue-type-pill" style="background:#0284c7;">${discoveredClues.size} / 6 identifiés</span>
+        </div>
+        <div class="clue-body" style="padding-top:8px;">
+          <p style="font-size:0.78rem; color:#cbd5e1; margin-bottom:8px;">
+            Examine la scène à la loupe. Le réticule réagit en doré dès qu'une anomalie est sous l'objectif :
+          </p>
+          <div class="clue-checklist-guide">
+            <div class="guide-item ${discoveredClues.has('salive') ? 'done' : 'missing'}">
+              <span>${discoveredClues.has('salive') ? '✅' : '🔍'}</span>
+              <span><strong>Gobelet de café</strong> : sur la moquette à gauche</span>
+            </div>
+            <div class="guide-item ${discoveredClues.has('cheveu') ? 'done' : 'missing'}">
+              <span>${discoveredClues.has('cheveu') ? '✅' : '🔍'}</span>
+              <span><strong>Cheveu</strong> : sur le col de veste / nuque de Marc</span>
+            </div>
+            <div class="guide-item ${discoveredClues.has('poil') ? 'done' : 'missing'}">
+              <span>${discoveredClues.has('poil') ? '✅' : '🔍'}</span>
+              <span><strong>Poil animal</strong> : sur sa manche de chemise gauche</span>
+            </div>
+            <div class="guide-item ${discoveredClues.has('sang_sol') ? 'done' : 'missing'}">
+              <span>${discoveredClues.has('sang_sol') ? '✅' : '🔍'}</span>
+              <span><strong>Gouttes de sang</strong> : au sol près des jambes de Marc</span>
+            </div>
+            <div class="guide-item ${discoveredClues.has('empreinte') ? 'done' : 'missing'}">
+              <span>${discoveredClues.has('empreinte') ? '✅' : '🔍'}</span>
+              <span><strong>Empreinte digitale</strong> : au sol près de sa main droite</span>
+            </div>
+            <div class="guide-item ${discoveredClues.has('sang_meuble') ? 'done' : 'missing'}">
+              <span>${discoveredClues.has('sang_meuble') ? '✅' : '🔍'}</span>
+              <span><strong>Sang séché</strong> : sur l'angle avant gauche du bureau</span>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
     function handleSceneClick(e) {
@@ -4504,41 +4614,29 @@
       const percentX = (mouseX / rect.width) * 100;
       const percentY = (mouseY / rect.height) * 100;
 
-      // Clic sur l'agenda sur le bureau (x: 36.1%, y: 38.4%)
-      if (Math.hypot(percentX - 36.1, percentY - 38.4) < 7.5) {
-        goToStep(2);
-        return;
-      }
-      // Clic sur l'ordinateur sur le bureau (x: 48.3%, y: 27.0%)
-      if (Math.hypot(percentX - 48.3, percentY - 27.0) < 8.0) {
-        goToStep(4);
-        return;
+      // Clic direct sur l'angle du grand bureau (sang séché)
+      let clickedClue = null;
+      if (percentX >= 30 && percentX <= 45 && percentY >= 14 && percentY <= 31) {
+        if (!discoveredClues.has('sang_meuble')) {
+          clickedClue = 'sang_meuble';
+        }
       }
 
-      // Clic sur un des indices de la scène
-      let clickedClue = null;
-      Object.keys(clueLocations).forEach(key => {
-        const loc = clueLocations[key];
-        const dist = Math.hypot(percentX - loc.x, percentY - loc.y);
-        if (dist < loc.radius) {
-          clickedClue = key;
-        }
-      });
+      if (!clickedClue) {
+        Object.keys(clueLocations).forEach(key => {
+          const loc = clueLocations[key];
+          const dist = Math.hypot(percentX - loc.x, percentY - loc.y);
+          if (dist < loc.radius) {
+            clickedClue = key;
+          }
+        });
+      }
 
       if (clickedClue) {
         discoverClue(clickedClue);
       } else {
         playBeep(320, 0.05);
-        const container = document.getElementById('clue-display');
-        container.innerHTML = `
-          <div class="clue-header">
-            <h4>🔎 Examen au grossissement 2.5×</h4>
-            <span class="clue-type-pill" style="background:#334155;">Zone neutre</span>
-          </div>
-          <div class="clue-body">
-            <p>Aucun prélèvement à cet endroit précis. Continue d'explorer : le <strong>gobelet au sol</strong> à gauche, les <strong>gouttes de sang au sol</strong> près des jambes, les <strong>vêtements de Marc</strong> (manche et col), l'<strong>empreinte au sol</strong> près de sa main, et l'<strong>angle du bureau</strong>.</p>
-          </div>
-        `;
+        renderClueExplorerGuide();
       }
     }
 
@@ -5554,6 +5652,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       initClassifier(); 
       selectDnaSample('poils');
+      renderClueExplorerGuide();
       try {
         const savedName = localStorage.getItem('enquete_agent_name');
         if (savedName) document.getElementById('agent-name').value = savedName;
