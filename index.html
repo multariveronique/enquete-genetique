@@ -5765,9 +5765,9 @@
 
       const t = (typeof activeVid.currentTime === 'number' && !isNaN(activeVid.currentTime)) ? activeVid.currentTime : 0;
       
-      // Séquence 1 (0s à 5.65s) : Arrivée -> Débute à 19h18:24 et défile seconde par seconde pendant qu'il se dirige vers le bureau
-      // Séquence 2 (t >= 5.65s à 10s) : Deuxième apparition -> Bascule à 19h32:15 au moment exact où l'homme à capuche apparaît seul quittant le bureau (+13min 45s, > 10 min écoulées pour commettre le crime)
-      const CUT_TIME = 5.65;
+      // Séquence 1 (0s à 6.8s) : Arrivée -> Débute à 19h18:24 et défile seconde par seconde pendant qu'il se dirige vers le bureau
+      // Séquence 2 (t >= 6.8s à 10s) : Deuxième phase -> Bascule à 19h32:15 quand il réapparaît en quittant le bureau (+13min 45s, > 10 min écoulées pour commettre le crime)
+      const CUT_TIME = 6.8;
       const isExitPhase = (t >= CUT_TIME);
 
       let hours = 19;
