@@ -726,6 +726,155 @@
     font-weight: 700;
   }
 
+  /* --- EXPLORATION LIBRE À LA LOUPE SANS PASTILLES VISIBLES --- */
+  .scene-viewport-wrapper {
+    position: relative;
+    cursor: crosshair;
+    user-select: none;
+    overflow: hidden;
+  }
+
+  /* ZONES DE DÉTECTION TOTALEMENT INVISIBLES AU DÉPART */
+  .clue-detection-zone {
+    position: absolute;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 15;
+    background: transparent;
+    transition: background 0.2s;
+  }
+
+  /* LOUPE SCIENTIFIQUE VIRTUELLE SUIVANT LE CURSEUR */
+  .scene-loupe {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border: 2.5px solid #38bdf8;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), inset 0 0 10px rgba(56, 189, 248, 0.2);
+    pointer-events: none;
+    z-index: 40;
+    transform: translate(-50%, -50%);
+    display: none;
+    background: rgba(56, 189, 248, 0.06);
+    transition: border-color 0.15s, box-shadow 0.15s, width 0.15s, height 0.15s;
+  }
+
+  .scene-loupe.detecting {
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.8), inset 0 0 15px rgba(245, 158, 11, 0.3) !important;
+    background: rgba(245, 158, 11, 0.15) !important;
+  }
+
+  .loupe-crosshair {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .loupe-crosshair::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 0;
+    width: 14px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.7);
+  }
+  .loupe-crosshair::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 6px;
+    width: 2px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .loupe-tip-badge {
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f59e0b;
+    color: #000;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    display: none;
+    font-family: var(--font-mono);
+  }
+
+  /* BALISES DE SCELLÉS PLACÉES UNIQUEMENT APRÈS DÉCOUVERTE */
+  .evidence-flag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: #0f172a;
+    border: 2px solid #f59e0b;
+    color: #f59e0b;
+    font-weight: 800;
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    padding: 2px 6px;
+    border-radius: 4px;
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+    z-index: 25;
+    pointer-events: none;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  .evidence-flag.bagged {
+    border-color: #10b981;
+    color: #34d399;
+    background: #064e3b;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
+  }
+
+  /* --- CACHES HUD DE VIDÉOSURVEILLANCE (HEURE 19H-20H SANS 23H) --- */
+  .cctv-hud-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 36px;
+    background: #000000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 14px;
+    z-index: 30;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: #e2e8f0;
+    border-bottom: 1.5px solid #1e293b;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  }
+
+  .cctv-hud-bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: #000000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 14px;
+    z-index: 30;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: #94a3b8;
+    border-top: 1.5px solid #1e293b;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.8);
+  }
+
   /* HOTSPOTS */
   .hotspot {
     position: absolute;
@@ -2975,22 +3124,22 @@
   <!-- STEP NAVIGATION TABS -->
   <nav class="stepper-nav">
     <button class="step-tab active" onclick="goToStep(1)" id="tab-1">
-      <span class="step-badge">1</span> 🔍 Scène de Crime
+      <span class="step-badge">1</span> 🔎 Scène de Crime (Loupe & Scellés)
     </button>
     <button class="step-tab" onclick="goToStep(2)" id="tab-2">
-      <span class="step-badge">2</span> 🧪 Scellés d'ADN
+      <span class="step-badge">2</span> 📔 Agenda du Soigneur
     </button>
     <button class="step-tab" onclick="goToStep(3)" id="tab-3">
-      <span class="step-badge">3</span> 🦁 Agenda & Espèces
+      <span class="step-badge">3</span> 🦁 Fiches des Espèces
     </button>
     <button class="step-tab" onclick="goToStep(4)" id="tab-4">
-      <span class="step-badge">4</span> 📹 Vidéosurveillance
+      <span class="step-badge">4</span> 📹 Vidéosurveillance (19h28)
     </button>
     <button class="step-tab" onclick="goToStep(5)" id="tab-5">
-      <span class="step-badge">5</span> 🧬 Labo de Tri SVT
+      <span class="step-badge">5</span> 🧬 Labo de Tri SVT (12 Caractères)
     </button>
     <button class="step-tab" onclick="goToStep(6)" id="tab-6">
-      <span class="step-badge">6</span> 📄 Rapport d'Enquête
+      <span class="step-badge">6</span> 📄 Rapport d'Investigation
     </button>
   </nav>
 
@@ -3003,84 +3152,74 @@
     <section class="step-panel active" id="step-1">
       <div class="panel-banner">
         <div>
-          <h2>🔎 Exploration de la Scène de Crime – Recherche d'Indices & Mise sous Scellés</h2>
-          <p>Marc Delorme, 42 ans, soigneur animalier en chef, a été retrouvé inanimé dans son bureau. 
-             <strong>Explorez la pièce, trouvez les 5 indices biologiques (salive, cheveux, poils, sang) et glissez-les un par un dans un sac de scellé officiel</strong> pour les expédier à la police scientifique.</p>
+          <h2>🔎 Étape 1 : Exploration de la Scène de Crime à la Loupe & Mise sous Scellés</h2>
+          <p>Marc Delorme a été agressé dans son bureau entre 19h00 et 20h00. 
+             <strong>Déplace ta loupe sur la scène pour repérer les 5 indices biologiques dissimulés (salive, cheveux, poils, sang). Dès qu'un indice est détecté, clique pour le prélever et glisse-le dans un sac de scellé judiciaire officiel !</strong></p>
         </div>
-        <span class="target-badge" id="scelles-counter-badge">Scellés constitués : 0 / 5</span>
+        <span class="target-badge" id="scelles-counter-badge">Indices sous scellés : 0 / 5</span>
       </div>
 
       <div class="scene-explorer-layout">
-        <!-- VUE SCENE DE CRIME AVEC LES VRAIS POINTS D'INDICES -->
-        <div class="scene-viewport-wrapper">
+        <!-- VUE SCENE DE CRIME : AUCUNE PASTILLE VISIBLE AU DÉPART ! -->
+        <div class="scene-viewport-wrapper" id="scene-viewport" onmousemove="handleLoupeMove(event)" onmouseleave="handleLoupeLeave()" onclick="handleSceneClick(event)">
           <img src="assets/enquete_genetique/scene_de_crime.jpg" alt="Scène de crime dans le bureau du soigneur" class="scene-image" id="crime-scene-img">
           
+          <!-- LOUPE VIRTUELLE ACTIVE -->
+          <div class="scene-loupe" id="scene-loupe">
+            <div class="loupe-crosshair"></div>
+            <span class="loupe-tip-badge" id="loupe-tip">🔍 Indice repéré ! Clique</span>
+          </div>
+
+          <!-- BANDEAUX POLICE ET CAMERA -->
           <div class="camera-overlay">
             <span class="rec-dot"></span>
-            <span>CAM_01 • BUREAU_SOIGNEUR • ZONE DE RECHERCHE D'INDICES</span>
+            <span>ZONE_CRIME • RECHERCHE ACTIVE À LA LOUPE</span>
           </div>
 
-          <div class="tape-decoration">POLICE TECHNIQUE ET SCIENTIFIQUE • ZONE SÉCURISÉE</div>
+          <div class="tape-decoration">POLICE SCIENTIFIQUE • ACCÈS STRICTEMENT RÉSERVÉ</div>
 
-          <!-- INDICE 1 : SALIVE SUR LE GOBELET DE CAFE (TABLE DU BUREAU) -->
-          <div class="hotspot" style="top: 80%; left: 83%;" onclick="inspectCrimeSceneClue('salive')" title="Examiner le gobelet de café" id="hotspot-salive">
-            <span class="hotspot-number">☕</span>
-            <span class="hotspot-tag">Salive</span>
-          </div>
+          <!-- ZONES DE DÉTECTION TOTALEMENT INVISIBLES (SANS PASTILLES !) -->
+          <!-- 1. Gobelet de café (Salive) sur la table à droite -->
+          <div class="clue-detection-zone" id="zone-salive" data-clue="salive" style="top: 76%; left: 80%; width: 9%; height: 11%;"></div>
 
-          <!-- INDICE 2 : CHEVEU SUR LE COL DE LA VESTE DE LA VICTIME -->
-          <div class="hotspot" style="top: 64%; left: 45%;" onclick="inspectCrimeSceneClue('cheveu')" title="Examiner le col de la veste de Marc" id="hotspot-cheveu">
-            <span class="hotspot-number">🧥</span>
-            <span class="hotspot-tag">Cheveu</span>
-          </div>
+          <!-- 2. Cheveu avec bulbe sur le col de la veste de Marc -->
+          <div class="clue-detection-zone" id="zone-cheveu" data-clue="cheveu" style="top: 61%; left: 42%; width: 8%; height: 9%;"></div>
 
-          <!-- INDICE 3 : POIL ANIMAL SUR LA MANCHE DE LA CHEMISE -->
-          <div class="hotspot" style="top: 72%; left: 56%;" onclick="inspectCrimeSceneClue('poil')" title="Examiner la manche de chemise de Marc" id="hotspot-poil">
-            <span class="hotspot-number">🐾</span>
-            <span class="hotspot-tag">Poil</span>
-          </div>
+          <!-- 3. Poil animal sur la manche de chemise de Marc -->
+          <div class="clue-detection-zone" id="zone-poil" data-clue="poil" style="top: 69%; left: 53%; width: 8%; height: 9%;"></div>
 
-          <!-- INDICE 4 : GOUTTE DE SANG FRAIS AU SOL -->
-          <div class="hotspot" style="top: 76%; left: 37%;" onclick="inspectCrimeSceneClue('sang_sol')" title="Examiner la flaque de sang au sol" id="hotspot-sang_sol">
-            <span class="hotspot-number">🩸</span>
-            <span class="hotspot-tag">Sang sol</span>
-          </div>
+          <!-- 4. Goutte de sang au sol près du crâne -->
+          <div class="clue-detection-zone" id="zone-sang_sol" data-clue="sang_sol" style="top: 73%; left: 34%; width: 9%; height: 10%;"></div>
 
-          <!-- INDICE 5 : SANG SÉCHÉ SUR L'ANGLE MÉTALLIQUE DU MEUBLE -->
-          <div class="hotspot" style="top: 50%; left: 24%;" onclick="inspectCrimeSceneClue('sang_meuble')" title="Examiner l'angle du meuble de lutte" id="hotspot-sang_meuble">
-            <span class="hotspot-number">🩸</span>
-            <span class="hotspot-tag">Meuble</span>
-          </div>
+          <!-- 5. Sang séché sur l'angle métallique du meuble -->
+          <div class="clue-detection-zone" id="zone-sang_meuble" data-clue="sang_meuble" style="top: 47%; left: 21%; width: 8%; height: 10%;"></div>
 
-          <!-- PIECE A CONVICTION : AGENDA SUR LE BUREAU -->
-          <div class="hotspot" style="top: 36%; left: 37%; border-color:#eab308;" onclick="goToStep(3)" title="Consulter l'agenda de Marc (Onglet 3)" id="hotspot-agenda">
-            <span class="hotspot-number">📔</span>
-            <span class="hotspot-tag" style="background:#eab308; color:#000;">Agenda ➔</span>
-          </div>
+          <!-- ACCÈS AGENDA SUR LE BUREAU -->
+          <div class="clue-detection-zone" id="zone-agenda" data-clue="agenda_link" style="top: 34%; left: 35%; width: 8%; height: 8%;" title="Cliquer pour ouvrir l'Agenda de Marc (Onglet 2)"></div>
 
-          <!-- TERMINAL : VIDEOSURVEILLANCE -->
-          <div class="hotspot" style="top: 26%; left: 49%; border-color:#38bdf8;" onclick="goToStep(4)" title="Visionner la vidéosurveillance (Onglet 4)" id="hotspot-computer">
-            <span class="hotspot-number">🖥️</span>
-            <span class="hotspot-tag" style="background:#0284c7; color:#fff;">Vidéos ➔</span>
-          </div>
+          <!-- ACCÈS ORDINATEUR -->
+          <div class="clue-detection-zone" id="zone-computer" data-clue="computer_link" style="top: 24%; left: 47%; width: 9%; height: 9%;" title="Cliquer pour ouvrir la Vidéosurveillance (Onglet 4)"></div>
+
+          <!-- LES BALISES N'APPARAISSENT QU'APRÈS DÉCOUVERTE -->
+          <div id="discovered-flags-container"></div>
         </div>
 
         <!-- SIDEBAR D'INSPECTION & DE MISE SOUS SCELLÉ -->
         <div class="inspection-sidebar">
           <h3>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
-            Relevé d'Indice & Sac de Scellé
+            Relevé d'Indices & Scellés
           </h3>
 
-          <!-- ZONE DE CONTENU DYNAMIQUE DE L'INDICE -->
+          <!-- ZONE DE CONTENU DYNAMIQUE -->
           <div class="clue-details-box" id="clue-display">
             <div class="clue-empty-state">
               <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5" style="margin-bottom:12px;">
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
               </svg>
-              <p>Cliquez sur l'un des <strong>indices sur la scène de crime</strong> pour l'examiner et le glisser dans un scellé officiel de la police.</p>
+              <p>Promène ta loupe sur la scène de crime. Explore la victime, le sol, la table et les meubles pour détecter les <strong>5 indices biologiques</strong>.</p>
             </div>
           </div>
 
@@ -3088,30 +3227,30 @@
           <div style="margin-top:16px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <h4 style="font-size:0.8rem; color:#cbd5e1; text-transform:uppercase; letter-spacing:0.5px; margin:0;">
-                Scellés prêts pour l'analyse ADN :
+                Scellés prêts pour l'analyse :
               </h4>
               <span id="rack-count-text" style="font-size:0.8rem; font-weight:700; color:#38bdf8;">0 / 5</span>
             </div>
 
             <div class="scelles-progress-rack">
-              <div class="rack-slot" id="slot-rack-salive">☕ S-01</div>
-              <div class="rack-slot" id="slot-rack-cheveu">🧥 C-01</div>
-              <div class="rack-slot" id="slot-rack-poil">🐾 P-01</div>
-              <div class="rack-slot" id="slot-rack-sang_sol">🩸 B-01</div>
-              <div class="rack-slot" id="slot-rack-sang_meuble">🩸 B-02</div>
+              <div class="rack-slot" id="slot-rack-salive">☕ SC-01</div>
+              <div class="rack-slot" id="slot-rack-cheveu">🧥 SC-02</div>
+              <div class="rack-slot" id="slot-rack-poil">🐾 SC-03</div>
+              <div class="rack-slot" id="slot-rack-sang_sol">🩸 SC-04</div>
+              <div class="rack-slot" id="slot-rack-sang_meuble">🩸 SC-05</div>
             </div>
           </div>
 
-          <!-- BANNIÈRE DE VALIDATION DE TOUS LES SCELLÉS -->
+          <!-- BANNIÈRE VALIDATION FINALE -->
           <div id="all-scelles-complete-box" style="display:none; background:rgba(16,185,129,0.15); border:1.5px solid #10b981; border-radius:8px; padding:12px; margin-top:14px; text-align:center;">
             <div style="color:#a7f3d0; font-weight:700; font-size:0.88rem; margin-bottom:6px;">
-              🎉 Les 5 indices biologiques sont sous scellés !
+              🎉 Les 5 indices sont sous scellés !
             </div>
             <p style="color:#e2e8f0; font-size:0.78rem; margin:0 0 10px 0; line-height:1.4;">
-              Chaque échantillon renferme des cellules avec un NOYAU contenant l'ADN. Ils seront analysés dans l'Activité N°3.
+              Chaque cellule renferme un NOYAU avec de l'ADN exploitable (analysé dans l'Activité 3).
             </p>
-            <button class="btn-primary" onclick="goToStep(3)" style="width:100%; font-size:0.85rem; padding:8px;">
-              Consulter l'Agenda du Soigneur (Onglet 3) ▶
+            <button class="btn-primary" onclick="goToStep(2)" style="width:100%; font-size:0.85rem; padding:8px;">
+              Ouvrir l'Agenda de Marc (Onglet 2) ▶
             </button>
           </div>
 
@@ -3125,222 +3264,12 @@
     <section class="step-panel" id="step-2">
       <div class="panel-banner">
         <div>
-          <h2>🧪 Étape 2 : Galerie des 8 Scellés Judiciaires & Prélèvements d'ADN</h2>
-          <p>Les techniciens en identification criminelle ont placé sous scellés <strong>8 prélèvements biologiques</strong> réalisés sur la scène de crime. Cliquez sur un scellé pour examiner ses cellules au microscope et identifier la localisation de l'ADN.</p>
+          <h2>📔 Étape 2 : L'Agenda du Soigneur (Dimanche 08 Novembre)</h2>
+          <p>L'agenda professionnel de Marc Delorme retrouvé sur son bureau retrace l'ensemble de ses interventions et rencontres du <strong>dimanche 08 novembre</strong>. Analysez la chronologie de sa journée.</p>
         </div>
-        <span class="target-badge">Notion : Traces biologiques & ADN</span>
+        <span class="target-badge">Document d'Enquête</span>
       </div>
 
-      <!-- BANDEAU RÈGLE ESSENTIELLE ACTIVITÉ 3 -->
-      <div style="background:linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); border:1.5px solid #a855f7; border-radius:10px; padding:14px 18px; margin-bottom:20px; display:flex; align-items:center; gap:16px;">
-        <span style="font-size:2rem;">🎯</span>
-        <div>
-          <h4 style="color:#c084fc; margin:0 0 4px 0; font-size:1rem;">Règle d'or de l'enquête : Tous ces 8 prélèvements contiennent de l'ADN exploitable !</h4>
-          <p style="color:#e2e8f0; font-size:0.86rem; margin:0; line-height:1.4;">
-            Qu'il s'agisse des cellules folliculaires des poils et cheveux, des globules blancs du sang ou des cellules buccales de la salive, <strong>toutes ces cellules possèdent un noyau avec de l'ADN</strong>. Ces 8 échantillons feront l'objet de <strong>l'Activité N°3</strong> pour reconstituer les caryotypes (chromosomes) de chaque suspect et animal !
-          </p>
-        </div>
-      </div>
-
-      <!-- GRILLE DES 8 SCELLÉS JUDICIAIRES -->
-      <div class="seals-grid-8">
-
-        <!-- 1. POILS ANIMAUX -->
-        <div class="seal-bag-card active-sample" id="dna-card-poils" onclick="selectDnaSample('poils')">
-          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
-          <div class="seal-header">
-            <span class="seal-code">#SC-2026-P01</span>
-            <span class="seal-barcode">|||| ||| ||||</span>
-          </div>
-          <div class="seal-visual-pouch">
-            <svg width="100" height="70" viewBox="0 0 100 70">
-              <path d="M15 60 Q 30 20, 50 15" stroke="#d97706" stroke-width="2.5" fill="none"/>
-              <circle cx="15" cy="60" r="3.5" fill="#f59e0b"/>
-              <path d="M40 65 Q 55 30, 80 25" stroke="#1c1917" stroke-width="3" fill="none"/>
-              <circle cx="40" cy="65" r="4" fill="#52525b"/>
-              <path d="M60 62 Q 70 35, 90 30" stroke="#b45309" stroke-width="2" fill="none"/>
-              <circle cx="60" cy="62" r="3" fill="#f59e0b"/>
-            </svg>
-          </div>
-          <div class="seal-title">Poils d'animaux (avec racines)</div>
-          <div class="seal-location">📍 Blouson de travail & manches de Marc</div>
-          <div class="seal-dna-tag">✅ ADN Présent (Bulbes racinaires)</div>
-        </div>
-
-        <!-- 2. CHEVEUX HUMAINS -->
-        <div class="seal-bag-card" id="dna-card-cheveux" onclick="selectDnaSample('cheveux')">
-          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
-          <div class="seal-header">
-            <span class="seal-code">#SC-2026-C01</span>
-            <span class="seal-barcode">||| ||||| ||</span>
-          </div>
-          <div class="seal-visual-pouch">
-            <svg width="100" height="70" viewBox="0 0 100 70">
-              <path d="M20 15 Q 40 40, 70 55" stroke="#334155" stroke-width="3" fill="none"/>
-              <circle cx="70" cy="55" r="5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
-              <circle cx="70" cy="55" r="2.5" fill="#a855f7"/>
-            </svg>
-          </div>
-          <div class="seal-title">Cheveux humains (avec bulbes)</div>
-          <div class="seal-location">📍 Col déchiré de Marc & sol (lutte)</div>
-          <div class="seal-dna-tag">✅ ADN Présent (Follicule pileux)</div>
-        </div>
-
-        <!-- 3. SANG 1 SOL -->
-        <div class="seal-bag-card" id="dna-card-sang1" onclick="selectDnaSample('sang1')">
-          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
-          <div class="seal-header">
-            <span class="seal-code">#SC-2026-B01</span>
-            <span class="seal-barcode">|||| || ||||</span>
-          </div>
-          <div class="seal-visual-pouch">
-            <svg width="100" height="70" viewBox="0 0 100 70">
-              <rect x="25" y="32" width="55" height="5" fill="#cbd5e1" rx="2"/>
-              <ellipse cx="25" cy="34" rx="10" ry="6" fill="#991b1b"/>
-              <circle cx="22" cy="34" r="2" fill="#ef4444"/>
-            </svg>
-          </div>
-          <div class="seal-title">Écouvillon Sang n°1 (Sol)</div>
-          <div class="seal-location">📍 Flaque au sol près du corps inanimé</div>
-          <div class="seal-dna-tag">✅ ADN Présent (Globules blancs)</div>
-        </div>
-
-        <!-- 4. SANG 2 BUREAU -->
-        <div class="seal-bag-card" id="dna-card-sang2" onclick="selectDnaSample('sang2')">
-          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
-          <div class="seal-header">
-            <span class="seal-code">#SC-2026-B02</span>
-            <span class="seal-barcode">|| ||||| |||</span>
-          </div>
-          <div class="seal-visual-pouch">
-            <svg width="100" height="70" viewBox="0 0 100 70">
-              <rect x="25" y="32" width="55" height="5" fill="#cbd5e1" rx="2"/>
-              <ellipse cx="25" cy="34" rx="10" ry="6" fill="#b91c1c"/>
-            </svg>
-          </div>
-          <div class="seal-title">Écouvillon Sang n°2 (Bureau)</div>
-          <div class="seal-location">📍 Coin métallique tranchant du meuble</div>
-          <div class="seal-dna-tag">✅ ADN Présent (Globules blancs)</div>
-        </div>
-
-        <!-- 5. SANG 3 ONGLES -->
-        <div class="seal-bag-card" id="dna-card-sang3" onclick="selectDnaSample('sang3')">
-          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
-          <div class="seal-header">
-            <span class="seal-code">#SC-2026-B03</span>
-            <span class="seal-barcode">||||| || |||</span>
-          </div>
-          <div class="seal-visual-pouch">
-            <svg width="100" height="70" viewBox="0 0 100 70">
-              <rect x="25" y="32" width="55" height="5" fill="#cbd5e1" rx="2"/>
-              <ellipse cx="25" cy="34" rx="9" ry="5.5" fill="#7f1d1d"/>
-            </svg>
-          </div>
-          <div class="seal-title">Écouvillon Sang n°3 (Ongles)</div>
-          <div class="seal-location">📍 Grattage sous les ongles de Marc (défense)</div>
-          <div class="seal-dna-tag">✅ ADN Présent (Cellules cutanées + Sang)</div>
-        </div>
-
-        <!-- 6. SANG 4 CAISSE -->
-        <div class="seal-bag-card" id="dna-card-sang4" onclick="selectDnaSample('sang4')">
-          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
-          <div class="seal-header">
-            <span class="seal-code">#SC-2026-B04</span>
-            <span class="seal-barcode">||| || |||||</span>
-          </div>
-          <div class="seal-visual-pouch">
-            <svg width="100" height="70" viewBox="0 0 100 70">
-              <rect x="25" y="32" width="55" height="5" fill="#cbd5e1" rx="2"/>
-              <ellipse cx="25" cy="34" rx="10" ry="6" fill="#991b1b"/>
-            </svg>
-          </div>
-          <div class="seal-title">Écouvillon Sang n°4 (Caisse)</div>
-          <div class="seal-location">📍 Éclaboussure sur caisse de transport</div>
-          <div class="seal-dna-tag">✅ ADN Présent (Globules blancs)</div>
-        </div>
-
-        <!-- 7. SANG 5 TÉLÉPHONE -->
-        <div class="seal-bag-card" id="dna-card-sang5" onclick="selectDnaSample('sang5')">
-          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
-          <div class="seal-header">
-            <span class="seal-code">#SC-2026-B05</span>
-            <span class="seal-barcode">|||| ||| |||</span>
-          </div>
-          <div class="seal-visual-pouch">
-            <svg width="100" height="70" viewBox="0 0 100 70">
-              <rect x="25" y="32" width="55" height="5" fill="#cbd5e1" rx="2"/>
-              <ellipse cx="25" cy="34" rx="10" ry="6" fill="#b91c1c"/>
-            </svg>
-          </div>
-          <div class="seal-title">Écouvillon Sang n°5 (Combiné)</div>
-          <div class="seal-location">📍 Empreinte digitale sanglante sur téléphone</div>
-          <div class="seal-dna-tag">✅ ADN Présent (Globules blancs)</div>
-        </div>
-
-        <!-- 8. SALIVE GOBELET -->
-        <div class="seal-bag-card" id="dna-card-salive" onclick="selectDnaSample('salive')">
-          <div class="seal-tamper-tape">SCELLÉ JUDICIAIRE INVIOLABLE • POLICE NATIONALE</div>
-          <div class="seal-header">
-            <span class="seal-code">#SC-2026-S01</span>
-            <span class="seal-barcode">|| |||||| ||</span>
-          </div>
-          <div class="seal-visual-pouch">
-            <svg width="100" height="70" viewBox="0 0 100 70">
-              <rect x="25" y="32" width="55" height="5" fill="#cbd5e1" rx="2"/>
-              <ellipse cx="25" cy="34" rx="10" ry="6" fill="#38bdf8" opacity="0.6"/>
-              <circle cx="25" cy="34" r="3" fill="#0284c7"/>
-            </svg>
-          </div>
-          <div class="seal-title">Écouvillon Salive n°1 (Gobelet)</div>
-          <div class="seal-location">📍 Buvant de la tasse de café sur le bureau</div>
-          <div class="seal-dna-tag">✅ ADN Présent (Cellules buccales)</div>
-        </div>
-
-      </div>
-
-      <!-- PANNEAU D'ANALYSE MICROSCOPIQUE -->
-      <div class="dna-microscope-panel">
-        <div class="microscope-lens-viewport">
-          <div class="microscope-reticle"></div>
-          <svg class="cell-visual-svg" id="microscope-svg" viewBox="0 0 200 200">
-            <!-- DYNAMIC CELL ANATOMY IN SVG -->
-          </svg>
-        </div>
-
-        <div class="sample-analysis-content" id="dna-analysis-text">
-          <!-- REMPLI PAR JAVASCRIPT -->
-        </div>
-      </div>
-
-      <!-- TEASER TRANSITION VERS ACTIVITE 2 & 3 -->
-      <div class="act2-teaser-card" style="margin-top:20px;">
-        <div>
-          <h4>🔬 Transition SVT : De la Cellule à la Localisation de l'ADN</h4>
-          <p>Tous ces prélèvements contiennent des cellules munies d'un <strong>noyau</strong>. Pour comprendre comment cet ADN détermine nos caractères et comment le manipuler, passez à l'Activité N°2 (micro-injection et transfert de noyau) !</p>
-        </div>
-        <a href="activite2.html" class="btn-primary" style="text-decoration:none; background:linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);">
-          Lancer le Laboratoire de Transfert de Noyau (Activité N°2) ▶
-        </a>
-      </div>
-
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
-        <button class="btn-secondary" onclick="goToStep(1)">◀ Retour à la Scène de Crime</button>
-        <button class="btn-primary" onclick="goToStep(3)">Passer à l'Agenda du Soigneur ▶</button>
-      </div>
-    </section>
-
-    <!-- ============================================================
-<section class="step-panel" id="step-3">
-      <div class="panel-banner">
-        <div>
-          <h2>🦁 Étape 3 : L'Agenda du Dimanche 08 Novembre & Les Espèces Rencontrées</h2>
-          <p>L'agenda professionnel de Marc Delorme retrouvé sur son bureau retrace l'ensemble de ses interventions et rencontres du <strong>dimanche 08 novembre</strong>. Analysez les espèces côtoyées pour distinguer les caractères spécifiques propres à chaque être vivant.</p>
-        </div>
-        <span class="target-badge">Notion : Caractères Spécifiques</span>
-      </div>
-
-      <!-- AGENDA OUVERT RÉALISTE : DIMANCHE 08 NOVEMBRE -->
-            <!-- ORGANISATEUR CUIR RÉALISTE : LE PLANNING DE LA VICTIME (MARC) -->
       <div class="real-leather-organizer">
         <!-- VOLET GAUCHE CUIR (FENTES CARTES) -->
         <div class="organizer-leather-pocket">
@@ -3448,6 +3377,24 @@
 
 
       <!-- FICHES COMPARATIVES DES 6 ESPÈCES RENCONTRÉES -->
+      
+
+      <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+        <button class="btn-primary" onclick="goToStep(3)" style="padding:10px 22px; font-size:0.9rem;">
+          Consulter les Fiches des Espèces (Onglet 3) ▶
+        </button>
+      </div>
+    </section>
+
+    <section class="step-panel" id="step-3">
+      <div class="panel-banner">
+        <div>
+          <h2>🦁 Étape 3 : Fiches d'Identification des Espèces Rencontrées</h2>
+          <p>Analysez les caractéristiques des êtres vivants côtoyés par Marc durant sa journée pour distinguer les <strong>caractères spécifiques</strong> propres à chaque espèce (lion, chimpanzé, muntjac, chien, humain).</p>
+        </div>
+        <span class="target-badge">Caractères Spécifiques</span>
+      </div>
+
       <h3 style="color:#38bdf8; margin:24px 0 14px 0; display:flex; align-items:center; gap:8px;">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h10M7 12h10M7 17h10"/>
@@ -3589,14 +3536,20 @@
         <button class="btn-secondary" onclick="goToStep(2)">◀ Retour aux Scellés d'ADN</button>
         <button class="btn-primary" onclick="goToStep(4)">Passer à la Vidéosurveillance & Reconnaissance Faciale ▶</button>
       </div>
+    
+
+      <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+        <button class="btn-primary" onclick="goToStep(4)" style="padding:10px 22px; font-size:0.9rem;">
+          Visionner la Vidéosurveillance (Onglet 4) ▶
+        </button>
+      </div>
     </section>
 
-    <!-- ============================================================
-<section class="step-panel" id="step-4">
+    <section class="step-panel" id="step-4">
       <div class="panel-banner">
         <div>
           <h2>📹 Étape 4 : Vidéosurveillance & Reconnaissance Faciale (Portraits-Robots)</h2>
-          <p>Le serveur de vidéosurveillance a enregistré le passage de deux suspects dans le couloir menant au bureau de Marc. Le module biométrique analyse l'extrait vidéo et compare les visages détectés aux <strong>portraits-robots</strong> établis par la police judiciaire.</p>
+          <p>Marc a été agressé dans son bureau entre 19h00 et 20h00, avant la fermeture du parc. Le serveur de vidéosurveillance a capté le passage de deux suspects dans le couloir à <strong>19h28</strong>. Le module biométrique analyse l'enregistrement et compare les visages aux portraits-robots. Le module biométrique analyse l'extrait vidéo et compare les visages détectés aux <strong>portraits-robots</strong> établis par la police judiciaire.</p>
         </div>
         <span class="target-badge">Notion : Variations Individuelles</span>
       </div>
@@ -3618,14 +3571,25 @@
         <div class="cctv-unified-screen">
           
           <!-- GAUCHE DE L'ÉCRAN : L'ENREGISTREMENT DE LA CAMÉRA -->
-          <div class="cctv-video-half">
-            <div class="cctv-video-hud-overlay">
-              <span>CAM 01 : ENREGISTREMENT CONTINU</span>
-              <span style="color:#34d399; font-weight:700;">2 INDIVIDUS DÉTECTÉS [LOCK]</span>
+          <div class="cctv-video-half" style="position:relative; overflow:hidden; border-radius:6px; background:#000;">
+            <!-- BANDEAU HUD SUPÉRIEUR : MASQUE TOUT TIMESTAMP 23H ET AFFICHE 19H28 -->
+            <div class="cctv-hud-top-bar">
+              <span style="color:#ef4444; font-weight:800; display:flex; align-items:center; gap:6px;">
+                <span class="rec-dot-blink"></span> ● ENR • CAM_01 [COULOIR BUREAU]
+              </span>
+              <span id="cctv-hud-timecode" style="color:#38bdf8; font-weight:700; letter-spacing:1px;">
+                08/11/2026 19:28:14
+              </span>
             </div>
-            
-            <video id="cctv-video-element" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay></video>
+
+            <video id="cctv-video-element" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay style="width:100%; height:auto; display:block; filter:contrast(1.1);"></video>
             <div class="cctv-scanlines"></div>
+
+            <!-- BANDEAU HUD INFÉRIEUR -->
+            <div class="cctv-hud-bottom-bar">
+              <span>ZOO DE BIGUGLIA • COULOIR INTÉRIEUR</span>
+              <span style="color:#34d399; font-weight:700;">DÉTECTION DE MOUVEMENT : 19h28 [ENREGISTRÉ]</span>
+            </div>
           </div>
 
           <!-- DROITE DE L'ÉCRAN : LES 2 PORTRAITS-ROBOTS ET LA RECONNAISSANCE FACIALE -->
@@ -4253,6 +4217,136 @@
 
   <!-- SCRIPT LOGIQUE & INTERACTIVITE -->
   <script>
+    /* --- GESTION DE LA LOUPE D'INVESTIGATION SUR LA SCÈNE DE CRIME --- */
+    const clueLocations = {
+      salive: { x: 82.5, y: 80, radius: 6.5, name: "Gobelet de café (Salive)" },
+      cheveu: { x: 45.0, y: 64, radius: 5.5, name: "Col de veste (Cheveu)" },
+      poil: { x: 56.0, y: 72, radius: 5.5, name: "Manche de chemise (Poil animal)" },
+      sang_sol: { x: 37.0, y: 76, radius: 6.5, name: "Flaque au sol (Sang)" },
+      sang_meuble: { x: 24.0, y: 50, radius: 6.0, name: "Angle du meuble (Sang séché)" }
+    };
+
+    const discoveredClues = new Set();
+    let nearbyClueKey = null;
+
+    function handleLoupeMove(e) {
+      const viewport = document.getElementById('scene-viewport');
+      if (!viewport) return;
+
+      const rect = viewport.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const percentX = (mouseX / rect.width) * 100;
+      const percentY = (mouseY / rect.height) * 100;
+
+      const loupe = document.getElementById('scene-loupe');
+      const tip = document.getElementById('loupe-tip');
+      if (loupe) {
+        loupe.style.display = 'block';
+        loupe.style.left = `${mouseX}px`;
+        loupe.style.top = `${mouseY}px`;
+
+        // Check proximity to undiscovered clues
+        nearbyClueKey = null;
+        Object.keys(clueLocations).forEach(key => {
+          if (!discoveredClues.has(key)) {
+            const loc = clueLocations[key];
+            const dist = Math.hypot(percentX - loc.x, percentY - loc.y);
+            if (dist < loc.radius) {
+              nearbyClueKey = key;
+            }
+          }
+        });
+
+        if (nearbyClueKey) {
+          loupe.classList.add('detecting');
+          if (tip) {
+            tip.style.display = 'block';
+            tip.innerText = `🔍 ${clueLocations[nearbyClueKey].name} détecté ! Clique`;
+          }
+        } else {
+          loupe.classList.remove('detecting');
+          if (tip) tip.style.display = 'none';
+        }
+      }
+    }
+
+    function handleLoupeLeave() {
+      const loupe = document.getElementById('scene-loupe');
+      if (loupe) loupe.style.display = 'none';
+      nearbyClueKey = null;
+    }
+
+    function handleSceneClick(e) {
+      const viewport = document.getElementById('scene-viewport');
+      if (!viewport) return;
+
+      const rect = viewport.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      const percentX = (mouseX / rect.width) * 100;
+      const percentY = (mouseY / rect.height) * 100;
+
+      // Check click on agenda area
+      if (Math.hypot(percentX - 38, percentY - 37) < 6) {
+        goToStep(2);
+        return;
+      }
+      // Check click on computer area
+      if (Math.hypot(percentX - 51, percentY - 28) < 7) {
+        goToStep(4);
+        return;
+      }
+
+      // Check click on biological clues
+      let clickedClue = null;
+      Object.keys(clueLocations).forEach(key => {
+        const loc = clueLocations[key];
+        const dist = Math.hypot(percentX - loc.x, percentY - loc.y);
+        if (dist < loc.radius) {
+          clickedClue = key;
+        }
+      });
+
+      if (clickedClue) {
+        discoverClue(clickedClue);
+      } else {
+        playBeep(320, 0.05);
+        const container = document.getElementById('clue-display');
+        container.innerHTML = `
+          <div class="clue-header">
+            <h4>🔎 Zone inspectée à la loupe</h4>
+            <span class="clue-type-pill" style="background:#334155;">Zone neutre</span>
+          </div>
+          <div class="clue-body">
+            <p>Rien de suspect à cet endroit précis. Poursuis ton exploration en balayant la loupe sur les vêtements de la victime Marc, la table de travail, le sol ou les meubles.</p>
+          </div>
+        `;
+      }
+    }
+
+    function discoverClue(clueKey) {
+      playSuccessChime();
+      discoveredClues.add(clueKey);
+
+      // Create evidence marker flag on the scene if not exists
+      const container = document.getElementById('discovered-flags-container');
+      if (container && !document.getElementById(`flag-${clueKey}`)) {
+        const loc = clueLocations[clueKey];
+        const flag = document.createElement('div');
+        flag.className = `evidence-flag ${baggedScelles.has(clueKey) ? 'bagged' : ''}`;
+        flag.id = `flag-${clueKey}`;
+        flag.style.left = `${loc.x}%`;
+        flag.style.top = `${loc.y}%`;
+        flag.innerHTML = `📍 #${discoveredClues.size}`;
+        container.appendChild(flag);
+      }
+
+      // Display inspection & bagging interface
+      inspectCrimeSceneClue(clueKey);
+    }
+
     /* ============================================================
        RELEVÉ DES 5 INDICES & MISE SOUS SCELLÉ JUDICIAIRE (ACTIVITÉ 1)
        ============================================================ */
@@ -5232,10 +5326,15 @@
       const cctvVid = document.getElementById('cctv-video-element');
       if (cctvVid) {
         cctvVid.addEventListener('timeupdate', () => {
-          const totalSec = Math.floor(cctvVid.currentTime);
-          const sec = String(totalSec % 60).padStart(2, '0');
-          const tc = document.getElementById('cctv-timecode');
-          if (tc) tc.innerText = `2026-11-08 19:42:${sec}`;
+          const elapsedSec = Math.floor(cctvVid.currentTime);
+          const startSec = 14 + elapsedSec;
+          const min = 28 + Math.floor(startSec / 60);
+          const sec = String(startSec % 60).padStart(2, '0');
+          const timeText = `2026-11-08 19:${min}:${sec}`;
+          const topTc = document.getElementById('cctv-timecode');
+          if (topTc) topTc.innerText = timeText;
+          const hudTc = document.getElementById('cctv-hud-timecode');
+          if (hudTc) hudTc.innerText = `08/11/2026 19:${min}:${sec}`;
         });
       }
       selectDnaSample('poils');
