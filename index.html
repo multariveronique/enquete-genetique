@@ -3775,7 +3775,7 @@
               </span>
             </div>
 
-            <video id="cctv-video-element" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay onclick="toggleCctvPlay()" style="width:100%; height:auto; display:block; filter:contrast(1.1); cursor:pointer;"></video>
+            <video id="cctv-video-element" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay ontimeupdate="syncCctvClockNow()" onclick="toggleCctvPlay()" style="width:100%; height:auto; display:block; filter:contrast(1.1); cursor:pointer;"></video>
             <div class="cctv-scanlines" style="pointer-events:none;"></div>
 
             <!-- OVERLAY CENTRAL DE LECTURE SI LA VIDÉO EST EN PAUSE -->
@@ -4305,7 +4305,7 @@
               </span>
             </div>
 
-            <video id="modal-cctv-video" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay style="width:100%; height:auto; display:block; filter:contrast(1.1);"></video>
+            <video id="modal-cctv-video" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay ontimeupdate="syncCctvClockNow()" style="width:100%; height:auto; display:block; filter:contrast(1.1);"></video>
             <div class="cctv-scanlines" style="pointer-events:none;"></div>
 
             <!-- BANDEAU HUD INFÉRIEUR : MASQUE TOTAL DU TIMESTAMP 23H & HORODATAGE OFFICIEL 19H -->
@@ -5007,9 +5007,11 @@
           if (p !== undefined) {
             p.then(() => {
               if (typeof updateCctvPlayState === 'function') updateCctvPlayState(true);
+              if (typeof syncCctvClockNow === 'function') syncCctvClockNow();
             }).catch(e => {
               console.log("Autoplay standby:", e);
               if (typeof updateCctvPlayState === 'function') updateCctvPlayState(false);
+              if (typeof syncCctvClockNow === 'function') syncCctvClockNow();
             });
           }
         } else {
@@ -5558,6 +5560,7 @@
         if (p !== undefined) {
           p.then(() => {
             updateCctvPlayState(true);
+            if (typeof syncCctvClockNow === 'function') syncCctvClockNow();
           }).catch(err => {
             console.warn("Play error:", err);
             updateCctvPlayState(false);
@@ -5576,7 +5579,10 @@
         vid.muted = true;
         const p = vid.play();
         if (p !== undefined) {
-          p.then(() => updateCctvPlayState(true)).catch(() => updateCctvPlayState(false));
+          p.then(() => {
+            updateCctvPlayState(true);
+            if (typeof syncCctvClockNow === 'function') syncCctvClockNow();
+          }).catch(() => updateCctvPlayState(false));
         }
       }
       const modalVid = document.getElementById('modal-cctv-video');
@@ -5585,6 +5591,7 @@
         modalVid.muted = true;
         modalVid.play().catch(() => {});
       }
+      if (typeof syncCctvClockNow === 'function') syncCctvClockNow();
     }
 
     function updateCctvPlayState(isPlaying) {
@@ -5744,70 +5751,81 @@
        ============================================================ */
     let lastRenderedTime = '';
 
-    function renderCctvClocks() {
+    function syncCctvClockNow() {
       const mainVid = document.getElementById('cctv-video-element');
       const modalVid = document.getElementById('modal-cctv-video');
-
-      // Sélectionner la vidéo active
-      let activeVid = mainVid;
       const modal = document.getElementById('cctv-modal');
+
+      let activeVid = mainVid;
       if (modal && modal.classList.contains('open') && modalVid) {
         activeVid = modalVid;
       }
 
-      if (activeVid) {
-        const t = (activeVid.currentTime && !isNaN(activeVid.currentTime)) ? activeVid.currentTime : 0;
-        
-        // Séquence 1 (0s à 4.9s) : Arrivée -> Débute à 19h18:24 et défile avec la vidéo
-        // Séquence 2 (5.0s à 10s) : Départ -> Débute à 19h32:15 (+13min 51s, > 10 min) et défile avec la vidéo
-        const isExitPhase = (t >= 5.0);
+      if (!activeVid) return;
 
-        let hours = 19;
-        let minutes = isExitPhase ? 32 : 18;
-        let baseSec = isExitPhase ? 15 : 24;
-        let progressSec = isExitPhase ? (t - 5.0) : t;
-        let seconds = Math.floor(baseSec + progressSec);
+      const t = (typeof activeVid.currentTime === 'number' && !isNaN(activeVid.currentTime)) ? activeVid.currentTime : 0;
+      
+      // Séquence 1 (0s à 4.9s) : Arrivée -> Débute à 19h18:24 et défile seconde par seconde
+      // Séquence 2 (5.0s à 10s) : Départ -> Débute à 19h32:15 (+13min 51s, > 10 min écoulées) et défile seconde par seconde
+      const isExitPhase = (t >= 5.0);
 
-        if (seconds >= 60) {
-          minutes += Math.floor(seconds / 60);
-          seconds = seconds % 60;
-        }
+      let hours = 19;
+      let minutes = isExitPhase ? 32 : 18;
+      let baseSec = isExitPhase ? 15 : 24;
+      let deltaSec = Math.floor(isExitPhase ? (t - 5.0) : t);
+      let seconds = baseSec + deltaSec;
 
-        const timeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-        if (timeStr !== lastRenderedTime) {
-          lastRenderedTime = timeStr;
-          document.querySelectorAll('.cctv-clock-dyn').forEach(el => {
-            el.textContent = timeStr;
-          });
-        }
+      if (seconds >= 60) {
+        minutes += Math.floor(seconds / 60);
+        seconds = seconds % 60;
       }
 
-      requestAnimationFrame(renderCctvClocks);
+      const timeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+      if (timeStr !== lastRenderedTime) {
+        lastRenderedTime = timeStr;
+        const clockEls = document.querySelectorAll('.cctv-clock-dyn');
+        for (let i = 0; i < clockEls.length; i++) {
+          clockEls[i].textContent = timeStr;
+        }
+      }
+    }
+
+    function renderCctvClocksLoop() {
+      syncCctvClockNow();
+      requestAnimationFrame(renderCctvClocksLoop);
     }
 
     function setupCctvVideoListeners() {
       const mainVid = document.getElementById('cctv-video-element');
+      const modalVid = document.getElementById('modal-cctv-video');
 
       if (mainVid) {
         mainVid.muted = true;
-        mainVid.addEventListener('play', () => updateCctvPlayState(true));
-        mainVid.addEventListener('pause', () => updateCctvPlayState(false));
-        mainVid.addEventListener('ended', () => updateCctvPlayState(false));
+        mainVid.addEventListener('timeupdate', syncCctvClockNow);
+        mainVid.addEventListener('play', () => { updateCctvPlayState(true); syncCctvClockNow(); });
+        mainVid.addEventListener('pause', () => { updateCctvPlayState(false); syncCctvClockNow(); });
+        mainVid.addEventListener('ended', () => { updateCctvPlayState(false); syncCctvClockNow(); });
+        mainVid.addEventListener('seeked', syncCctvClockNow);
         updateCctvPlayState(!mainVid.paused);
       }
 
-      const modalVid = document.getElementById('modal-cctv-video');
       if (modalVid) {
         modalVid.muted = true;
+        modalVid.addEventListener('timeupdate', syncCctvClockNow);
+        modalVid.addEventListener('play', syncCctvClockNow);
+        modalVid.addEventListener('pause', syncCctvClockNow);
+        modalVid.addEventListener('seeked', syncCctvClockNow);
       }
 
-      // Lancement de la boucle fluide d'actualisation de l'heure
-      requestAnimationFrame(renderCctvClocks);
+      // Intervalle régulier + boucle d'animation pour garantir le défilement fluide
+      setInterval(syncCctvClockNow, 120);
+      requestAnimationFrame(renderCctvClocksLoop);
+      syncCctvClockNow();
     }
 
-    // Initialize on load
-    window.addEventListener('DOMContentLoaded', () => {
+    // Initialisation robuste de l'application
+    function initApp() {
       initClassifier(); 
       selectDnaSample('poils');
       renderClueExplorerGuide();
@@ -5820,7 +5838,13 @@
       } catch (e) {}
 
       updateReportHeader();
-    });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
   </script>
 </body>
 </html>
