@@ -3694,10 +3694,9 @@
       <div class="panel-banner">
         <div>
           <h2>📹 Étape 4 : Vidéosurveillance & Reconnaissance Faciale (Portraits-Robots)</h2>
-          <p>Paul Delorme a été agressé dans son bureau un dimanche soir après 19h00, avant la fermeture totale du zoo. 
-             L'enregistrement de la caméra de surveillance montre un individu encapuchonné arrivant à <strong>19h18</strong> et se dirigeant vers le bureau éclairé de Paul, puis quittant précipitamment les lieux à <strong>19h32</strong> : 
-             au moins <strong>14 minutes</strong> se sont écoulées pendant lesquelles l'agression et la fouille ont eu lieu. 
-             Le module biométrique analyse l'enregistrement et compare les visages détectés aux <strong>portraits-robots</strong> établis par la police judiciaire.</p>
+          <p>Paul Delorme a été agressé dans son bureau ce dimanche soir, avant la fermeture du zoo. 
+             Visionnez attentivement l'enregistrement de la caméra de surveillance extérieure pour relever les indices et les horaires clés de la scène. 
+             Le module biométrique compare les visages détectés aux <strong>portraits-robots</strong> établis par les enquêteurs.</p>
         </div>
         <span class="target-badge">Notion : Variations Individuelles</span>
       </div>
@@ -3712,7 +3711,7 @@
             <span class="rec-dot-blink"></span>
             ● REC • MONITEUR EXT-01 [COULOIR DU BUREAU]
           </span>
-          <span id="cctv-timecode" style="color:#38bdf8; font-weight:700;">EXTRAIT SÉCURISÉ • HORODATAGE 19H POLICE</span>
+          <span id="cctv-timecode" style="color:#38bdf8; font-weight:700;">EXTRAIT SÉCURISÉ • HORODATAGE OFFICIEL</span>
         </div>
 
         <!-- ZONE D'AFFICHAGE DE L'ÉCRAN : VIDÉO À GAUCHE + PORTRAITS-ROBOTS À DROITE -->
@@ -3723,30 +3722,30 @@
             <!-- BANDEAU HUD SUPÉRIEUR : MASQUE TOTAL DU TIMESTAMP D'ORIGINE ET AFFICHAGE HORAIRE OFFICIEL -->
             <div class="cctv-hud-top-bar">
               <span style="color:#ef4444; font-weight:800; display:flex; align-items:center; gap:6px;">
-                <span class="rec-dot-blink"></span> ● CAM_01 [BUREAU]
+                <span class="rec-dot-blink"></span> ● ENR • CAM_01 [EXTÉRIEUR]
               </span>
-              <span class="cctv-phase-tag cctv-phase-dyn" style="background:#0f172a; color:#38bdf8; font-size:0.72rem; padding:3px 10px; border-radius:4px; border:1px solid #0284c7; font-weight:700;">
-                🚶 SÉQUENCE 1 : ENTRÉE DU SUSPECT
+              <span class="cctv-status-tag" style="background:#0f172a; color:#34d399; font-size:0.72rem; padding:3px 10px; border-radius:4px; border:1px solid #059669; font-weight:700;">
+                ● SIGNAL EN DIRECT
               </span>
               <span style="color:#f8fafc; font-family:var(--font-mono); font-weight:800; font-size:0.95rem; display:flex; align-items:center; gap:6px;">
-                <span style="color:#64748b; font-size:0.75rem;">08/11</span> <span class="cctv-clock-dyn" style="color:#38bdf8; font-size:1.05rem;">19:18:22</span>
+                <span style="color:#64748b; font-size:0.75rem;">08/11</span> <span class="cctv-clock-dyn" style="color:#38bdf8; font-size:1.05rem;">19:18:24</span>
               </span>
             </div>
 
-            <video id="cctv-video-element" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay style="width:100%; height:auto; display:block; filter:contrast(1.1);"></video>
-            <div class="cctv-scanlines"></div>
+            <video id="cctv-video-element" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay onclick="toggleCctvPlay()" style="width:100%; height:auto; display:block; filter:contrast(1.1); cursor:pointer;"></video>
+            <div class="cctv-scanlines" style="pointer-events:none;"></div>
 
             <!-- BANDEAU HUD INFÉRIEUR : MASQUE TOTAL DU TIMESTAMP 23H & HORODATAGE OFFICIEL 19H -->
             <div class="cctv-hud-bottom-bar">
               <div class="cctv-hud-timecode-row">
                 <span class="cctv-bracket-tag">[</span>
                 <span class="cctv-osd-date">2026-11-08</span>
-                <span class="cctv-clock-dyn cctv-main-timecode">19:18:22</span>
+                <span class="cctv-clock-dyn cctv-main-timecode">19:18:24</span>
                 <span class="cctv-bracket-tag">]</span>
               </div>
               <div style="display:flex; justify-content:space-between; align-items:center; width:100%; font-size:0.74rem; color:#94a3b8; border-top:1px solid #1e293b; padding-top:4px;">
-                <span>ZOO DE BIGUGLIA • COULOIR INTÉRIEUR</span>
-                <span style="color:#34d399; font-weight:700;">FLUX VIDÉO SÉCURISÉ</span>
+                <span>ZOO DE BIGUGLIA • CAM_01</span>
+                <span style="color:#34d399; font-weight:700;">FLUX VIDÉO SÉCURISÉ • 25 FPS</span>
               </div>
             </div>
           </div>
@@ -3811,12 +3810,6 @@
             </div>
           </div>
 
-        </div>
-
-        <!-- BANDEAU DE SAUT TEMPOREL DYNAMIQUE (> 10 MIN ÉCOULÉES) -->
-        <div class="cctv-elapsed-dyn" style="background:#020617; padding:8px 14px; font-size:0.78rem; border-top:1px solid #1e293b; color:#94a3b8; font-family:var(--font-mono); display:flex; justify-content:space-between; align-items:center;">
-          <span style="color:#38bdf8; font-weight:700;">⏱️ HORAIRE ENTRÉE : 19h18 (Suspect vers bureau éclairé)</span>
-          <span style="color:#94a3b8;">ENREGISTREMENT CONTINU</span>
         </div>
 
         <!-- CONTRÔLES INFÉRIEURS DU MONITEUR -->
@@ -4253,30 +4246,30 @@
             <!-- BANDEAU HUD SUPÉRIEUR : MASQUE TOTAL DU TIMESTAMP D'ORIGINE ET AFFICHAGE HORAIRE OFFICIEL -->
             <div class="cctv-hud-top-bar">
               <span style="color:#ef4444; font-weight:800; display:flex; align-items:center; gap:6px;">
-                <span class="rec-dot-blink"></span> ● CAM_01 [BUREAU]
+                <span class="rec-dot-blink"></span> ● ENR • CAM_01 [EXTÉRIEUR]
               </span>
-              <span class="cctv-phase-tag cctv-phase-dyn" style="background:#0f172a; color:#38bdf8; font-size:0.72rem; padding:3px 10px; border-radius:4px; border:1px solid #0284c7; font-weight:700;">
-                🚶 SÉQUENCE 1 : ENTRÉE DU SUSPECT
+              <span class="cctv-status-tag" style="background:#0f172a; color:#34d399; font-size:0.72rem; padding:3px 10px; border-radius:4px; border:1px solid #059669; font-weight:700;">
+                ● SIGNAL EN DIRECT
               </span>
               <span style="color:#f8fafc; font-family:var(--font-mono); font-weight:800; font-size:0.95rem; display:flex; align-items:center; gap:6px;">
-                <span style="color:#64748b; font-size:0.75rem;">08/11</span> <span class="cctv-clock-dyn" style="color:#38bdf8; font-size:1.05rem;">19:18:22</span>
+                <span style="color:#64748b; font-size:0.75rem;">08/11</span> <span class="cctv-clock-dyn" style="color:#38bdf8; font-size:1.05rem;">19:18:24</span>
               </span>
             </div>
 
             <video id="modal-cctv-video" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay style="width:100%; height:auto; display:block; filter:contrast(1.1);"></video>
-            <div class="cctv-scanlines"></div>
+            <div class="cctv-scanlines" style="pointer-events:none;"></div>
 
             <!-- BANDEAU HUD INFÉRIEUR : MASQUE TOTAL DU TIMESTAMP 23H & HORODATAGE OFFICIEL 19H -->
             <div class="cctv-hud-bottom-bar">
               <div class="cctv-hud-timecode-row">
                 <span class="cctv-bracket-tag">[</span>
                 <span class="cctv-osd-date">2026-11-08</span>
-                <span class="cctv-clock-dyn cctv-main-timecode">19:18:22</span>
+                <span class="cctv-clock-dyn cctv-main-timecode">19:18:24</span>
                 <span class="cctv-bracket-tag">]</span>
               </div>
               <div style="display:flex; justify-content:space-between; align-items:center; width:100%; font-size:0.74rem; color:#94a3b8; border-top:1px solid #1e293b; padding-top:4px;">
-                <span>ZOO DE BIGUGLIA • COULOIR INTÉRIEUR</span>
-                <span style="color:#34d399; font-weight:700;">FLUX VIDÉO SÉCURISÉ</span>
+                <span>ZOO DE BIGUGLIA • CAM_01</span>
+                <span style="color:#34d399; font-weight:700;">FLUX VIDÉO SÉCURISÉ • 25 FPS</span>
               </div>
             </div>
           </div>
@@ -4317,12 +4310,6 @@
               🔍 Voir la planche complète des portraits-robots
             </button>
           </div>
-        </div>
-
-        <!-- BANDEAU DE SAUT TEMPOREL DYNAMIQUE (> 10 MIN ÉCOULÉES) -->
-        <div class="cctv-elapsed-dyn" style="background:#020617; padding:8px 14px; font-size:0.78rem; border-top:1px solid #1e293b; color:#94a3b8; font-family:var(--font-mono); display:flex; justify-content:space-between; align-items:center;">
-          <span style="color:#38bdf8; font-weight:700;">⏱️ HORAIRE ENTRÉE : 19h18 (Suspect vers bureau éclairé)</span>
-          <span style="color:#94a3b8;">ENREGISTREMENT CONTINU</span>
         </div>
 
         <div class="cctv-controls-strip">
@@ -5661,44 +5648,67 @@
     }
 
     /* ============================================================
-       SYNCHRONISATION TEMPORELLE CCTV & MASQUAGE D'HORODATAGE (19H)
+       SYNCHRONISATION ET DÉFILEMENT DE L'HORODATAGE CCTV (19H)
        ============================================================ */
-    function setupCctvTimeSync() {
-      function syncTime(vid) {
-        if (!vid) return;
-        const t = vid.currentTime;
-        // La vidéo dure ~10 secondes :
-        // 0s à 4.9s : Arrivée du suspect encapuchonné vers le bureau éclairé -> 19:18:xx
-        // >= 5.0s : Fuite du suspect hors du bureau -> 19:32:xx (+14 minutes écoulées)
-        const isExitPhase = (t >= 5.0);
-        
-        const secDelta = Math.floor(t % 5);
-        const timeStr = isExitPhase 
-          ? `19:32:${String(14 + secDelta).padStart(2, '0')}` 
-          : `19:18:${String(22 + secDelta).padStart(2, '0')}`;
-        
-        const phaseStr = isExitPhase
-          ? `🏃 SÉQUENCE 2 : SUSPECT EN FUITE (+14 MIN)`
-          : `🚶 SÉQUENCE 1 : ENTRÉE DU SUSPECT`;
+    let lastRenderedTime = '';
 
-        const bannerHtml = isExitPhase
-          ? `<span style="color:#f59e0b; font-weight:700;">⏱️ CRÉNEAU DU CRIME : 19h18 ➔ 19h32 (14 min d'occupation du bureau)</span><span style="color:#34d399; font-weight:700;">✓ HORODATAGE VALIDÉ</span>`
-          : `<span style="color:#38bdf8; font-weight:700;">⏱️ HORAIRE ENTRÉE : 19h18 (Suspect vers bureau éclairé)</span><span style="color:#94a3b8;">ENREGISTREMENT CONTINU</span>`;
-
-        document.querySelectorAll('.cctv-clock-dyn').forEach(el => el.textContent = timeStr);
-        document.querySelectorAll('.cctv-phase-dyn').forEach(el => el.textContent = phaseStr);
-        document.querySelectorAll('.cctv-elapsed-dyn').forEach(el => el.innerHTML = bannerHtml);
-      }
-
+    function renderCctvClocks() {
       const mainVid = document.getElementById('cctv-video-element');
       const modalVid = document.getElementById('modal-cctv-video');
 
+      // Sélectionner la vidéo en cours de lecture ou active
+      let activeVid = mainVid;
+      const modal = document.getElementById('cctv-modal');
+      if (modal && modal.classList.contains('open') && modalVid) {
+        activeVid = modalVid;
+      }
+
+      if (activeVid && !isNaN(activeVid.currentTime)) {
+        const t = activeVid.currentTime;
+        
+        // Découpage temporel des 2 séquences de la vidéo (durée totale ~10s) :
+        // 1. Première séquence (0s à 4.9s) : Arrivée -> Défilement continu à partir de 19:18:24
+        // 2. Deuxième séquence (5.0s à 10s) : Départ -> Défilement continu à partir de 19:32:15 (+13min 51s, > 10 min écoulées)
+        const isExitPhase = (t >= 5.0);
+
+        let hours = 19;
+        let minutes = isExitPhase ? 32 : 18;
+        let seconds = isExitPhase ? (15 + Math.floor(t - 5.0)) : (24 + Math.floor(t));
+
+        const timeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+        if (timeStr !== lastRenderedTime) {
+          lastRenderedTime = timeStr;
+          document.querySelectorAll('.cctv-clock-dyn').forEach(el => {
+            el.textContent = timeStr;
+          });
+        }
+      }
+
+      requestAnimationFrame(renderCctvClocks);
+    }
+
+    function setupCctvVideoListeners() {
+      const mainVid = document.getElementById('cctv-video-element');
+      const btnPlay = document.getElementById('btn-cam-play');
+
       if (mainVid) {
-        mainVid.addEventListener('timeupdate', () => syncTime(mainVid));
+        mainVid.addEventListener('play', () => {
+          if (btnPlay) {
+            btnPlay.innerText = "⏸ Pause";
+            btnPlay.classList.add('active');
+          }
+        });
+        mainVid.addEventListener('pause', () => {
+          if (btnPlay) {
+            btnPlay.innerText = "▶ Lecture";
+            btnPlay.classList.remove('active');
+          }
+        });
       }
-      if (modalVid) {
-        modalVid.addEventListener('timeupdate', () => syncTime(modalVid));
-      }
+
+      // Lancement de la boucle fluide d'actualisation de l'heure
+      requestAnimationFrame(renderCctvClocks);
     }
 
     // Initialize on load
@@ -5706,7 +5716,7 @@
       initClassifier(); 
       selectDnaSample('poils');
       renderClueExplorerGuide();
-      setupCctvTimeSync();
+      setupCctvVideoListeners();
       try {
         const savedName = localStorage.getItem('enquete_agent_name');
         if (savedName) document.getElementById('agent-name').value = savedName;
