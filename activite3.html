@@ -1527,7 +1527,7 @@
             if (placedSet.has('21_extra')) {
               chrsDiv.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs['21'].h}px;">${createChromosomeSVG('21', 0, 'snapped_21_extra')}</div>`;
             } else {
-              chrsDiv.innerHTML += `<div class="karyo-target-slot" data-slot-key="21_extra" data-chr-key="21" style="width:16px; height:${chrDefs['21'].h}px;" title="Dépose le 3ème chromosome 21 ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
+              chrsDiv.innerHTML += `<div class="karyo-target-slot" data-slot-key="21_extra" data-chr-key="21" style="width:16px; height:${chrDefs['21'].h}px;" title="Emplacement de chromosome à compléter"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
             }
           } else if (missingMap[pairNum]) {
             // One regular chromosome + one target slot
@@ -1535,7 +1535,7 @@
             if (placedSet.has(pairNum)) {
               chrsDiv.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs[pairNum].h}px;">${createChromosomeSVG(pairNum, 0, `snapped_${pairNum}`)}</div>`;
             } else {
-              chrsDiv.innerHTML += `<div class="karyo-target-slot" data-slot-key="${pairNum}" data-chr-key="${pairNum}" style="width:16px; height:${chrDefs[pairNum].h}px;" title="Dépose le chromosome homologue ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
+              chrsDiv.innerHTML += `<div class="karyo-target-slot" data-slot-key="${pairNum}" data-chr-key="${pairNum}" style="width:16px; height:${chrDefs[pairNum].h}px;" title="Emplacement de chromosome à compléter"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
             }
           } else {
             // Normal 2 chromosomes fully in place
@@ -1568,44 +1568,44 @@
 
       if (s.id === 'S01') {
         // Female XX: 1 placed X + 1 slot X
-        sexLabel.innerText = 'X   X';
+        sexLabel.innerText = '23';
         sexChrs.innerHTML += createChromosomeSVG('X', 0, 'board_X_1');
         if (placedSet.has('X')) {
           sexChrs.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs['X'].h}px;">${createChromosomeSVG('X', 0, 'snapped_X')}</div>`;
         } else {
-          sexChrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="X" data-chr-key="X" style="width:16px; height:${chrDefs['X'].h}px;" title="Dépose le second chromosome X ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
+          sexChrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="X" data-chr-key="X" style="width:16px; height:${chrDefs['X'].h}px;" title="Emplacement de chromosome à compléter"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
         }
       } else if (s.id === 'C01') {
         // Léa: Female XX (both X placed, X slot is in missingChrs)
-        sexLabel.innerText = 'X   X';
+        sexLabel.innerText = '23';
         sexChrs.innerHTML += createChromosomeSVG('X', 0, 'board_X_1');
         if (placedSet.has('X')) {
           sexChrs.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs['X'].h}px;">${createChromosomeSVG('X', 0, 'snapped_X')}</div>`;
         } else {
-          sexChrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="X" data-chr-key="X" style="width:16px; height:${chrDefs['X'].h}px;" title="Dépose le chromosome X ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
+          sexChrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="X" data-chr-key="X" style="width:16px; height:${chrDefs['X'].h}px;" title="Emplacement de chromosome à compléter"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
         }
       } else if (s.id === 'P01') {
         // Chimpanzee: Pair 23 (XX) fully placed
-        sexLabel.innerText = '23 (X X)';
+        sexLabel.innerText = '23';
         sexChrs.innerHTML += createChromosomeSVG('X', 0, 'board_X_1');
         sexChrs.innerHTML += createChromosomeSVG('X', 0, 'board_X_2');
       } else if (s.id === 'B01') {
         // Male XY: 1 placed X + 1 slot Y
-        sexLabel.innerText = 'X   Y';
+        sexLabel.innerText = '23';
         sexChrs.innerHTML += createChromosomeSVG('X', 0, 'board_X_1');
         if (placedSet.has('Y')) {
           sexChrs.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs['Y'].h}px;">${createChromosomeSVG('Y', 0, 'snapped_Y')}</div>`;
         } else {
-          sexChrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="Y" data-chr-key="Y" style="width:16px; height:${chrDefs['Y'].h}px;" title="Dépose le petit chromosome Y ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
+          sexChrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="Y" data-chr-key="Y" style="width:16px; height:${chrDefs['Y'].h}px;" title="Emplacement de chromosome à compléter"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
         }
       } else if (s.id === 'B02') {
         // Klinefelter XXY: 1 X and 1 Y placed + 1 slot for extra X
-        sexLabel.innerText = 'X   X   Y';
+        sexLabel.innerText = '23';
         sexChrs.innerHTML += createChromosomeSVG('X', 0, 'board_X_1');
         if (placedSet.has('X_extra')) {
           sexChrs.innerHTML += `<div class="karyo-target-slot snapped-slot" style="width:16px; height:${chrDefs['X'].h}px;">${createChromosomeSVG('X', 0, 'snapped_X_extra')}</div>`;
         } else {
-          sexChrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="X_extra" data-chr-key="X" style="width:16px; height:${chrDefs['X'].h}px;" title="Dépose le chromosome X supplémentaire ici !"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
+          sexChrs.innerHTML += `<div class="karyo-target-slot" data-slot-key="X_extra" data-chr-key="X" style="width:16px; height:${chrDefs['X'].h}px;" title="Emplacement de chromosome à compléter"><span style="font-size:10px; font-weight:bold; color:#f59e0b;">?</span></div>`;
         }
         sexChrs.innerHTML += createChromosomeSVG('Y', 0, 'board_Y_1');
       }
@@ -1725,7 +1725,7 @@
         el.dataset.chrKey = c.chrKey;
         el.style.left = `${c.x}px`;
         el.style.top = `${c.y}px`;
-        el.title = `${c.name} - Glisse-le vers sa paire homologue !`;
+        el.title = 'Chromosome à classer - Compare sa taille et ses bandes avec les paires du caryotype';
 
         el.innerHTML = `
           <div class="chr-drag-pill">À ranger ✋</div>

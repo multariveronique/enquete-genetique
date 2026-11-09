@@ -3800,10 +3800,10 @@
                   <div class="screen-scan-laser"></div>
                 </div>
                 <ul class="sketch-traits-mini">
-                  <li>• Visage : <strong>Allongé</strong> <span class="trait-tag tag-hereditaire" style="font-size:0.6rem;">Héréditaire</span></li>
-                  <li>• Yeux : <strong>Foncés</strong> <span class="trait-tag tag-hereditaire" style="font-size:0.6rem;">Héréditaire</span></li>
-                  <li>• Nez : <strong>Fin</strong> <span class="trait-tag tag-hereditaire" style="font-size:0.6rem;">Héréditaire</span></li>
-                  <li>• Barbe : <strong>Bouc taillé</strong> <span class="trait-tag tag-acquis" style="font-size:0.6rem;">Acquis</span></li>
+                  <li>• Visage : <strong>Allongé</strong></li>
+                  <li>• Yeux : <strong>Foncés</strong></li>
+                  <li>• Nez : <strong>Fin</strong></li>
+                  <li>• Barbe : <strong>Bouc taillé</strong></li>
                 </ul>
               </div>
 
@@ -3818,10 +3818,10 @@
                   <div class="screen-scan-laser" style="background:#22d3ee; box-shadow:0 0 6px #06b6d4;"></div>
                 </div>
                 <ul class="sketch-traits-mini">
-                  <li>• Visage : <strong>Carré</strong> <span class="trait-tag tag-hereditaire" style="font-size:0.6rem;">Héréditaire</span></li>
-                  <li>• Yeux : <strong>Clairs</strong> <span class="trait-tag tag-hereditaire" style="font-size:0.6rem;">Héréditaire</span></li>
-                  <li>• Nez : <strong>Droit</strong> <span class="trait-tag tag-hereditaire" style="font-size:0.6rem;">Héréditaire</span></li>
-                  <li>• Coiffure : <strong>Mèche</strong> <span class="trait-tag tag-acquis" style="font-size:0.6rem;">Acquis</span></li>
+                  <li>• Visage : <strong>Carré</strong></li>
+                  <li>• Yeux : <strong>Clairs</strong></li>
+                  <li>• Nez : <strong>Droit</strong></li>
+                  <li>• Coiffure : <strong>Mèche</strong></li>
                 </ul>
               </div>
 
@@ -4565,40 +4565,36 @@
     function renderClueExplorerGuide() {
       const container = document.getElementById('clue-display');
       if (!container) return;
+
+      const clueOrder = ['salive', 'cheveu', 'poil', 'sang_sol', 'sang_meuble', 'empreinte'];
+      const clueNames = {
+        salive: '☕ Gobelet de café (Salive)',
+        cheveu: '🧥 Cheveu sur le col de la victime',
+        poil: '🐾 Poil animal sur la manche',
+        sang_sol: '🩸 Gouttes de sang au sol',
+        sang_meuble: '🪵 Sang séché sur l\'angle du bureau',
+        empreinte: '🖐️ Empreinte papillaire au sol'
+      };
+
       container.innerHTML = `
         <div class="clue-header">
           <h4>🔎 Relevé des 6 Indices d'Investigation</h4>
-          <span class="clue-type-pill" style="background:#0284c7;">${discoveredClues.size} / 6 identifiés</span>
+          <span class="clue-type-pill" style="background:#0284c7;">${discoveredClues.size} / 6 prélevés</span>
         </div>
         <div class="clue-body" style="padding-top:8px;">
           <p style="font-size:0.78rem; color:#cbd5e1; margin-bottom:8px;">
-            Examine la scène à la loupe. Le réticule réagit en doré dès qu'une anomalie est sous l'objectif :
+            Promène ta loupe grossissante sur la pièce. Dès que le réticule réagit en doré, clique pour prélever l'indice !
           </p>
           <div class="clue-checklist-guide">
-            <div class="guide-item ${discoveredClues.has('salive') ? 'done' : 'missing'}">
-              <span>${discoveredClues.has('salive') ? '✅' : '🔍'}</span>
-              <span><strong>Gobelet de café</strong> : sur la moquette à gauche</span>
-            </div>
-            <div class="guide-item ${discoveredClues.has('cheveu') ? 'done' : 'missing'}">
-              <span>${discoveredClues.has('cheveu') ? '✅' : '🔍'}</span>
-              <span><strong>Cheveu</strong> : sur le col de veste / nuque de Paul</span>
-            </div>
-            <div class="guide-item ${discoveredClues.has('poil') ? 'done' : 'missing'}">
-              <span>${discoveredClues.has('poil') ? '✅' : '🔍'}</span>
-              <span><strong>Poil animal</strong> : sur sa manche de chemise gauche</span>
-            </div>
-            <div class="guide-item ${discoveredClues.has('sang_sol') ? 'done' : 'missing'}">
-              <span>${discoveredClues.has('sang_sol') ? '✅' : '🔍'}</span>
-              <span><strong>Gouttes de sang</strong> : au sol près des jambes de Paul</span>
-            </div>
-            <div class="guide-item ${discoveredClues.has('empreinte') ? 'done' : 'missing'}">
-              <span>${discoveredClues.has('empreinte') ? '✅' : '🔍'}</span>
-              <span><strong>Empreinte digitale</strong> : au sol près de sa main droite</span>
-            </div>
-            <div class="guide-item ${discoveredClues.has('sang_meuble') ? 'done' : 'missing'}">
-              <span>${discoveredClues.has('sang_meuble') ? '✅' : '🔍'}</span>
-              <span><strong>Sang séché</strong> : sur l'angle avant gauche du bureau</span>
-            </div>
+            ${clueOrder.map((key, i) => {
+              const isFound = discoveredClues.has(key);
+              return `
+                <div class="guide-item ${isFound ? 'done' : 'missing'}">
+                  <span>${isFound ? '✅' : '🔍'}</span>
+                  <span><strong>Indice #${i + 1}</strong> : ${isFound ? clueNames[key] : '<em style="color:#94a3b8;">À découvrir à la loupe...</em>'}</span>
+                </div>
+              `;
+            }).join('')}
           </div>
         </div>
       `;
@@ -5245,20 +5241,20 @@
        STEP 5 : LABORATOIRE DE CLASSIFICATION (DRAG & DROP + BOUTONS)
        ============================================================ */
     const traitsList = [
-      { id: 't1', title: 'Bipédie permanente et exclusive', category: 'specifique', icon: '🚶‍♂️', hint: 'Propre à l\'espèce humaine' },
-      { id: 't2', title: 'Grand volume crânien & langage articulé', category: 'specifique', icon: '🧠', hint: 'Propre à l\'espèce humaine' },
-      { id: 't3', title: 'Pouce opposable uniquement aux mains', category: 'specifique', icon: '👍', hint: 'Contrairement au chimpanzé' },
-      { id: 't4', title: 'Absence de fourrure corporelle intégrale', category: 'specifique', icon: '👤', hint: 'Propre à l\'espèce humaine' },
+      { id: 't1', title: 'Bipédie permanente et exclusive', category: 'specifique', icon: '🚶‍♂️' },
+      { id: 't2', title: 'Grand volume crânien & langage articulé', category: 'specifique', icon: '🧠' },
+      { id: 't3', title: 'Pouce opposable uniquement aux mains', category: 'specifique', icon: '👍' },
+      { id: 't4', title: 'Absence de fourrure corporelle intégrale', category: 'specifique', icon: '👤' },
       
-      { id: 't5', title: 'Couleur des yeux (bleus, marrons, verts)', category: 'hereditaire', icon: '👁️', hint: 'Transmis par les parents' },
-      { id: 't6', title: 'Forme naturelle du visage (allongé ou carré)', category: 'hereditaire', icon: '👤', hint: 'Structure osseuse héritée' },
-      { id: 't7', title: 'Forme du nez et des oreilles', category: 'hereditaire', icon: '👃', hint: 'Morphologie transmise génétiquement' },
-      { id: 't8', title: 'Groupe sanguin & formule chromosomique', category: 'hereditaire', icon: '🧬', hint: 'Transmis par les cellules reproductrices dès la conception' },
+      { id: 't5', title: 'Couleur des yeux (bleus, marrons, verts)', category: 'hereditaire', icon: '👁️' },
+      { id: 't6', title: 'Forme naturelle du visage (allongé ou carré)', category: 'hereditaire', icon: '👤' },
+      { id: 't7', title: 'Forme du nez et des oreilles', category: 'hereditaire', icon: '👃' },
+      { id: 't8', title: 'Groupe sanguin (A, B, AB ou O)', category: 'hereditaire', icon: '🧬' },
 
-      { id: 't9', title: 'Bouc ou barbe taillée au menton', category: 'acquis', icon: '🧔', hint: 'Choix esthétique et mode de vie' },
-      { id: 't10', title: 'Musculature développée par le travail', category: 'acquis', icon: '💪', hint: 'Entraînement physique du soigneur' },
-      { id: 't11', title: 'Coup de soleil / bronzage sur la nuque', category: 'acquis', icon: '☀️', hint: 'Action des rayons UV du soleil' },
-      { id: 't12', title: 'Cicatrice d\'une ancienne griffure', category: 'acquis', icon: '🩹', hint: 'Blessure survenue au cours de la vie' }
+      { id: 't9', title: 'Bouc ou barbe taillée au menton', category: 'acquis', icon: '🧔' },
+      { id: 't10', title: 'Musculature développée par le travail', category: 'acquis', icon: '💪' },
+      { id: 't11', title: 'Coup de soleil / bronzage sur la peau', category: 'acquis', icon: '☀️' },
+      { id: 't12', title: 'Cicatrice ancienne d\'une griffure', category: 'acquis', icon: '🩹' }
     ];
 
     let cardPlacement = {};
@@ -5289,7 +5285,6 @@
         <div style="font-weight:600; display:flex; align-items:center; gap:6px;">
           <span>${trait.icon}</span> <span>${trait.title}</span>
         </div>
-        <div style="font-size:0.72rem; color:var(--text-muted); font-style:italic;">${trait.hint}</div>
         <div class="card-actions">
           <button class="move-btn" onclick="moveCard('${trait.id}', 'col-specifique')" title="Classer dans Spécifique">Spécifique</button>
           <button class="move-btn" onclick="moveCard('${trait.id}', 'col-hereditaire')" title="Classer dans Héréditaire">Héréditaire</button>
