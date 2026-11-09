@@ -744,71 +744,90 @@
     transition: background 0.2s;
   }
 
-  /* LOUPE SCIENTIFIQUE VIRTUELLE SUIVANT LE CURSEUR */
+  /* LOUPE SCIENTIFIQUE D'INVESTIGATION AVEC ZOOM OPTIQUE RÉEL (GROSSISSEMENT X2.5) */
   .scene-loupe {
     position: absolute;
-    width: 64px;
-    height: 64px;
-    border: 2.5px solid #38bdf8;
+    width: 140px;
+    height: 140px;
+    border: 3px solid #38bdf8;
     border-radius: 50%;
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), inset 0 0 10px rgba(56, 189, 248, 0.2);
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.6), inset 0 0 16px rgba(0, 0, 0, 0.7);
     pointer-events: none;
     z-index: 40;
     transform: translate(-50%, -50%);
     display: none;
-    background: rgba(56, 189, 248, 0.06);
-    transition: border-color 0.15s, box-shadow 0.15s, width 0.15s, height 0.15s;
+    background-repeat: no-repeat;
+    background-color: #0b1120;
+    overflow: hidden;
   }
 
-  .scene-loupe.detecting {
-    border-color: #f59e0b !important;
-    box-shadow: 0 0 25px rgba(245, 158, 11, 0.8), inset 0 0 15px rgba(245, 158, 11, 0.3) !important;
-    background: rgba(245, 158, 11, 0.15) !important;
+  .scene-loupe::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.6), inset 0 0 6px rgba(56, 189, 248, 0.4);
+    pointer-events: none;
+  }
+
+  .loupe-glass-sheen {
+    position: absolute;
+    top: 8px;
+    left: 14px;
+    width: 55px;
+    height: 28px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%);
+    border-radius: 50%;
+    transform: rotate(-25deg);
+    pointer-events: none;
   }
 
   .loupe-crosshair {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 14px;
-    height: 14px;
+    width: 20px;
+    height: 20px;
     transform: translate(-50%, -50%);
     pointer-events: none;
   }
   .loupe-crosshair::before {
     content: "";
     position: absolute;
-    top: 6px;
+    top: 9px;
     left: 0;
-    width: 14px;
+    width: 20px;
     height: 2px;
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(56, 189, 248, 0.75);
   }
   .loupe-crosshair::after {
     content: "";
     position: absolute;
     top: 0;
-    left: 6px;
+    left: 9px;
     width: 2px;
-    height: 14px;
-    background: rgba(255, 255, 255, 0.7);
+    height: 20px;
+    background: rgba(56, 189, 248, 0.75);
   }
 
-  .loupe-tip-badge {
+  .loupe-mag-badge {
     position: absolute;
-    bottom: -24px;
+    bottom: 8px;
     left: 50%;
     transform: translateX(-50%);
-    background: #f59e0b;
-    color: #000;
-    font-size: 9px;
+    background: rgba(15, 23, 42, 0.85);
+    color: #38bdf8;
+    font-size: 10px;
     font-weight: 800;
-    padding: 2px 7px;
+    padding: 1px 7px;
     border-radius: 4px;
-    white-space: nowrap;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    display: none;
+    border: 1px solid rgba(56, 189, 248, 0.5);
     font-family: var(--font-mono);
+    pointer-events: none;
+    letter-spacing: 0.5px;
   }
 
   /* BALISES DE SCELLÉS PLACÉES UNIQUEMENT APRÈS DÉCOUVERTE */
@@ -3152,28 +3171,29 @@
     <section class="step-panel active" id="step-1">
       <div class="panel-banner">
         <div>
-          <h2>🔎 Étape 1 : Exploration de la Scène de Crime à la Loupe & Mise sous Scellés</h2>
+          <h2>🔎 Étape 1 : Exploration de la Scène de Crime à la Loupe Optique & Mise sous Scellés</h2>
           <p>Marc Delorme a été agressé dans son bureau entre 19h00 et 20h00. 
-             <strong>Déplace ta loupe sur la scène pour repérer les 5 indices biologiques dissimulés (salive, cheveux, poils, sang). Dès qu'un indice est détecté, clique pour le prélever et glisse-le dans un sac de scellé judiciaire officiel !</strong></p>
+             <strong>Déplace ta loupe optique grossissante sur la scène pour repérer par toi-même les indices dissimulés (salive, cheveux, poils, traces de sang et empreinte digitale). Dès que tu repères une anomalie, clique dessus pour prélever l'indice et le glisser dans un sac de scellé officiel !</strong></p>
         </div>
-        <span class="target-badge" id="scelles-counter-badge">Indices sous scellés : 0 / 5</span>
+        <span class="target-badge" id="scelles-counter-badge">Indices sous scellés : 0 / 6</span>
       </div>
 
       <div class="scene-explorer-layout">
-        <!-- VUE SCENE DE CRIME : AUCUNE PASTILLE VISIBLE AU DÉPART ! -->
+        <!-- VUE SCENE DE CRIME : EXPLORATION LIBRE À LA LOUPE SANS PASTILLES AU DÉPART ! -->
         <div class="scene-viewport-wrapper" id="scene-viewport" onmousemove="handleLoupeMove(event)" onmouseleave="handleLoupeLeave()" onclick="handleSceneClick(event)">
           <img src="assets/enquete_genetique/scene_de_crime.jpg" alt="Scène de crime dans le bureau du soigneur" class="scene-image" id="crime-scene-img">
           
-          <!-- LOUPE VIRTUELLE ACTIVE -->
+          <!-- LOUPE OPTIQUE RÉELLE (GROSSISSEMENT X2.5) -->
           <div class="scene-loupe" id="scene-loupe">
+            <div class="loupe-glass-sheen"></div>
             <div class="loupe-crosshair"></div>
-            <span class="loupe-tip-badge" id="loupe-tip">🔍 Indice repéré ! Clique</span>
+            <div class="loupe-mag-badge">ZOOM 2.5×</div>
           </div>
 
           <!-- BANDEAUX POLICE ET CAMERA -->
           <div class="camera-overlay">
             <span class="rec-dot"></span>
-            <span>ZONE_CRIME • RECHERCHE ACTIVE À LA LOUPE</span>
+            <span>ZONE_CRIME • RECHERCHE ACTIVE À LA LOUPE GROSSISSANTE</span>
           </div>
 
           <div class="tape-decoration">POLICE SCIENTIFIQUE • ACCÈS STRICTEMENT RÉSERVÉ</div>
@@ -3193,6 +3213,9 @@
 
           <!-- 5. Sang séché sur l'angle métallique du meuble -->
           <div class="clue-detection-zone" id="zone-sang_meuble" data-clue="sang_meuble" style="top: 47%; left: 21%; width: 8%; height: 10%;"></div>
+
+          <!-- 6. Empreinte papillaire au sol près des gouttes de sang -->
+          <div class="clue-detection-zone" id="zone-empreinte" data-clue="empreinte" style="top: 78%; left: 39%; width: 7%; height: 8%;"></div>
 
           <!-- ACCÈS AGENDA SUR LE BUREAU -->
           <div class="clue-detection-zone" id="zone-agenda" data-clue="agenda_link" style="top: 34%; left: 35%; width: 8%; height: 8%;" title="Cliquer pour ouvrir l'Agenda de Marc (Onglet 2)"></div>
@@ -3219,17 +3242,17 @@
               <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5" style="margin-bottom:12px;">
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
               </svg>
-              <p>Promène ta loupe sur la scène de crime. Explore la victime, le sol, la table et les meubles pour détecter les <strong>5 indices biologiques</strong>.</p>
+              <p>Promène ta loupe optique grossissante sur la scène. Examine attentivement la victime, le sol (gouttes et traces papillaires), la table et les meubles pour prélever les <strong>6 indices d'investigation</strong>.</p>
             </div>
           </div>
 
-          <!-- RACK DES 5 SCELLÉS OFFICIELS -->
+          <!-- RACK DES 6 SCELLÉS OFFICIELS -->
           <div style="margin-top:16px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <h4 style="font-size:0.8rem; color:#cbd5e1; text-transform:uppercase; letter-spacing:0.5px; margin:0;">
-                Scellés prêts pour l'analyse :
+                Scellés d'investigation :
               </h4>
-              <span id="rack-count-text" style="font-size:0.8rem; font-weight:700; color:#38bdf8;">0 / 5</span>
+              <span id="rack-count-text" style="font-size:0.8rem; font-weight:700; color:#38bdf8;">0 / 6</span>
             </div>
 
             <div class="scelles-progress-rack">
@@ -3238,16 +3261,17 @@
               <div class="rack-slot" id="slot-rack-poil">🐾 SC-03</div>
               <div class="rack-slot" id="slot-rack-sang_sol">🩸 SC-04</div>
               <div class="rack-slot" id="slot-rack-sang_meuble">🩸 SC-05</div>
+              <div class="rack-slot" id="slot-rack-empreinte">🖐️ ED-06</div>
             </div>
           </div>
 
           <!-- BANNIÈRE VALIDATION FINALE -->
           <div id="all-scelles-complete-box" style="display:none; background:rgba(16,185,129,0.15); border:1.5px solid #10b981; border-radius:8px; padding:12px; margin-top:14px; text-align:center;">
             <div style="color:#a7f3d0; font-weight:700; font-size:0.88rem; margin-bottom:6px;">
-              🎉 Les 5 indices sont sous scellés !
+              🎉 Les 6 indices sont sous scellés !
             </div>
             <p style="color:#e2e8f0; font-size:0.78rem; margin:0 0 10px 0; line-height:1.4;">
-              Chaque cellule renferme un NOYAU avec de l'ADN exploitable (analysé dans l'Activité 3).
+              Les prélèvements biologiques renferment des cellules contenant le programme génétique. Découvre dans quel compartiment il se cache dans l'Activité 2 !
             </p>
             <button class="btn-primary" onclick="goToStep(2)" style="width:100%; font-size:0.85rem; padding:8px;">
               Ouvrir l'Agenda de Marc (Onglet 2) ▶
@@ -3871,7 +3895,8 @@
             <li><strong>Cheveux humains avec bulbe</strong> (col de la victime) : présence de cellules folliculaires vivantes $\rightarrow$ ADN nucléaire extrait avec succès.</li>
             <li><strong>Salive</strong> (rebord du gobelet de café) : cellules épithéliales de la muqueuse buccale $\rightarrow$ ADN nucléaire exploitable.</li>
             <li><strong>Cellules de peau sous les ongles</strong> (griffure de défense) : squames épidermiques $\rightarrow$ profil génétique de l'agresseur isolé.</li>
-            <li><strong>Gouttes de sang au sol</strong> : les globules blancs (leucocytes possédant un noyau) ont permis une extraction d'ADN confirmatoire.</li>
+            <li><strong>Gouttes de sang au sol</strong> : les globules blancs (leucocytes) ont permis une extraction d'ADN confirmatoire.</li>
+            <li><strong>Empreinte digitale au sol</strong> : la dactyloscopie comparative prouve qu'elle appartient à Marc Delorme (la victime qui a pris appui au sol).</li>
             <li><strong>Poils d'animaux</strong> (lion, chimpanzé) : identifiés comme provenant des animaux du zoo grâce à leurs caractères spécifiques (cuticule animale). Absence de bulbe pileux $\rightarrow$ pas d'ADN nucléaire, piste animale définitivement écartée.</li>
           </ul>
         </section>
@@ -4222,12 +4247,12 @@
       salive: { x: 82.5, y: 80, radius: 6.5, name: "Gobelet de café (Salive)" },
       cheveu: { x: 45.0, y: 64, radius: 5.5, name: "Col de veste (Cheveu)" },
       poil: { x: 56.0, y: 72, radius: 5.5, name: "Manche de chemise (Poil animal)" },
-      sang_sol: { x: 37.0, y: 76, radius: 6.5, name: "Flaque au sol (Sang)" },
+      sang_sol: { x: 37.0, y: 76, radius: 6.0, name: "Flaque au sol (Sang)" },
+      empreinte: { x: 41.5, y: 80.5, radius: 5.5, name: "Empreinte digitale au sol" },
       sang_meuble: { x: 24.0, y: 50, radius: 6.0, name: "Angle du meuble (Sang séché)" }
     };
 
     const discoveredClues = new Set();
-    let nearbyClueKey = null;
 
     function handleLoupeMove(e) {
       const viewport = document.getElementById('scene-viewport');
@@ -4237,45 +4262,22 @@
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
 
-      const percentX = (mouseX / rect.width) * 100;
-      const percentY = (mouseY / rect.height) * 100;
-
       const loupe = document.getElementById('scene-loupe');
-      const tip = document.getElementById('loupe-tip');
       if (loupe) {
+        const zoom = 2.5;
+        const radius = 70; // 140px / 2
         loupe.style.display = 'block';
         loupe.style.left = `${mouseX}px`;
         loupe.style.top = `${mouseY}px`;
-
-        // Check proximity to undiscovered clues
-        nearbyClueKey = null;
-        Object.keys(clueLocations).forEach(key => {
-          if (!discoveredClues.has(key)) {
-            const loc = clueLocations[key];
-            const dist = Math.hypot(percentX - loc.x, percentY - loc.y);
-            if (dist < loc.radius) {
-              nearbyClueKey = key;
-            }
-          }
-        });
-
-        if (nearbyClueKey) {
-          loupe.classList.add('detecting');
-          if (tip) {
-            tip.style.display = 'block';
-            tip.innerText = `🔍 ${clueLocations[nearbyClueKey].name} détecté ! Clique`;
-          }
-        } else {
-          loupe.classList.remove('detecting');
-          if (tip) tip.style.display = 'none';
-        }
+        loupe.style.backgroundImage = "url('assets/enquete_genetique/scene_de_crime.jpg')";
+        loupe.style.backgroundSize = `${rect.width * zoom}px ${rect.height * zoom}px`;
+        loupe.style.backgroundPosition = `-${mouseX * zoom - radius}px -${mouseY * zoom - radius}px`;
       }
     }
 
     function handleLoupeLeave() {
       const loupe = document.getElementById('scene-loupe');
       if (loupe) loupe.style.display = 'none';
-      nearbyClueKey = null;
     }
 
     function handleSceneClick(e) {
@@ -4299,7 +4301,7 @@
         return;
       }
 
-      // Check click on biological clues
+      // Check click on clues
       let clickedClue = null;
       Object.keys(clueLocations).forEach(key => {
         const loc = clueLocations[key];
@@ -4316,11 +4318,11 @@
         const container = document.getElementById('clue-display');
         container.innerHTML = `
           <div class="clue-header">
-            <h4>🔎 Zone inspectée à la loupe</h4>
+            <h4>🔎 Examen au grossissement 2.5×</h4>
             <span class="clue-type-pill" style="background:#334155;">Zone neutre</span>
           </div>
           <div class="clue-body">
-            <p>Rien de suspect à cet endroit précis. Poursuis ton exploration en balayant la loupe sur les vêtements de la victime Marc, la table de travail, le sol ou les meubles.</p>
+            <p>Aucun indice biologique ni empreinte décelé à cet endroit précis. Continue d'explorer attentivement les vêtements de Marc, les taches au sol, l'angle du meuble et le bureau.</p>
           </div>
         `;
       }
@@ -4348,7 +4350,7 @@
     }
 
     /* ============================================================
-       RELEVÉ DES 5 INDICES & MISE SOUS SCELLÉ JUDICIAIRE (ACTIVITÉ 1)
+       RELEVÉ DES INDICES & MISE SOUS SCELLÉ JUDICIAIRE (ACTIVITÉ 1)
        ============================================================ */
     const scellesCluesData = {
       salive: {
@@ -4357,19 +4359,19 @@
         title: '☕ Salive sur le gobelet de café',
         location: 'Table du bureau de Marc (balise n°20)',
         nature: 'Cellules épithéliales de la muqueuse buccale',
-        nucleusFact: 'Chaque cellule buccale possède un NOYAU qui renferme la molécule d\'ADN de la personne qui a bu.',
+        nucleusFact: 'Les cellules épithéliales prélevées sur le gobelet renferment le programme génétique. Mais dans quel compartiment de la cellule (membrane, cytoplasme ou compartiment central) l\'ADN se cache-t-il ? C\'est ce que tu prouveras dans l\'Activité 2 !',
         icon: '☕',
-        badge: 'SCELLÉ S-01'
+        badge: 'SCELLÉ SC-01'
       },
       cheveu: {
         id: 'cheveu',
         code: '#SC-2026-C01',
         title: '🧥 Cheveu retrouvé sur le col',
         location: 'Veste déchirée de la victime',
-        nature: 'Cellules du bulbe pileux (racine)',
-        nucleusFact: 'Le bulbe à la racine du cheveu contient des cellules vivantes avec un NOYAU riche en ADN.',
+        nature: 'Cellules vivantes du bulbe pileux (racine)',
+        nucleusFact: 'Le bulbe à la racine du cheveu contient des cellules humaines avec l\'information génétique de l\'individu. L\'expérience de transfert de l\'Activité 2 permettra de déterminer son emplacement précis.',
         icon: '🧥',
-        badge: 'SCELLÉ C-01'
+        badge: 'SCELLÉ SC-02'
       },
       poil: {
         id: 'poil',
@@ -4377,29 +4379,39 @@
         title: '🐾 Poil animal sur la manche',
         location: 'Chemise de travail de Marc',
         nature: 'Cellules folliculaires de la gaine du poil',
-        nucleusFact: 'La gaine du poil contient des cellules animales possédant un NOYAU avec l\'ADN de l\'espèce.',
+        nucleusFact: 'La gaine du poil contient des cellules animales avec le matériel génétique de l\'espèce. L\'Activité 2 démontrera dans quel compartiment ce matériel est enfermé.',
         icon: '🐾',
-        badge: 'SCELLÉ P-01'
+        badge: 'SCELLÉ SC-03'
       },
       sang_sol: {
         id: 'sang_sol',
         code: '#SC-2026-B01',
-        title: '🩸 Goutte de sang au sol',
-        location: 'Flaque près du corps inanimé de Marc',
-        nature: 'Leucocytes sanguins (globules blancs)',
-        nucleusFact: 'Les globules blancs (leucocytes) du sang possèdent un NOYAU volumineux contenant l\'ADN complet.',
+        title: '🩸 Flaque de sang au sol',
+        location: 'Gouttes près du corps inanimé de Marc',
+        nature: 'Globules blancs sanguins (leucocytes)',
+        nucleusFact: 'Contrairement aux globules rouges qui sont de simples sacs d\'hémoglobine, les leucocytes (globules blancs) sont des cellules complètes portant l\'ADN. Le laboratoire de l\'Activité 2 révélera où est situé cet ADN.',
         icon: '🩸',
-        badge: 'SCELLÉ B-01'
+        badge: 'SCELLÉ SC-04'
       },
       sang_meuble: {
         id: 'sang_meuble',
         code: '#SC-2026-B02',
         title: '🩸 Sang séché sur l’angle du meuble',
         location: 'Coin métallique du bureau (lutte violente)',
-        nature: 'Leucocytes sanguins desséchés',
-        nucleusFact: 'Même séché, le sang conserve les noyaux de ses globules blancs et son ADN reste parfaitement exploitable.',
+        nature: 'Globules blancs sanguins desséchés',
+        nucleusFact: 'Même séché, le sang conserve ses cellules leucocytaires et son information génétique reste intacte. Ses chromosomes seront ensuite analysés dans l\'Activité 3.',
         icon: '🩸',
-        badge: 'SCELLÉ B-02'
+        badge: 'SCELLÉ SC-05'
+      },
+      empreinte: {
+        id: 'empreinte',
+        code: '#SC-2026-ED01',
+        title: '🖐️ Empreinte digitale au sol',
+        location: 'Carrelage poussiéreux, à quelques centimètres des gouttes de sang',
+        nature: 'Empreinte papillaire de contact (crêtes, sillons et cellules cutanées)',
+        nucleusFact: '🔎 <strong>Analyse dactyloscopique :</strong> La comparaison des crêtes papillaires et minuties avec le fichier d\'identification révèle formellement que cette empreinte appartient à la VICTIME <strong>Marc Delorme</strong> lui-même ! Marc a pris appui au sol de la main droite en chutant sous le choc.<br><br>💡 <strong>Règle d\'or de la police scientifique :</strong> Tous les indices découverts sur une scène de crime n\'appartiennent pas au criminel ! Identifier les traces de la victime permet d\'éviter les erreurs judiciaires.',
+        icon: '🖐️',
+        badge: 'SCELLÉ ED-06'
       }
     };
 
@@ -4425,7 +4437,7 @@
               ✓ Prélèvement sécurisé sous scellé ${data.code}
             </div>
             <p style="font-size:0.78rem; color:#94a3b8; margin:4px 0 0 0;">
-              Transmis au laboratoire pour l'analyse des caryotypes (Activité 3).
+              Transmis au laboratoire pour l'investigation (Activité 2 & 3).
             </p>
           </div>
         `;
@@ -4445,7 +4457,7 @@
             <div class="scelle-evidence-bag" id="target-evidence-bag" ondragover="handleScelleDragOver(event)" ondragleave="handleScelleDragLeave(event)" ondrop="handleScelleDrop(event, '${data.id}')">
               <span class="bag-tape-header">⚠️ SCELLÉ JUDICIAIRE • POLICE NATIONALE</span>
               <div style="font-size:0.85rem; color:#cbd5e1; font-weight:700; margin:4px 0;">
-                Dépose l'indice ici pour le placer sous scellé inviolable
+                Dépose l'indice ici pour le placer sous scellé officiel
               </div>
               <button class="btn-bag-clue" onclick="bagClue('${data.id}')">
                 📥 Glisser dans le scellé de prélèvement
@@ -4462,9 +4474,9 @@
         </div>
         <div class="clue-body">
           <p style="margin-bottom:8px;"><strong>📍 Emplacement :</strong> ${data.location}</p>
-          <p style="margin-bottom:8px;"><strong>🔬 Nature des cellules :</strong> ${data.nature}</p>
-          <div class="clue-question" style="margin-bottom:12px;">
-            💡 <strong>Règle d'or SVT :</strong> ${data.nucleusFact}
+          <p style="margin-bottom:8px;"><strong>🔬 Nature des cellules / traces :</strong> ${data.nature}</p>
+          <div class="clue-question" style="margin-bottom:12px; line-height:1.5;">
+            💡 <strong>Règle d'investigation SVT :</strong> ${data.nucleusFact}
           </div>
           ${bagContentHtml}
         </div>
@@ -4521,14 +4533,16 @@
 
       // Update counters
       const count = baggedScelles.size;
-      document.getElementById('scelles-counter-badge').innerText = `Scellés constitués : ${count} / 5`;
-      document.getElementById('rack-count-text').innerText = `${count} / 5`;
+      const counterBadge = document.getElementById('scelles-counter-badge');
+      if (counterBadge) counterBadge.innerText = `Indices sous scellés : ${count} / 6`;
+      const rackCount = document.getElementById('rack-count-text');
+      if (rackCount) rackCount.innerText = `${count} / 6`;
 
       // Re-render inspection card
       inspectCrimeSceneClue(clueId);
 
-      // If all 5 scellés are completed
-      if (count === 5) {
+      // If all 6 scellés are completed
+      if (count === 6) {
         playSuccessChime();
         const completeBox = document.getElementById('all-scelles-complete-box');
         if (completeBox) completeBox.style.display = 'block';
@@ -4743,13 +4757,13 @@
         hasDna: true,
         badgeText: "ADN Présent (Cellules folliculaires racinaires)",
         description: "Plusieurs poils fauves de lion, poils noirs de chimpanzé et poils roux de muntjac prélevés sur la blouse de Marc. Les racines et bulbes sont intacts et renferment des cellules vivantes.",
-        svtConclusion: "🦁 Règle SVT : Contrairement à un poil coupé, un poil arraché avec son bulbe renferme des cellules vivantes avec noyau. Cet ADN permettra dans l'Activité 3 de dresser le caryotype des 3 espèces animales !",
+        svtConclusion: "🦁 Règle SVT : Contrairement à un poil coupé, un poil arraché avec son bulbe renferme des cellules vivantes complètes avec leur matériel génétique. Cet ADN permettra dans l'Activité 3 de dresser le caryotype des espèces animales !",
         svgContent: `
           <!-- POILS AVEC RACINES -->
           <path d="M70 20 Q 90 70, 110 140" stroke="#d97706" stroke-width="12" stroke-linecap="round"/>
           <circle cx="110" cy="140" r="24" fill="#78350f" stroke="#f59e0b" stroke-width="2.5"/>
           <circle cx="110" cy="140" r="10" fill="#a855f7" stroke="#c084fc" stroke-width="2"/>
-          <text x="110" y="144" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">NOYAU (ADN)</text>
+          <text x="110" y="144" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">ADN</text>
           <text x="100" y="185" fill="#fde68a" font-size="10" text-anchor="middle" font-family="sans-serif">Bulbe racinaire du poil</text>
         `
       },
@@ -4757,15 +4771,15 @@
         title: "Scellé #SC-2026-C01 : Cheveux humains avec bulbe pileux (lutte)",
         category: "Trace humaine agresseur",
         hasDna: true,
-        badgeText: "ADN Humain Complet Présent (Noyaux du bulbe)",
+        badgeText: "ADN Humain Complet Présent (Cellules du bulbe)",
         description: "Mèche de cheveux bruns arrachée au col de Marc lors de la bagarre. Le bulbe folliculaire est bien développé et contient des centaines de cellules de l'agresseur.",
-        svtConclusion: "🧬 Règle SVT : Chaque cellule du bulbe folliculaire possède un noyau renfermant les 23 paires de chromosomes de l'agresseur. Indice primordial pour le caryotype de l'Activité 3 !",
+        svtConclusion: "🧬 Règle SVT : Chaque cellule du bulbe folliculaire renferme l'ensemble des chromosomes de l'agresseur. Indice primordial pour le caryotype de l'Activité 3 !",
         svgContent: `
           <!-- CHEVEU AVEC BULBE -->
           <path d="M100 20 L100 120" stroke="#334155" stroke-width="16" stroke-linecap="round"/>
           <circle cx="100" cy="140" r="32" fill="#0369a1" stroke="#38bdf8" stroke-width="3"/>
           <circle cx="100" cy="140" r="14" fill="#a855f7" stroke="#c084fc" stroke-width="2"/>
-          <text x="100" y="144" fill="#fff" font-size="9" text-anchor="middle" font-weight="bold">NOYAU (ADN)</text>
+          <text x="100" y="144" fill="#fff" font-size="9" text-anchor="middle" font-weight="bold">ADN</text>
           <text x="100" y="190" fill="#38bdf8" font-size="10" text-anchor="middle" font-family="sans-serif">Bulbe folliculaire humain</text>
         `
       },
@@ -4775,14 +4789,14 @@
         hasDna: true,
         badgeText: "ADN Présent (Globules blancs / Leucocytes)",
         description: "Écouvillon stérile imbibé du sang prélevé dans la flaque au sol à 50 cm de Marc. Présence massive de globules rouges et de leucocytes.",
-        svtConclusion: "🩸 Règle d'or SVT : Si les globules rouges n'ont pas de noyau, les globules blancs (leucocytes) possèdent un volumineux noyau rempli d'ADN ! Prêt pour le caryotype de l'Activité 3.",
+        svtConclusion: "🩸 Règle d'or SVT : Si les globules rouges sont de simples véhicules sans matériel génétique, les leucocytes (globules blancs) sont des cellules complètes remplies d'ADN ! Prêt pour le caryotype de l'Activité 3.",
         svgContent: `
           <!-- SANG AU SOL -->
           <circle cx="65" cy="75" r="22" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/>
           <circle cx="135" cy="65" r="20" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/>
           <circle cx="100" cy="120" r="30" fill="rgba(255,255,255,0.2)" stroke="#38bdf8" stroke-width="2.5"/>
           <path d="M90 110 Q98 105 105 112 Q112 120 105 130 Q95 132 90 120 Z" fill="#7c3aed" stroke="#c084fc" stroke-width="2"/>
-          <text x="100" y="123" fill="#fff" font-size="7" text-anchor="middle" font-weight="bold">NOYAU</text>
+          <text x="100" y="123" fill="#fff" font-size="7" text-anchor="middle" font-weight="bold">ADN</text>
           <text x="100" y="175" fill="#fca5a5" font-size="10" text-anchor="middle" font-family="sans-serif">Leucocyte (Globule blanc)</text>
         `
       },
@@ -4807,7 +4821,7 @@
         hasDna: true,
         badgeText: "ADN Présent (Squames de peau + Leucocytes)",
         description: "En griffant son agresseur au visage, Marc a piégé des fragments de cellules cutanées et des micro-gouttes de sang sous ses ongles.",
-        svtConclusion: "🖐️ Règle d'or SVT : Cellules épidermiques et globules blancs de l'agresseur avec leurs noyaux intacts ! Preuve directe pour confondre le suspect dans l'Activité 3.",
+        svtConclusion: "🖐️ Règle d'or SVT : Cellules épidermiques et globules blancs de l'agresseur avec leurs structures intactes ! Preuve directe pour confondre le suspect dans l'Activité 3.",
         svgContent: `
           <polygon points="60,60 110,50 140,85 100,120 50,100" fill="rgba(245, 158, 11, 0.25)" stroke="#f59e0b" stroke-width="2"/>
           <circle cx="95" cy="85" r="14" fill="#6d28d9" stroke="#9333ea" stroke-width="2"/>
@@ -4821,12 +4835,12 @@
         hasDna: true,
         badgeText: "ADN Présent (Globules blancs / Leucocytes)",
         description: "Projection de gouttelettes de sang à 1m20 du sol sur la caisse métallique en bois située derrière le bureau.",
-        svtConclusion: "🩸 Règle d'or SVT : Des globules blancs complets avec noyaux sont isolés dans cette projection. Destinés à l'analyse chromosomique de l'Activité 3.",
+        svtConclusion: "🩸 Règle d'or SVT : Des globules blancs complets sont isolés dans cette projection. Destinés à l'analyse chromosomique de l'Activité 3.",
         svgContent: `
           <circle cx="55" cy="85" r="15" fill="#b91c1c"/>
           <circle cx="110" cy="115" r="30" fill="rgba(255,255,255,0.2)" stroke="#38bdf8" stroke-width="2.5"/>
           <circle cx="110" cy="115" r="15" fill="#7c3aed" stroke="#c084fc" stroke-width="2"/>
-          <text x="110" y="119" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">NOYAU</text>
+          <text x="110" y="119" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">ADN</text>
           <text x="100" y="175" fill="#fca5a5" font-size="10" text-anchor="middle" font-family="sans-serif">Éclaboussure caisse</text>
         `
       },
@@ -4850,11 +4864,11 @@
         hasDna: true,
         badgeText: "ADN Présent (Cellules de la muqueuse buccale)",
         description: "Prélèvement sur le rebord de la tasse de café jetable posée sur le bureau. Nombreuses cellules détachées lors de la déglutition.",
-        svtConclusion: "☕ Règle d'or SVT : Les cellules buccales possèdent un volumineux noyau très riche en filaments d'ADN. Ce profil sera croisé avec les caryotypes de l'Activité 3 !",
+        svtConclusion: "☕ Règle d'or SVT : Les cellules buccales possèdent un matériel biologique très riche en filaments d'ADN. Ce profil sera croisé avec les caryotypes de l'Activité 3 !",
         svgContent: `
           <ellipse cx="90" cy="95" rx="55" ry="42" fill="rgba(6, 182, 212, 0.25)" stroke="#06b6d4" stroke-width="2.5"/>
           <circle cx="95" cy="95" r="18" fill="#7c3aed" stroke="#a855f7" stroke-width="2"/>
-          <text x="95" y="99" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">NOYAU</text>
+          <text x="95" y="99" fill="#fff" font-size="8" text-anchor="middle" font-weight="bold">ADN</text>
           <text x="100" y="175" fill="#a5f3fc" font-size="10" text-anchor="middle" font-family="sans-serif">Cellule épithéliale buccale</text>
         `
       }
