@@ -1125,6 +1125,46 @@
         </button>
       </div>
 
+      <!-- DÉDUCTION SCIENTIFIQUE DE L'ÉLÈVE (AVANT AFFICHAGE DE LA CORRECTION) -->
+      <div class="deduction-challenge-card" id="deduction-challenge-box" style="display:none; background:#030712; border:2px solid #38bdf8; border-radius:12px; padding:20px; margin:20px auto; max-width:700px; box-shadow:0 0 25px rgba(56,189,248,0.25);">
+        <div style="display:flex; align-items:flex-start; gap:14px; margin-bottom:16px;">
+          <span style="font-size:2rem; line-height:1;">🔬</span>
+          <div>
+            <h4 style="margin:0 0 4px 0; color:#38bdf8; font-size:1.15rem;">Déduction Scientifique : Où se trouve l'information génétique ?</h4>
+            <p style="margin:0; color:#cbd5e1; font-size:0.88rem; line-height:1.4;">
+              Observe attentivement le résultat de ta micromanipulation ci-dessus. 
+              <strong>Quel constituant de la cellule-œuf a déterminé la couleur du pelage du lapereau à sa naissance ?</strong>
+            </p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px;">
+          <label style="display:flex; align-items:center; gap:10px; background:#0f172a; padding:10px 14px; border-radius:8px; border:1px solid #334155; cursor:pointer; color:#e2e8f0; font-size:0.88rem;">
+            <input type="radio" name="rabbit-organelle" value="membrane">
+            <span>🥢 <strong>La membrane plasmique</strong></span>
+          </label>
+          <label style="display:flex; align-items:center; gap:10px; background:#0f172a; padding:10px 14px; border-radius:8px; border:1px solid #334155; cursor:pointer; color:#e2e8f0; font-size:0.88rem;">
+            <input type="radio" name="rabbit-organelle" value="cytoplasme">
+            <span>💧 <strong>Le cytoplasme</strong></span>
+          </label>
+          <label style="display:flex; align-items:center; gap:10px; background:#0f172a; padding:10px 14px; border-radius:8px; border:1.5px solid #38bdf8; cursor:pointer; color:#e2e8f0; font-size:0.88rem;">
+            <input type="radio" name="rabbit-organelle" value="noyau">
+            <span>🔬 <strong>Le noyau cellulaire</strong></span>
+          </label>
+          <label style="display:flex; align-items:center; gap:10px; background:#0f172a; padding:10px 14px; border-radius:8px; border:1px solid #334155; cursor:pointer; color:#e2e8f0; font-size:0.88rem;">
+            <input type="radio" name="rabbit-organelle" value="uterus">
+            <span>🤰 <strong>L'utérus de la lapine porteuse</strong></span>
+          </label>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+          <button class="btn-primary" onclick="validateRabbitDeduction()" style="background:#0284c7; border:none; padding:10px 22px; border-radius:8px; font-weight:700; color:#fff; cursor:pointer; font-size:0.9rem;">
+            Valider ma déduction scientifique ▶
+          </button>
+          <span id="deduction-feedback" style="font-size:0.88rem; font-weight:700;"></span>
+        </div>
+      </div>
+
       <!-- TABLEAU D'HISTORIQUE DES ESSAIS -->
       <table class="trials-history-table" id="trials-table">
         <thead>
@@ -1145,7 +1185,7 @@
       <!-- ============================================================
            ENCADRÉ LUDIQUE FICHE ÉLÈVE N°2
            ============================================================ -->
-      <div class="student-notebook-callout" id="student-notebook-box-act2">
+      <div class="student-notebook-callout" id="student-notebook-box-act2" style="display:none;">
         <div class="callout-header">
           <div class="callout-badge">
             <span class="callout-icon">📋</span>
@@ -1556,6 +1596,8 @@
     }
 
     function displayBirthFact() {
+      const deductBox = document.getElementById('deduction-challenge-box');
+      if (deductBox) deductBox.style.display = 'block';
       playChime();
       const card = document.getElementById('factual-baby-card');
       card.style.display = 'block';
@@ -1669,6 +1711,32 @@
     window.addEventListener('DOMContentLoaded', () => {
       initDragAndDrop();
     });
-  </script>
+  
+    /* VALIDATION DE LA DÉDUCTION PAR L'ÉLÈVE */
+    function validateRabbitDeduction() {
+      const selected = document.querySelector('input[name="rabbit-organelle"]:checked');
+      const fb = document.getElementById('deduction-feedback');
+      if (!selected) {
+        playBeep(250, 0.1);
+        fb.innerHTML = '<span style="color:#f59e0b;">⚠️ Coche un constituant cellulaire ci-dessus avant de valider.</span>';
+        return;
+      }
+
+      if (selected.value === 'noyau') {
+        playChime();
+        fb.innerHTML = '<span style="color:#10b981;">✅ BRAVO ! Tu as déduit toi-même que seul le NOYAU transmet l'information génétique (ADN) ! Voici la synthèse officielle :</span>';
+        const box = document.getElementById('student-notebook-box-act2');
+        if (box) {
+          box.style.display = 'block';
+          setTimeout(() => {
+            box.scrollIntoView({ behavior: 'smooth' });
+          }, 350);
+        }
+      } else {
+        playBeep(180, 0.2);
+        fb.innerHTML = '<span style="color:#f43f5e;">❌ Réfléchis bien : peu importe d'où viennent la membrane, le cytoplasme ou la mère porteuse, le lapereau a TOUJOURS la couleur de la lapine qui a donné son NOYAU !</span>';
+      }
+    }
+</script>
 </body>
 </html>

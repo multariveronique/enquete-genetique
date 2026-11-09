@@ -574,6 +574,158 @@
     font-family: var(--font-mono);
   }
 
+    /* SCELLÉ INTERACTIF & GLISSER-DÉPOSER D'INDICES */
+  .hotspot.bagged {
+    border-color: #10b981 !important;
+    background: rgba(6, 78, 59, 0.95) !important;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.8) !important;
+  }
+  .hotspot.bagged::before {
+    border-color: #10b981 !important;
+  }
+  .hotspot-tag-bagged {
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #059669;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 4px;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+
+  .interactive-scelle-zone {
+    background: #0b1120;
+    border: 1.5px solid #334155;
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 12px;
+  }
+
+  .clue-token-card {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 1.5px solid #38bdf8;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: grab;
+    user-select: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .clue-token-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(56, 189, 248, 0.4);
+    border-color: #7dd3fc;
+  }
+  .clue-token-card.dragging {
+    cursor: grabbing;
+    opacity: 0.6;
+    transform: scale(0.96);
+  }
+
+  .scelle-evidence-bag {
+    background: rgba(15, 23, 42, 0.85);
+    border: 2px dashed #f59e0b;
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 14px;
+    text-align: center;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .scelle-evidence-bag.drag-over {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.15);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+    transform: scale(1.02);
+  }
+  .scelle-evidence-bag.sealed {
+    border: 2px solid #10b981;
+    background: rgba(6, 78, 59, 0.25);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+  }
+
+  .bag-tape-header {
+    background: #eab308;
+    color: #000;
+    font-weight: 900;
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    letter-spacing: 1px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+
+  .bag-tape-sealed {
+    background: #dc2626;
+    color: #fff;
+    font-weight: 900;
+    font-size: 0.76rem;
+    font-family: var(--font-mono);
+    letter-spacing: 1.5px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.5);
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  .btn-bag-clue {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #000;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-bag-clue:hover {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+  }
+
+  .scelles-progress-rack {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .rack-slot {
+    flex: 1;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 8px 4px;
+    text-align: center;
+    font-size: 0.72rem;
+    color: #64748b;
+    font-family: var(--font-mono);
+    transition: all 0.2s;
+  }
+  .rack-slot.filled {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    font-weight: 700;
+  }
+
   /* HOTSPOTS */
   .hotspot {
     position: absolute;
@@ -2851,84 +3003,118 @@
     <section class="step-panel active" id="step-1">
       <div class="panel-banner">
         <div>
-          <h2>🔎 Exploration de la Scène de Crime – Bureau du Soigneur</h2>
-          <p>Marc Delorme, 42 ans, soigneur animalier en chef du parc zoologique, a été retrouvé inanimé dans son bureau. Inspectez les points d'intérêt pour relever les indices médico-légaux.</p>
+          <h2>🔎 Exploration de la Scène de Crime – Recherche d'Indices & Mise sous Scellés</h2>
+          <p>Marc Delorme, 42 ans, soigneur animalier en chef, a été retrouvé inanimé dans son bureau. 
+             <strong>Explorez la pièce, trouvez les 5 indices biologiques (salive, cheveux, poils, sang) et glissez-les un par un dans un sac de scellé officiel</strong> pour les expédier à la police scientifique.</p>
         </div>
-        <span class="target-badge">Objectif : 5 indices à explorer</span>
+        <span class="target-badge" id="scelles-counter-badge">Scellés constitués : 0 / 5</span>
       </div>
 
       <div class="scene-explorer-layout">
-        <!-- VUE SCENE DE CRIME AVEC HOTSPOTS -->
+        <!-- VUE SCENE DE CRIME AVEC LES VRAIS POINTS D'INDICES -->
         <div class="scene-viewport-wrapper">
           <img src="assets/enquete_genetique/scene_de_crime.jpg" alt="Scène de crime dans le bureau du soigneur" class="scene-image" id="crime-scene-img">
           
           <div class="camera-overlay">
             <span class="rec-dot"></span>
-            <span>CAM_01 • BUREAU_SOIGNEUR • ENQUÊTE EN COURS</span>
+            <span>CAM_01 • BUREAU_SOIGNEUR • ZONE DE RECHERCHE D'INDICES</span>
           </div>
 
-          <div class="tape-decoration">POLICE SCIENTIFIQUE • ZONE SÉCURISÉE • NE PAS FRANCHIR</div>
+          <div class="tape-decoration">POLICE TECHNIQUE ET SCIENTIFIQUE • ZONE SÉCURISÉE</div>
 
-          <!-- HOTSPOT 1 : LA VICTIME -->
-          <div class="hotspot" style="top: 67%; left: 49%;" onclick="inspectClue('victim')" title="Examiner la victime" id="hotspot-victim">
-            <span class="hotspot-number">1</span>
-            <span class="hotspot-tag">Victime</span>
+          <!-- INDICE 1 : SALIVE SUR LE GOBELET DE CAFE (TABLE DU BUREAU) -->
+          <div class="hotspot" style="top: 80%; left: 83%;" onclick="inspectCrimeSceneClue('salive')" title="Examiner le gobelet de café" id="hotspot-salive">
+            <span class="hotspot-number">☕</span>
+            <span class="hotspot-tag">Salive</span>
           </div>
 
-          <!-- HOTSPOT 2 : SCELLÉS & PRELEVEMENTS D'ADN -->
-          <div class="hotspot" style="top: 73%; left: 21%;" onclick="inspectClue('samples'); openSamplesModal();" title="Examiner les prélèvements d'ADN" id="hotspot-samples">
-            <span class="hotspot-number">2</span>
-            <span class="hotspot-tag">Scellés ADN</span>
+          <!-- INDICE 2 : CHEVEU SUR LE COL DE LA VESTE DE LA VICTIME -->
+          <div class="hotspot" style="top: 64%; left: 45%;" onclick="inspectCrimeSceneClue('cheveu')" title="Examiner le col de la veste de Marc" id="hotspot-cheveu">
+            <span class="hotspot-number">🧥</span>
+            <span class="hotspot-tag">Cheveu</span>
           </div>
 
-          <!-- HOTSPOT 3 : AGENDA DU SOIGNEUR SUR LE BUREAU -->
-          <div class="hotspot" style="top: 36%; left: 37%;" onclick="inspectClue('agenda'); openAgendaModal();" title="Examiner l'agenda du soigneur" id="hotspot-agenda">
-            <span class="hotspot-number">3</span>
-            <span class="hotspot-tag">Agenda</span>
+          <!-- INDICE 3 : POIL ANIMAL SUR LA MANCHE DE LA CHEMISE -->
+          <div class="hotspot" style="top: 72%; left: 56%;" onclick="inspectCrimeSceneClue('poil')" title="Examiner la manche de chemise de Marc" id="hotspot-poil">
+            <span class="hotspot-number">🐾</span>
+            <span class="hotspot-tag">Poil</span>
           </div>
 
-          <!-- HOTSPOT 4 : L'ECRAN ORDINATEUR / VIDEOSURVEILLANCE -->
-          <div class="hotspot" style="top: 26%; left: 49%;" onclick="inspectClue('computer'); openCctvModal();" title="Examiner l'ordinateur" id="hotspot-computer">
-            <span class="hotspot-number">4</span>
-            <span class="hotspot-tag">Vidéos</span>
+          <!-- INDICE 4 : GOUTTE DE SANG FRAIS AU SOL -->
+          <div class="hotspot" style="top: 76%; left: 37%;" onclick="inspectCrimeSceneClue('sang_sol')" title="Examiner la flaque de sang au sol" id="hotspot-sang_sol">
+            <span class="hotspot-number">🩸</span>
+            <span class="hotspot-tag">Sang sol</span>
           </div>
 
-          <!-- HOTSPOT 5 : BALISE 20 & TASSE DE CAFE -->
-          <div class="hotspot" style="top: 84%; left: 84%;" onclick="inspectClue('coffee')" title="Examiner la balise 20" id="hotspot-coffee">
-            <span class="hotspot-number">5</span>
-            <span class="hotspot-tag">Balise #20</span>
+          <!-- INDICE 5 : SANG SÉCHÉ SUR L'ANGLE MÉTALLIQUE DU MEUBLE -->
+          <div class="hotspot" style="top: 50%; left: 24%;" onclick="inspectCrimeSceneClue('sang_meuble')" title="Examiner l'angle du meuble de lutte" id="hotspot-sang_meuble">
+            <span class="hotspot-number">🩸</span>
+            <span class="hotspot-tag">Meuble</span>
+          </div>
+
+          <!-- PIECE A CONVICTION : AGENDA SUR LE BUREAU -->
+          <div class="hotspot" style="top: 36%; left: 37%; border-color:#eab308;" onclick="goToStep(3)" title="Consulter l'agenda de Marc (Onglet 3)" id="hotspot-agenda">
+            <span class="hotspot-number">📔</span>
+            <span class="hotspot-tag" style="background:#eab308; color:#000;">Agenda ➔</span>
+          </div>
+
+          <!-- TERMINAL : VIDEOSURVEILLANCE -->
+          <div class="hotspot" style="top: 26%; left: 49%; border-color:#38bdf8;" onclick="goToStep(4)" title="Visionner la vidéosurveillance (Onglet 4)" id="hotspot-computer">
+            <span class="hotspot-number">🖥️</span>
+            <span class="hotspot-tag" style="background:#0284c7; color:#fff;">Vidéos ➔</span>
           </div>
         </div>
 
-        <!-- SIDEBAR D'INSPECTION -->
+        <!-- SIDEBAR D'INSPECTION & DE MISE SOUS SCELLÉ -->
         <div class="inspection-sidebar">
           <h3>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
             </svg>
-            Dossier d'Analyse Médicale
+            Relevé d'Indice & Sac de Scellé
           </h3>
 
+          <!-- ZONE DE CONTENU DYNAMIQUE DE L'INDICE -->
           <div class="clue-details-box" id="clue-display">
             <div class="clue-empty-state">
-              <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5" style="margin-bottom:12px;">
-                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5" style="margin-bottom:12px;">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
               </svg>
-              <p>Cliquez sur l'un des <strong>5 repères numérotés</strong> sur la scène de crime pour inspecter les éléments clés.</p>
+              <p>Cliquez sur l'un des <strong>indices sur la scène de crime</strong> pour l'examiner et le glisser dans un scellé officiel de la police.</p>
             </div>
           </div>
 
-          <!-- CHECKLIST DES DECOUVERTES -->
-          <div>
-            <h4 style="font-size:0.85rem; color:#cbd5e1; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Éléments répertoriés :</h4>
-            <ul class="clue-checklist">
-              <li id="chk-victim"><span class="check-icon"></span> 1. Examen physique de la victime (caractères)</li>
-              <li id="chk-samples"><span class="check-icon"></span> 2. Boîte de scellés biologiques (sources d'ADN)</li>
-              <li id="chk-agenda"><span class="check-icon"></span> 3. Agenda de la journée (animaux & humains)</li>
-              <li id="chk-computer"><span class="check-icon"></span> 4. Terminal informatique (surveillance)</li>
-              <li id="chk-coffee"><span class="check-icon"></span> 5. Balise n°20 & indices périphériques</li>
-            </ul>
+          <!-- RACK DES 5 SCELLÉS OFFICIELS -->
+          <div style="margin-top:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h4 style="font-size:0.8rem; color:#cbd5e1; text-transform:uppercase; letter-spacing:0.5px; margin:0;">
+                Scellés prêts pour l'analyse ADN :
+              </h4>
+              <span id="rack-count-text" style="font-size:0.8rem; font-weight:700; color:#38bdf8;">0 / 5</span>
+            </div>
+
+            <div class="scelles-progress-rack">
+              <div class="rack-slot" id="slot-rack-salive">☕ S-01</div>
+              <div class="rack-slot" id="slot-rack-cheveu">🧥 C-01</div>
+              <div class="rack-slot" id="slot-rack-poil">🐾 P-01</div>
+              <div class="rack-slot" id="slot-rack-sang_sol">🩸 B-01</div>
+              <div class="rack-slot" id="slot-rack-sang_meuble">🩸 B-02</div>
+            </div>
           </div>
+
+          <!-- BANNIÈRE DE VALIDATION DE TOUS LES SCELLÉS -->
+          <div id="all-scelles-complete-box" style="display:none; background:rgba(16,185,129,0.15); border:1.5px solid #10b981; border-radius:8px; padding:12px; margin-top:14px; text-align:center;">
+            <div style="color:#a7f3d0; font-weight:700; font-size:0.88rem; margin-bottom:6px;">
+              🎉 Les 5 indices biologiques sont sous scellés !
+            </div>
+            <p style="color:#e2e8f0; font-size:0.78rem; margin:0 0 10px 0; line-height:1.4;">
+              Chaque échantillon renferme des cellules avec un NOYAU contenant l'ADN. Ils seront analysés dans l'Activité N°3.
+            </p>
+            <button class="btn-primary" onclick="goToStep(3)" style="width:100%; font-size:0.85rem; padding:8px;">
+              Consulter l'Agenda du Soigneur (Onglet 3) ▶
+            </button>
+          </div>
+
         </div>
       </div>
     </section>
@@ -3601,7 +3787,7 @@
         <!-- ============================================================
              ENCADRÉ LUDIQUE FICHE ÉLÈVE N°1
              ============================================================ -->
-        <div class="student-notebook-callout" id="student-notebook-box-act1">
+        <div class="student-notebook-callout" id="student-notebook-box-act1" style="display:none;">
           <div class="callout-header">
             <div class="callout-badge">
               <span class="callout-icon">📋</span>
@@ -4067,6 +4253,194 @@
 
   <!-- SCRIPT LOGIQUE & INTERACTIVITE -->
   <script>
+    /* ============================================================
+       RELEVÉ DES 5 INDICES & MISE SOUS SCELLÉ JUDICIAIRE (ACTIVITÉ 1)
+       ============================================================ */
+    const scellesCluesData = {
+      salive: {
+        id: 'salive',
+        code: '#SC-2026-S01',
+        title: '☕ Salive sur le gobelet de café',
+        location: 'Table du bureau de Marc (balise n°20)',
+        nature: 'Cellules épithéliales de la muqueuse buccale',
+        nucleusFact: 'Chaque cellule buccale possède un NOYAU qui renferme la molécule d\'ADN de la personne qui a bu.',
+        icon: '☕',
+        badge: 'SCELLÉ S-01'
+      },
+      cheveu: {
+        id: 'cheveu',
+        code: '#SC-2026-C01',
+        title: '🧥 Cheveu retrouvé sur le col',
+        location: 'Veste déchirée de la victime',
+        nature: 'Cellules du bulbe pileux (racine)',
+        nucleusFact: 'Le bulbe à la racine du cheveu contient des cellules vivantes avec un NOYAU riche en ADN.',
+        icon: '🧥',
+        badge: 'SCELLÉ C-01'
+      },
+      poil: {
+        id: 'poil',
+        code: '#SC-2026-P01',
+        title: '🐾 Poil animal sur la manche',
+        location: 'Chemise de travail de Marc',
+        nature: 'Cellules folliculaires de la gaine du poil',
+        nucleusFact: 'La gaine du poil contient des cellules animales possédant un NOYAU avec l\'ADN de l\'espèce.',
+        icon: '🐾',
+        badge: 'SCELLÉ P-01'
+      },
+      sang_sol: {
+        id: 'sang_sol',
+        code: '#SC-2026-B01',
+        title: '🩸 Goutte de sang au sol',
+        location: 'Flaque près du corps inanimé de Marc',
+        nature: 'Leucocytes sanguins (globules blancs)',
+        nucleusFact: 'Les globules blancs (leucocytes) du sang possèdent un NOYAU volumineux contenant l\'ADN complet.',
+        icon: '🩸',
+        badge: 'SCELLÉ B-01'
+      },
+      sang_meuble: {
+        id: 'sang_meuble',
+        code: '#SC-2026-B02',
+        title: '🩸 Sang séché sur l’angle du meuble',
+        location: 'Coin métallique du bureau (lutte violente)',
+        nature: 'Leucocytes sanguins desséchés',
+        nucleusFact: 'Même séché, le sang conserve les noyaux de ses globules blancs et son ADN reste parfaitement exploitable.',
+        icon: '🩸',
+        badge: 'SCELLÉ B-02'
+      }
+    };
+
+    // Track collected & bagged scellés
+    const baggedScelles = new Set();
+    let currentInspectedClue = null;
+
+    function inspectCrimeSceneClue(clueKey) {
+      playBeep(480, 0.05);
+      currentInspectedClue = clueKey;
+      const data = scellesCluesData[clueKey];
+      if (!data) return;
+
+      const isBagged = baggedScelles.has(clueKey);
+      const container = document.getElementById('clue-display');
+
+      let bagContentHtml = '';
+      if (isBagged) {
+        bagContentHtml = `
+          <div class="scelle-evidence-bag sealed">
+            <span class="bag-tape-sealed">🔒 SCELLÉ OFFICIEL SCELLÉ INVIOLABLE</span>
+            <div style="font-size:0.85rem; color:#34d399; font-weight:700; margin-top:6px;">
+              ✓ Prélèvement sécurisé sous scellé ${data.code}
+            </div>
+            <p style="font-size:0.78rem; color:#94a3b8; margin:4px 0 0 0;">
+              Transmis au laboratoire pour l'analyse des caryotypes (Activité 3).
+            </p>
+          </div>
+        `;
+      } else {
+        bagContentHtml = `
+          <div class="interactive-scelle-zone">
+            <!-- TOKEN DRAGGABLE DE L'INDICE -->
+            <div class="clue-token-card" id="token-${data.id}" draggable="true" ondragstart="handleClueDragStart(event, '${data.id}')">
+              <span style="font-size:1.8rem;">${data.icon}</span>
+              <div>
+                <strong style="color:#f8fafc; font-size:0.88rem; display:block;">${data.title}</strong>
+                <span style="color:#38bdf8; font-size:0.75rem;">Glisse-moi vers le sac de scellé ci-dessous ✋</span>
+              </div>
+            </div>
+
+            <!-- SAC DE SCELLÉ JUDICIAIRE (CIBLE DE DROP) -->
+            <div class="scelle-evidence-bag" id="target-evidence-bag" ondragover="handleScelleDragOver(event)" ondragleave="handleScelleDragLeave(event)" ondrop="handleScelleDrop(event, '${data.id}')">
+              <span class="bag-tape-header">⚠️ SCELLÉ JUDICIAIRE • POLICE NATIONALE</span>
+              <div style="font-size:0.85rem; color:#cbd5e1; font-weight:700; margin:4px 0;">
+                Dépose l'indice ici pour le placer sous scellé inviolable
+              </div>
+              <button class="btn-bag-clue" onclick="bagClue('${data.id}')">
+                📥 Glisser dans le scellé de prélèvement
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="clue-header">
+          <h4>${data.title}</h4>
+          <span class="clue-type-pill">${data.badge}</span>
+        </div>
+        <div class="clue-body">
+          <p style="margin-bottom:8px;"><strong>📍 Emplacement :</strong> ${data.location}</p>
+          <p style="margin-bottom:8px;"><strong>🔬 Nature des cellules :</strong> ${data.nature}</p>
+          <div class="clue-question" style="margin-bottom:12px;">
+            💡 <strong>Règle d'or SVT :</strong> ${data.nucleusFact}
+          </div>
+          ${bagContentHtml}
+        </div>
+      `;
+    }
+
+    function handleClueDragStart(e, clueId) {
+      e.dataTransfer.setData('text/plain', clueId);
+      const token = document.getElementById(`token-${clueId}`);
+      if (token) token.classList.add('dragging');
+      playBeep(520, 0.04);
+    }
+
+    function handleScelleDragOver(e) {
+      e.preventDefault();
+      const bag = document.getElementById('target-evidence-bag');
+      if (bag) bag.classList.add('drag-over');
+    }
+
+    function handleScelleDragLeave(e) {
+      const bag = document.getElementById('target-evidence-bag');
+      if (bag) bag.classList.remove('drag-over');
+    }
+
+    function handleScelleDrop(e, expectedClueId) {
+      e.preventDefault();
+      const droppedClueId = e.dataTransfer.getData('text/plain');
+      if (droppedClueId === expectedClueId) {
+        bagClue(expectedClueId);
+      }
+    }
+
+    function bagClue(clueId) {
+      if (baggedScelles.has(clueId)) return;
+      playSuccessChime();
+      baggedScelles.add(clueId);
+
+      // Update hotspot on scene
+      const hotspot = document.getElementById(`hotspot-${clueId}`);
+      if (hotspot) {
+        hotspot.classList.add('bagged');
+        hotspot.title = `✓ Indice placé sous scellé !`;
+        if (!hotspot.querySelector('.hotspot-tag-bagged')) {
+          const tag = document.createElement('span');
+          tag.className = 'hotspot-tag-bagged';
+          tag.innerText = '✓ Scellé';
+          hotspot.appendChild(tag);
+        }
+      }
+
+      // Update slot in rack
+      const rackSlot = document.getElementById(`slot-rack-${clueId}`);
+      if (rackSlot) rackSlot.classList.add('filled');
+
+      // Update counters
+      const count = baggedScelles.size;
+      document.getElementById('scelles-counter-badge').innerText = `Scellés constitués : ${count} / 5`;
+      document.getElementById('rack-count-text').innerText = `${count} / 5`;
+
+      // Re-render inspection card
+      inspectCrimeSceneClue(clueId);
+
+      // If all 5 scellés are completed
+      if (count === 5) {
+        playSuccessChime();
+        const completeBox = document.getElementById('all-scelles-complete-box');
+        if (completeBox) completeBox.style.display = 'block';
+      }
+    }
+
     /* ============================================================
        AUDIO SYNTHESIZER (WEB AUDIO API - ZERO FICHIER EXTERNE)
        ============================================================ */
@@ -4598,6 +4972,8 @@
       const btnReport = document.getElementById('btn-to-report');
 
       if (correctCount === total) {
+        const noteBox = document.getElementById('student-notebook-box-act1');
+        if (noteBox) { noteBox.style.display = 'block'; setTimeout(() => { noteBox.scrollIntoView({ behavior: 'smooth' }); }, 300); }
         playSuccessChime();
         feedback.className = 'feedback-msg show success';
         feedback.innerHTML = `
