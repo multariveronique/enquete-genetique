@@ -507,6 +507,7 @@
     display: grid;
     grid-template-columns: 1fr 380px;
     gap: 22px;
+    align-items: start; /* Évite impérativement l'étirement vertical et la bande noire ! */
   }
 
   @media (max-width: 1024px) {
@@ -517,18 +518,26 @@
 
   .scene-viewport-wrapper {
     position: relative;
-    background: #000;
+    background: #0b1120;
     border-radius: 12px;
     overflow: hidden;
     border: 2px solid var(--border);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    align-self: start;
+    cursor: crosshair;
+    user-select: none;
+    aspect-ratio: 1024 / 612;
+    width: 100%;
+    max-width: 100%;
   }
 
   .scene-image {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     display: block;
     user-select: none;
+    pointer-events: none;
   }
 
   .camera-overlay {
@@ -726,22 +735,81 @@
     font-weight: 700;
   }
 
-  /* --- EXPLORATION LIBRE À LA LOUPE SANS PASTILLES VISIBLES --- */
-  .scene-viewport-wrapper {
-    position: relative;
-    cursor: crosshair;
+  /* --- BOUTONS PULSEURS VISIBLES SUR LA SCÈNE (AGENDA ET VIDÉOSURVEILLANCE) --- */
+  .scene-pulsing-btn {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: rgba(15, 23, 42, 0.92);
+    border: 2px solid var(--cyan);
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 800;
+    font-family: var(--font-sans);
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.6);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
     user-select: none;
-    overflow: hidden;
+    animation: btnPulseGlow 2.2s infinite ease-in-out;
   }
 
-  /* ZONES DE DÉTECTION TOTALEMENT INVISIBLES AU DÉPART */
-  .clue-detection-zone {
-    position: absolute;
-    cursor: pointer;
+  .scene-pulsing-btn:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    background: #1e293b;
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.95);
+  }
+
+  .scene-pulsing-btn.btn-pulse-agenda {
+    border-color: #f59e0b;
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.7);
+  }
+  .scene-pulsing-btn.btn-pulse-agenda:hover {
+    border-color: #fbbf24;
+    box-shadow: 0 0 28px rgba(245, 158, 11, 0.95);
+  }
+
+  .scene-pulsing-btn.btn-pulse-cctv {
+    border-color: #ef4444;
+    box-shadow: 0 0 18px rgba(239, 68, 68, 0.7);
+  }
+  .scene-pulsing-btn.btn-pulse-cctv:hover {
+    border-color: #f87171;
+    box-shadow: 0 0 28px rgba(239, 68, 68, 0.95);
+  }
+
+  @keyframes btnPulseGlow {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.07);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.95);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+  }
+
+  .pulse-dot-ring {
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
-    z-index: 15;
-    background: transparent;
-    transition: background 0.2s;
+    display: inline-block;
+  }
+  .pulse-dot-ring.amber {
+    background: #f59e0b;
+    box-shadow: 0 0 8px #f59e0b;
+  }
+  .pulse-dot-ring.red {
+    background: #ef4444;
+    box-shadow: 0 0 8px #ef4444;
   }
 
   /* LOUPE SCIENTIFIQUE D'INVESTIGATION AVEC ZOOM OPTIQUE RÉEL (GROSSISSEMENT X2.5) */
@@ -3245,6 +3313,17 @@
 
           <!-- SURBRILLANCES D'AIDE TEMPORAIRES (ACTIVABLES PAR LE BOUTON AIDE) -->
           <div id="radar-hints-container" style="display:none;"></div>
+
+          <!-- BOUTONS PULSEURS INTERACTIFS SUR LE BUREAU (ACCÈS DIRECTS ÉTAPES 2 & 4) -->
+          <button type="button" class="scene-pulsing-btn btn-pulse-agenda" id="btn-scene-agenda" style="top: 38.4%; left: 36.1%;" onclick="event.stopPropagation(); goToStep(2);" title="Consulter l'Agenda de Marc du Dimanche 08 Novembre">
+            <span class="pulse-dot-ring amber"></span>
+            <span>📔 Agenda de Marc</span>
+          </button>
+
+          <button type="button" class="scene-pulsing-btn btn-pulse-cctv" id="btn-scene-cctv" style="top: 27.0%; left: 48.3%;" onclick="event.stopPropagation(); goToStep(4);" title="Visionner la Vidéosurveillance et les portraits-robots">
+            <span class="pulse-dot-ring red"></span>
+            <span>📹 Vidéosurveillance</span>
+          </button>
 
           <!-- LES BALISES DE SCELLÉS N'APPARAISSENT QU'APRÈS DÉCOUVERTE -->
           <div id="discovered-flags-container"></div>
