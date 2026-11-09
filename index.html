@@ -3376,12 +3376,12 @@
           <div id="radar-hints-container" style="display:none;"></div>
 
           <!-- BOUTONS PULSEURS DISCRETS SUR LE BUREAU (SANS MASQUER L'IMAGE) -->
-          <button type="button" class="scene-pulsing-btn btn-pulse-agenda" id="btn-scene-agenda" style="top: 15.0%; left: 34.0%;" onclick="event.stopPropagation(); goToStep(2);" title="Consulter l'Agenda de Paul du Dimanche 08 Novembre">
+          <button type="button" class="scene-pulsing-btn btn-pulse-agenda" id="btn-scene-agenda" style="top: 36.5%; left: 33.5%;" onclick="event.stopPropagation(); goToStep(2);" title="Consulter l'Agenda de Paul du Dimanche 08 Novembre">
             <span>📔</span>
             <span class="btn-pulse-tooltip">Consulter l'Agenda de Paul (Onglet 2)</span>
           </button>
 
-          <button type="button" class="scene-pulsing-btn btn-pulse-cctv" id="btn-scene-cctv" style="top: 11.5%; left: 52.0%;" onclick="event.stopPropagation(); goToStep(4);" title="Visionner la Vidéosurveillance et les portraits-robots">
+          <button type="button" class="scene-pulsing-btn btn-pulse-cctv" id="btn-scene-cctv" style="top: 22.0%; left: 53.5%;" onclick="event.stopPropagation(); goToStep(4);" title="Visionner la Vidéosurveillance et les portraits-robots">
             <span>📹</span>
             <span class="btn-pulse-tooltip">Vidéosurveillance & Biométrie (Onglet 4)</span>
           </button>
@@ -4425,44 +4425,44 @@
     // Coordonnées visuelles précises calquées sur assets/enquete_genetique/scene_de_crime.jpg (1024x612)
     const clueLocations = {
       salive: { 
-        x: 35.0, 
-        y: 35.0, 
-        radius: 6.5, 
+        x: 31.8, 
+        y: 70.0, 
+        radius: 9.0, 
         name: "Gobelet de café au sol (Salive)",
         hint: "Gobelet posé sur la moquette à gauche de Paul, près du tiroir ouvert"
       },
       sang_sol: { 
-        x: 64.0, 
-        y: 32.0, 
-        radius: 7.0, 
+        x: 65.5, 
+        y: 61.5, 
+        radius: 9.0, 
         name: "Gouttes de sang au sol",
         hint: "Taches et gouttes de sang au sol à proximité des jambes de Paul"
       },
       poil: { 
-        x: 54.0, 
-        y: 32.0, 
-        radius: 6.5, 
+        x: 56.5, 
+        y: 65.5, 
+        radius: 8.5, 
         name: "Poil animal sur la manche",
         hint: "Poil animal accroché sur la manche de chemise de Paul"
       },
       cheveu: { 
-        x: 48.5, 
-        y: 35.5, 
-        radius: 6.5, 
+        x: 47.5, 
+        y: 67.5, 
+        radius: 8.5, 
         name: "Cheveu sur le col de la veste",
         hint: "Cheveu humain avec bulbe au niveau du col/tête de la victime"
       },
       empreinte: { 
-        x: 42.5, 
-        y: 38.5, 
-        radius: 6.5, 
+        x: 41.5, 
+        y: 76.0, 
+        radius: 8.5, 
         name: "Empreinte digitale au sol",
         hint: "Empreinte papillaire au sol près de la main droite de Paul"
       },
       sang_meuble: { 
-        x: 37.5, 
-        y: 23.5, 
-        radius: 8.5, 
+        x: 36.5, 
+        y: 43.5, 
+        radius: 12.0, 
         name: "Sang séché sur l'angle du bureau",
         hint: "Angle avant gauche en bois du bureau de Paul (lutte violente)"
       }
@@ -4508,7 +4508,7 @@
 
         // Vérifier si la loupe survole un indice non découvert
         let nearbyClue = null;
-        if (!discoveredClues.has('sang_meuble') && percentX >= 30 && percentX <= 45 && percentY >= 14 && percentY <= 31) {
+        if (!discoveredClues.has('sang_meuble') && percentX >= 26 && percentX <= 46 && percentY >= 34 && percentY <= 53) {
           nearbyClue = 'sang_meuble';
         }
         if (!nearbyClue) {
@@ -4616,7 +4616,7 @@
 
       // Clic direct sur l'angle du grand bureau (sang séché)
       let clickedClue = null;
-      if (percentX >= 30 && percentX <= 45 && percentY >= 14 && percentY <= 31) {
+      if (percentX >= 26 && percentX <= 46 && percentY >= 34 && percentY <= 53) {
         if (!discoveredClues.has('sang_meuble')) {
           clickedClue = 'sang_meuble';
         }
