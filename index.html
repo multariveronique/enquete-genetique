@@ -5765,14 +5765,15 @@
 
       const t = (typeof activeVid.currentTime === 'number' && !isNaN(activeVid.currentTime)) ? activeVid.currentTime : 0;
       
-      // Séquence 1 (0s à 4.9s) : Arrivée -> Débute à 19h18:24 et défile seconde par seconde
-      // Séquence 2 (5.0s à 10s) : Départ -> Débute à 19h32:15 (+13min 51s, > 10 min écoulées) et défile seconde par seconde
-      const isExitPhase = (t >= 5.0);
+      // Séquence 1 (0s à 6.1s) : Arrivée -> Débute à 19h18:24 et défile seconde par seconde pendant qu'il se dirige vers le bureau
+      // Séquence 2 (t >= 6.1s à 10s) : Deuxième apparition -> Bascule à 19h32:15 quand il réapparaît en quittant le bureau (+13min 45s, > 10 min écoulées pour commettre le crime)
+      const CUT_TIME = 6.1;
+      const isExitPhase = (t >= CUT_TIME);
 
       let hours = 19;
       let minutes = isExitPhase ? 32 : 18;
       let baseSec = isExitPhase ? 15 : 24;
-      let deltaSec = Math.floor(isExitPhase ? (t - 5.0) : t);
+      let deltaSec = Math.floor(isExitPhase ? (t - CUT_TIME) : t);
       let seconds = baseSec + deltaSec;
 
       if (seconds >= 60) {
