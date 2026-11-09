@@ -735,93 +735,18 @@
     font-weight: 700;
   }
 
-  /* --- BOUTONS PULSEURS COMPACTS ET DISCRETS (AGENDA ET VIDÉOSURVEILLANCE) --- */
-  .scene-pulsing-btn {
+  /* --- ZONES INTERACTIVES SUR LA SCÈNE (CLIC DIRECT SANS AUCUN BOUTON PULSEUR) --- */
+  .scene-clickable-item {
     position: absolute;
-    transform: translate(-50%, -50%);
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: rgba(15, 23, 42, 0.8);
-    backdrop-filter: blur(4px);
-    border: 2px solid var(--cyan);
-    color: #ffffff;
-    font-size: 1.05rem;
     cursor: pointer;
-    z-index: 30;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-    user-select: none;
-    box-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
+    z-index: 25;
+    background: transparent;
+    border-radius: 6px;
+    transition: background 0.2s, box-shadow 0.2s;
   }
-
-  .scene-pulsing-btn::after {
-    content: "";
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border-radius: 50%;
-    border: 2px solid inherit;
-    animation: beaconPulse 2s infinite ease-out;
-    pointer-events: none;
-  }
-
-  @keyframes beaconPulse {
-    0% { transform: scale(1); opacity: 0.9; }
-    70% { transform: scale(1.6); opacity: 0; }
-    100% { transform: scale(1.6); opacity: 0; }
-  }
-
-  .scene-pulsing-btn.btn-pulse-agenda {
-    border-color: #f59e0b;
-    box-shadow: 0 0 14px rgba(245, 158, 11, 0.7);
-  }
-  .scene-pulsing-btn.btn-pulse-agenda::after {
-    border-color: #f59e0b;
-  }
-
-  .scene-pulsing-btn.btn-pulse-cctv {
-    border-color: #ef4444;
-    box-shadow: 0 0 14px rgba(239, 68, 68, 0.7);
-  }
-  .scene-pulsing-btn.btn-pulse-cctv::after {
-    border-color: #ef4444;
-  }
-
-  .scene-pulsing-btn:hover {
-    transform: translate(-50%, -50%) scale(1.22);
-    background: rgba(15, 23, 42, 0.95);
-  }
-
-  /* TOOLTIP FLOTTANT AU SURVOL */
-  .scene-pulsing-btn .btn-pulse-tooltip {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #0f172a;
-    border: 1px solid #38bdf8;
-    color: #f8fafc;
-    font-size: 0.72rem;
-    font-weight: 700;
-    font-family: var(--font-sans);
-    padding: 3px 8px;
-    border-radius: 4px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s, transform 0.2s;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    z-index: 45;
-  }
-  .scene-pulsing-btn:hover .btn-pulse-tooltip {
-    opacity: 1;
-    transform: translateX(-50%) translateY(-2px);
+  .scene-clickable-item:hover {
+    background: rgba(56, 189, 248, 0.08);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
   }
 
   /* LOUPE SCIENTIFIQUE D'INVESTIGATION AVEC ZOOM OPTIQUE RÉEL (GROSSISSEMENT X2.5) */
@@ -1018,24 +943,24 @@
     box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
   }
 
-  /* --- MASQUES HUD DE VIDÉOSURVEILLANCE (HORAIRE TOTALEMENT MASQUÉ) --- */
+  /* --- MASQUES HUD DE VIDÉOSURVEILLANCE (HORAIRE MASQUÉ & AFFICHAGE OFFICIEL 19H) --- */
   .cctv-hud-top-bar {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 54px;
+    height: 72px;
     background: #000000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 16px;
-    z-index: 35;
+    z-index: 50;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: #e2e8f0;
-    border-bottom: 2px solid #1e293b;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.95);
+    border-bottom: 2px solid #0284c7;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.98);
   }
 
   .cctv-hud-bottom-bar {
@@ -1043,18 +968,18 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 48px;
+    height: 50px;
     background: #000000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 16px;
-    z-index: 35;
+    z-index: 50;
     font-family: var(--font-mono);
-    font-size: 0.74rem;
+    font-size: 0.75rem;
     color: #94a3b8;
     border-top: 2px solid #1e293b;
-    box-shadow: 0 -4px 15px rgba(0,0,0,0.95);
+    box-shadow: 0 -6px 20px rgba(0,0,0,0.98);
   }
 
   /* HOTSPOTS */
@@ -3375,16 +3300,16 @@
           <!-- SURBRILLANCES D'AIDE TEMPORAIRES (ACTIVABLES PAR LE BOUTON AIDE) -->
           <div id="radar-hints-container" style="display:none;"></div>
 
-          <!-- BOUTONS PULSEURS DISCRETS SUR LE BUREAU (SANS MASQUER L'IMAGE) -->
-          <button type="button" class="scene-pulsing-btn btn-pulse-agenda" id="btn-scene-agenda" style="top: 36.5%; left: 33.5%;" onclick="event.stopPropagation(); goToStep(2);" title="Consulter l'Agenda de Paul du Dimanche 08 Novembre">
-            <span>📔</span>
-            <span class="btn-pulse-tooltip">Consulter l'Agenda de Paul (Onglet 2)</span>
-          </button>
+          <!-- ZONES CLIQUABLES DIRECTES SUR L'AGENDA ET L'ÉCRAN (SANS BOUTONS PULSEURS) -->
+          <div class="scene-clickable-item zone-item-agenda" 
+               style="top: 30%; left: 28%; width: 10%; height: 11%;" 
+               onclick="event.stopPropagation(); goToStep(2);" 
+               title="Cliquer directement sur l'Agenda de Paul pour ouvrir l'onglet"></div>
 
-          <button type="button" class="scene-pulsing-btn btn-pulse-cctv" id="btn-scene-cctv" style="top: 22.0%; left: 53.5%;" onclick="event.stopPropagation(); goToStep(4);" title="Visionner la Vidéosurveillance et les portraits-robots">
-            <span>📹</span>
-            <span class="btn-pulse-tooltip">Vidéosurveillance & Biométrie (Onglet 4)</span>
-          </button>
+          <div class="scene-clickable-item zone-item-screen" 
+               style="top: 15%; left: 49%; width: 10%; height: 16%;" 
+               onclick="event.stopPropagation(); goToStep(4);" 
+               title="Cliquer directement sur l'Écran pour ouvrir la Vidéosurveillance"></div>
 
           <!-- LES BALISES DE SCELLÉS N'APPARAISSENT QU'APRÈS DÉCOUVERTE -->
           <div id="discovered-flags-container"></div>
@@ -3736,13 +3661,16 @@
       <div class="panel-banner">
         <div>
           <h2>📹 Étape 4 : Vidéosurveillance & Reconnaissance Faciale (Portraits-Robots)</h2>
-          <p>Paul a été agressé dans son bureau entre 19h00 et 20h00, avant la fermeture du parc. Le serveur de vidéosurveillance a capté le passage de deux suspects dans le couloir à <strong>19h28</strong>. Le module biométrique analyse l'enregistrement et compare les visages aux portraits-robots. Le module biométrique analyse l'extrait vidéo et compare les visages détectés aux <strong>portraits-robots</strong> établis par la police judiciaire.</p>
+          <p>Paul Delorme a été agressé dans son bureau un dimanche soir après 19h00, avant la fermeture totale du zoo. 
+             L'enregistrement de la caméra de surveillance montre un individu encapuchonné arrivant à <strong>19h18</strong> et se dirigeant vers le bureau éclairé de Paul, puis quittant précipitamment les lieux à <strong>19h32</strong> : 
+             au moins <strong>14 minutes</strong> se sont écoulées pendant lesquelles l'agression et la fouille ont eu lieu. 
+             Le module biométrique analyse l'enregistrement et compare les visages détectés aux <strong>portraits-robots</strong> établis par la police judiciaire.</p>
         </div>
         <span class="target-badge">Notion : Variations Individuelles</span>
       </div>
 
       <!-- INTERFACE COMPLÈTE DE VIDÉOSURVEILLANCE -->
-            <!-- MONITEUR DE VIDÉOSURVEILLANCE AVEC PORTRAITS-ROBOTS SUR L'ÉCRAN -->
+      <!-- MONITEUR DE VIDÉOSURVEILLANCE AVEC PORTRAITS-ROBOTS SUR L'ÉCRAN -->
       <div class="cctv-unified-terminal">
         
         <!-- BARRE SUPÉRIEURE DU MONITEUR -->
@@ -3751,7 +3679,7 @@
             <span class="rec-dot-blink"></span>
             ● REC • MONITEUR EXT-01 [COULOIR DU BUREAU]
           </span>
-          <span id="cctv-timecode" style="color:#38bdf8; font-weight:700;">EXTRAIT SÉCURISÉ • ARCHIVE JUDICIAIRE</span>
+          <span id="cctv-timecode" style="color:#38bdf8; font-weight:700;">EXTRAIT SÉCURISÉ • HORODATAGE 19H POLICE</span>
         </div>
 
         <!-- ZONE D'AFFICHAGE DE L'ÉCRAN : VIDÉO À GAUCHE + PORTRAITS-ROBOTS À DROITE -->
@@ -3759,23 +3687,32 @@
           
           <!-- GAUCHE DE L'ÉCRAN : L'ENREGISTREMENT DE LA CAMÉRA -->
           <div class="cctv-video-half" style="position:relative; overflow:hidden; border-radius:6px; background:#000;">
-            <!-- BANDEAU HUD SUPÉRIEUR : MASQUE TOTAL DE L'HORAIRE DE LA VIDÉO -->
+            <!-- BANDEAU HUD SUPÉRIEUR : MASQUE TOTAL DU TIMESTAMP D'ORIGINE ET AFFICHAGE HORAIRE OFFICIEL -->
             <div class="cctv-hud-top-bar">
               <span style="color:#ef4444; font-weight:800; display:flex; align-items:center; gap:6px;">
-                <span class="rec-dot-blink"></span> ● ENR • CAM_01 [COULOIR BUREAU]
+                <span class="rec-dot-blink"></span> ● CAM_01 [BUREAU]
               </span>
-              <span style="color:#64748b; font-size:0.75rem; font-family:var(--font-mono); letter-spacing:0.5px;">
-                HORAIRE MASQUÉ • ENQUÊTE
+              <span class="cctv-phase-tag cctv-phase-dyn" style="background:#0f172a; color:#38bdf8; font-size:0.72rem; padding:3px 10px; border-radius:4px; border:1px solid #0284c7; font-weight:700;">
+                🚶 SÉQUENCE 1 : ENTRÉE DU SUSPECT
+              </span>
+              <span style="color:#f8fafc; font-family:var(--font-mono); font-weight:800; font-size:0.95rem; display:flex; align-items:center; gap:6px;">
+                <span style="color:#64748b; font-size:0.75rem;">08/11</span> <span class="cctv-clock-dyn" style="color:#38bdf8; font-size:1.05rem;">19:18:22</span>
               </span>
             </div>
 
             <video id="cctv-video-element" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay style="width:100%; height:auto; display:block; filter:contrast(1.1);"></video>
             <div class="cctv-scanlines"></div>
 
-            <!-- BANDEAU HUD INFÉRIEUR : MASQUE TOTAL DU BAS -->
+            <!-- BANDEAU HUD INFÉRIEUR : MASQUE DU BAS -->
             <div class="cctv-hud-bottom-bar">
               <span>ZOO DE BIGUGLIA • COULOIR INTÉRIEUR</span>
               <span style="color:#34d399; font-weight:700;">FLUX VIDÉO SÉCURISÉ</span>
+            </div>
+
+            <!-- BANDEAU DE SAUT TEMPOREL DYNAMIQUE (> 10 MIN ÉCOULÉES) -->
+            <div class="cctv-elapsed-dyn" style="background:#020617; padding:8px 14px; font-size:0.78rem; border-top:1px solid #1e293b; color:#94a3b8; font-family:var(--font-mono); display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:#38bdf8; font-weight:700;">⏱️ HORAIRE ENTRÉE : 19h18 (Suspect vers bureau éclairé)</span>
+              <span style="color:#94a3b8;">ENREGISTREMENT CONTINU</span>
             </div>
           </div>
 
@@ -4272,23 +4209,32 @@
 
         <div class="cctv-unified-screen">
           <div class="cctv-video-half" style="position:relative; overflow:hidden; border-radius:6px; background:#000;">
-            <!-- BANDEAU HUD SUPÉRIEUR : MASQUE TOTAL DE L'HORAIRE DE LA VIDÉO -->
+            <!-- BANDEAU HUD SUPÉRIEUR : MASQUE TOTAL DU TIMESTAMP D'ORIGINE ET AFFICHAGE HORAIRE OFFICIEL -->
             <div class="cctv-hud-top-bar">
               <span style="color:#ef4444; font-weight:800; display:flex; align-items:center; gap:6px;">
-                <span class="rec-dot-blink"></span> ● ENR • CAM_01 [COULOIR BUREAU]
+                <span class="rec-dot-blink"></span> ● CAM_01 [BUREAU]
               </span>
-              <span style="color:#64748b; font-size:0.75rem; font-family:var(--font-mono); letter-spacing:0.5px;">
-                HORAIRE MASQUÉ • ENQUÊTE
+              <span class="cctv-phase-tag cctv-phase-dyn" style="background:#0f172a; color:#38bdf8; font-size:0.72rem; padding:3px 10px; border-radius:4px; border:1px solid #0284c7; font-weight:700;">
+                🚶 SÉQUENCE 1 : ENTRÉE DU SUSPECT
+              </span>
+              <span style="color:#f8fafc; font-family:var(--font-mono); font-weight:800; font-size:0.95rem; display:flex; align-items:center; gap:6px;">
+                <span style="color:#64748b; font-size:0.75rem;">08/11</span> <span class="cctv-clock-dyn" style="color:#38bdf8; font-size:1.05rem;">19:18:22</span>
               </span>
             </div>
 
             <video id="modal-cctv-video" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay style="width:100%; height:auto; display:block; filter:contrast(1.1);"></video>
             <div class="cctv-scanlines"></div>
 
-            <!-- BANDEAU HUD INFÉRIEUR : MASQUE TOTAL DU BAS -->
+            <!-- BANDEAU HUD INFÉRIEUR : MASQUE DU BAS -->
             <div class="cctv-hud-bottom-bar">
               <span>ZOO DE BIGUGLIA • COULOIR INTÉRIEUR</span>
               <span style="color:#34d399; font-weight:700;">FLUX VIDÉO SÉCURISÉ</span>
+            </div>
+
+            <!-- BANDEAU DE SAUT TEMPOREL DYNAMIQUE (> 10 MIN ÉCOULÉES) -->
+            <div class="cctv-elapsed-dyn" style="background:#020617; padding:8px 14px; font-size:0.78rem; border-top:1px solid #1e293b; color:#94a3b8; font-family:var(--font-mono); display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:#38bdf8; font-weight:700;">⏱️ HORAIRE ENTRÉE : 19h18 (Suspect vers bureau éclairé)</span>
+              <span style="color:#94a3b8;">ENREGISTREMENT CONTINU</span>
             </div>
           </div>
 
@@ -4506,12 +4452,16 @@
         loupe.style.backgroundSize = `${rect.width * zoom}px ${rect.height * zoom}px`;
         loupe.style.backgroundPosition = `-${mouseX * zoom - radius}px -${mouseY * zoom - radius}px`;
 
+        // Vérifier si la loupe survole l'agenda ou l'écran
+        const isHoverAgenda = (percentX >= 27 && percentX <= 39 && percentY >= 30 && percentY <= 41);
+        const isHoverScreen = (percentX >= 48 && percentX <= 60 && percentY >= 14 && percentY <= 31);
+
         // Vérifier si la loupe survole un indice non découvert
         let nearbyClue = null;
-        if (!discoveredClues.has('sang_meuble') && percentX >= 26 && percentX <= 46 && percentY >= 34 && percentY <= 53) {
+        if (!discoveredClues.has('sang_meuble') && percentX >= 33 && percentX <= 43 && percentY >= 41 && percentY <= 53) {
           nearbyClue = 'sang_meuble';
         }
-        if (!nearbyClue) {
+        if (!nearbyClue && !isHoverAgenda && !isHoverScreen) {
           Object.keys(clueLocations).forEach(key => {
             if (!discoveredClues.has(key)) {
               const loc = clueLocations[key];
@@ -4523,7 +4473,13 @@
           });
         }
 
-        if (nearbyClue) {
+        if (isHoverAgenda) {
+          loupe.classList.remove('detecting');
+          if (badge) badge.innerText = "📔 CLIC : OUVRIR L'AGENDA";
+        } else if (isHoverScreen) {
+          loupe.classList.remove('detecting');
+          if (badge) badge.innerText = "📹 CLIC : VIDÉOSURVEILLANCE";
+        } else if (nearbyClue) {
           loupe.classList.add('detecting');
           if (badge) badge.innerText = "🔍 ANOMALIE DÉTECTÉE !";
         } else {
@@ -4610,9 +4566,21 @@
       const percentX = (mouseX / rect.width) * 100;
       const percentY = (mouseY / rect.height) * 100;
 
-      // Clic direct sur l'angle du grand bureau (sang séché)
+      // Clic direct sur l'agenda de Paul posé sur le bureau (Ouvre l'onglet 2)
+      if (percentX >= 27 && percentX <= 39 && percentY >= 30 && percentY <= 41) {
+        goToStep(2);
+        return;
+      }
+
+      // Clic direct sur l'écran d'ordinateur (Ouvre l'onglet 4 Vidéosurveillance)
+      if (percentX >= 48 && percentX <= 60 && percentY >= 14 && percentY <= 31) {
+        goToStep(4);
+        return;
+      }
+
+      // Clic direct sur l'angle avant du grand bureau (sang séché)
       let clickedClue = null;
-      if (percentX >= 26 && percentX <= 46 && percentY >= 34 && percentY <= 53) {
+      if (percentX >= 33 && percentX <= 43 && percentY >= 41 && percentY <= 53) {
         if (!discoveredClues.has('sang_meuble')) {
           clickedClue = 'sang_meuble';
         }
@@ -5643,11 +5611,53 @@
       document.getElementById('zoom-modal').classList.remove('open');
     }
 
+    /* ============================================================
+       SYNCHRONISATION TEMPORELLE CCTV & MASQUAGE D'HORODATAGE (19H)
+       ============================================================ */
+    function setupCctvTimeSync() {
+      function syncTime(vid) {
+        if (!vid) return;
+        const t = vid.currentTime;
+        // La vidéo dure ~10 secondes :
+        // 0s à 4.9s : Arrivée du suspect encapuchonné vers le bureau éclairé -> 19:18:xx
+        // >= 5.0s : Fuite du suspect hors du bureau -> 19:32:xx (+14 minutes écoulées)
+        const isExitPhase = (t >= 5.0);
+        
+        const secDelta = Math.floor(t % 5);
+        const timeStr = isExitPhase 
+          ? `19:32:${String(14 + secDelta).padStart(2, '0')}` 
+          : `19:18:${String(22 + secDelta).padStart(2, '0')}`;
+        
+        const phaseStr = isExitPhase
+          ? `🏃 SÉQUENCE 2 : SUSPECT EN FUITE (+14 MIN)`
+          : `🚶 SÉQUENCE 1 : ENTRÉE DU SUSPECT`;
+
+        const bannerHtml = isExitPhase
+          ? `<span style="color:#f59e0b; font-weight:700;">⏱️ CRÉNEAU DU CRIME : 19h18 ➔ 19h32 (14 min d'occupation du bureau)</span><span style="color:#34d399; font-weight:700;">✓ HORODATAGE VALIDÉ</span>`
+          : `<span style="color:#38bdf8; font-weight:700;">⏱️ HORAIRE ENTRÉE : 19h18 (Suspect vers bureau éclairé)</span><span style="color:#94a3b8;">ENREGISTREMENT CONTINU</span>`;
+
+        document.querySelectorAll('.cctv-clock-dyn').forEach(el => el.textContent = timeStr);
+        document.querySelectorAll('.cctv-phase-dyn').forEach(el => el.textContent = phaseStr);
+        document.querySelectorAll('.cctv-elapsed-dyn').forEach(el => el.innerHTML = bannerHtml);
+      }
+
+      const mainVid = document.getElementById('cctv-video-element');
+      const modalVid = document.getElementById('modal-cctv-video');
+
+      if (mainVid) {
+        mainVid.addEventListener('timeupdate', () => syncTime(mainVid));
+      }
+      if (modalVid) {
+        modalVid.addEventListener('timeupdate', () => syncTime(modalVid));
+      }
+    }
+
     // Initialize on load
     window.addEventListener('DOMContentLoaded', () => {
       initClassifier(); 
       selectDnaSample('poils');
       renderClueExplorerGuide();
+      setupCctvTimeSync();
       try {
         const savedName = localStorage.getItem('enquete_agent_name');
         if (savedName) document.getElementById('agent-name').value = savedName;
