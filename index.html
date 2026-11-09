@@ -828,6 +828,40 @@
     font-family: var(--font-mono);
     pointer-events: none;
     letter-spacing: 0.5px;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+
+  .scene-loupe.detecting {
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.9), inset 0 0 18px rgba(245, 158, 11, 0.35) !important;
+  }
+  .scene-loupe.detecting .loupe-crosshair::before,
+  .scene-loupe.detecting .loupe-crosshair::after {
+    background: #f59e0b !important;
+  }
+  .scene-loupe.detecting .loupe-mag-badge {
+    background: #f59e0b !important;
+    color: #000000 !important;
+    border-color: #f59e0b !important;
+    font-weight: 900 !important;
+  }
+
+  /* ZONES D'AIDE VISUELLE TEMPORAIRE */
+  .radar-hint-zone {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: 2px dashed #f59e0b;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.15);
+    pointer-events: none;
+    z-index: 22;
+    animation: radarPulse 1.5s infinite;
+  }
+  @keyframes radarPulse {
+    0% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.9; }
+    50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.4; }
+    100% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.9; }
   }
 
   /* BALISES DE SCELLÉS PLACÉES UNIQUEMENT APRÈS DÉCOUVERTE */
@@ -3169,61 +3203,50 @@
          ETAPE 1 : SCENE DE CRIME
          ============================================================ -->
     <section class="step-panel active" id="step-1">
-      <div class="panel-banner">
-        <div>
+      <div class="panel-banner" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div style="max-width:700px;">
           <h2>🔎 Étape 1 : Exploration de la Scène de Crime à la Loupe Optique & Mise sous Scellés</h2>
           <p>Marc Delorme a été agressé dans son bureau entre 19h00 et 20h00. 
-             <strong>Déplace ta loupe optique grossissante sur la scène pour repérer par toi-même les indices dissimulés (salive, cheveux, poils, traces de sang et empreinte digitale). Dès que tu repères une anomalie, clique dessus pour prélever l'indice et le glisser dans un sac de scellé officiel !</strong></p>
+             <strong>Promène ta loupe grossissante sur toute la scène (gobelet au sol, victime, sol taché, angle du bureau). Dès que le réticule détecte une anomalie, clique dessus pour prélever l'échantillon et le mettre sous scellé !</strong></p>
         </div>
-        <span class="target-badge" id="scelles-counter-badge">Indices sous scellés : 0 / 6</span>
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
+          <span class="target-badge" id="scelles-counter-badge">Indices sous scellés : 0 / 6</span>
+          <button type="button" class="btn-secondary" onclick="toggleRadarHints()" id="btn-radar-hints" style="font-size:0.78rem; padding:5px 12px; display:inline-flex; align-items:center; gap:6px;" title="Met en surbrillance les zones où chercher si tu es bloqué">
+            💡 Aide : Révéler les zones d'indices
+          </button>
+        </div>
       </div>
 
       <div class="scene-explorer-layout">
-        <!-- VUE SCENE DE CRIME : EXPLORATION LIBRE À LA LOUPE SANS PASTILLES AU DÉPART ! -->
-        <div class="scene-viewport-wrapper" id="scene-viewport" onmousemove="handleLoupeMove(event)" onmouseleave="handleLoupeLeave()" onclick="handleSceneClick(event)">
-          <img src="assets/enquete_genetique/scene_de_crime.jpg" alt="Scène de crime dans le bureau du soigneur" class="scene-image" id="crime-scene-img">
+        <!-- VUE SCENE DE CRIME : EXPLORATION LIBRE À LA LOUPE SCIENTIFIQUE -->
+        <div class="scene-viewport-wrapper" id="scene-viewport" 
+             onmousemove="handleLoupeMove(event)" 
+             onmouseenter="handleLoupeEnter(event)" 
+             onmouseleave="handleLoupeLeave()" 
+             ontouchstart="handleLoupeTouch(event)" 
+             ontouchmove="handleLoupeTouch(event)" 
+             onclick="handleSceneClick(event)">
+          <img src="assets/enquete_genetique/scene_de_crime.jpg" alt="Scène de crime dans le bureau du soigneur" class="scene-image" id="crime-scene-img" draggable="false">
           
-          <!-- LOUPE OPTIQUE RÉELLE (GROSSISSEMENT X2.5) -->
+          <!-- LOUPE OPTIQUE RÉELLE (GROSSISSEMENT X2.5 AVEC DÉTECTION ACTIVE) -->
           <div class="scene-loupe" id="scene-loupe">
             <div class="loupe-glass-sheen"></div>
             <div class="loupe-crosshair"></div>
-            <div class="loupe-mag-badge">ZOOM 2.5×</div>
+            <div class="loupe-mag-badge" id="loupe-status-badge">ZOOM 2.5×</div>
           </div>
 
           <!-- BANDEAUX POLICE ET CAMERA -->
           <div class="camera-overlay">
             <span class="rec-dot"></span>
-            <span>ZONE_CRIME • RECHERCHE ACTIVE À LA LOUPE GROSSISSANTE</span>
+            <span>ZONE_CRIME • EXPLORATION ACTIVE À LA LOUPE GROSSISSANTE</span>
           </div>
 
           <div class="tape-decoration">POLICE SCIENTIFIQUE • ACCÈS STRICTEMENT RÉSERVÉ</div>
 
-          <!-- ZONES DE DÉTECTION TOTALEMENT INVISIBLES (SANS PASTILLES !) -->
-          <!-- 1. Gobelet de café (Salive) sur la table à droite -->
-          <div class="clue-detection-zone" id="zone-salive" data-clue="salive" style="top: 76%; left: 80%; width: 9%; height: 11%;"></div>
+          <!-- SURBRILLANCES D'AIDE TEMPORAIRES (ACTIVABLES PAR LE BOUTON AIDE) -->
+          <div id="radar-hints-container" style="display:none;"></div>
 
-          <!-- 2. Cheveu avec bulbe sur le col de la veste de Marc -->
-          <div class="clue-detection-zone" id="zone-cheveu" data-clue="cheveu" style="top: 61%; left: 42%; width: 8%; height: 9%;"></div>
-
-          <!-- 3. Poil animal sur la manche de chemise de Marc -->
-          <div class="clue-detection-zone" id="zone-poil" data-clue="poil" style="top: 69%; left: 53%; width: 8%; height: 9%;"></div>
-
-          <!-- 4. Goutte de sang au sol près du crâne -->
-          <div class="clue-detection-zone" id="zone-sang_sol" data-clue="sang_sol" style="top: 73%; left: 34%; width: 9%; height: 10%;"></div>
-
-          <!-- 5. Sang séché sur l'angle métallique du meuble -->
-          <div class="clue-detection-zone" id="zone-sang_meuble" data-clue="sang_meuble" style="top: 47%; left: 21%; width: 8%; height: 10%;"></div>
-
-          <!-- 6. Empreinte papillaire au sol près des gouttes de sang -->
-          <div class="clue-detection-zone" id="zone-empreinte" data-clue="empreinte" style="top: 78%; left: 39%; width: 7%; height: 8%;"></div>
-
-          <!-- ACCÈS AGENDA SUR LE BUREAU -->
-          <div class="clue-detection-zone" id="zone-agenda" data-clue="agenda_link" style="top: 34%; left: 35%; width: 8%; height: 8%;" title="Cliquer pour ouvrir l'Agenda de Marc (Onglet 2)"></div>
-
-          <!-- ACCÈS ORDINATEUR -->
-          <div class="clue-detection-zone" id="zone-computer" data-clue="computer_link" style="top: 24%; left: 47%; width: 9%; height: 9%;" title="Cliquer pour ouvrir la Vidéosurveillance (Onglet 4)"></div>
-
-          <!-- LES BALISES N'APPARAISSENT QU'APRÈS DÉCOUVERTE -->
+          <!-- LES BALISES DE SCELLÉS N'APPARAISSENT QU'APRÈS DÉCOUVERTE -->
           <div id="discovered-flags-container"></div>
         </div>
 
@@ -4259,26 +4282,80 @@
   <!-- SCRIPT LOGIQUE & INTERACTIVITE -->
   <script>
     /* --- GESTION DE LA LOUPE D'INVESTIGATION SUR LA SCÈNE DE CRIME --- */
+    // Coordonnées visuelles précises calquées sur assets/enquete_genetique/scene_de_crime.jpg (1024x612)
     const clueLocations = {
-      salive: { x: 82.5, y: 80, radius: 6.5, name: "Gobelet de café (Salive)" },
-      cheveu: { x: 45.0, y: 64, radius: 5.5, name: "Col de veste (Cheveu)" },
-      poil: { x: 56.0, y: 72, radius: 5.5, name: "Manche de chemise (Poil animal)" },
-      sang_sol: { x: 37.0, y: 76, radius: 6.0, name: "Flaque au sol (Sang)" },
-      empreinte: { x: 41.5, y: 80.5, radius: 5.5, name: "Empreinte digitale au sol" },
-      sang_meuble: { x: 24.0, y: 50, radius: 6.0, name: "Angle du meuble (Sang séché)" }
+      salive: { 
+        x: 31.8, 
+        y: 70.0, 
+        radius: 9.0, 
+        name: "Gobelet de café au sol (Salive)",
+        hint: "Gobelet posé sur la moquette à gauche de Marc, près du tiroir ouvert"
+      },
+      sang_sol: { 
+        x: 65.5, 
+        y: 61.5, 
+        radius: 9.0, 
+        name: "Gouttes de sang au sol",
+        hint: "Taches et gouttes de sang au sol à proximité des jambes de Marc"
+      },
+      poil: { 
+        x: 56.5, 
+        y: 65.5, 
+        radius: 8.5, 
+        name: "Poil animal sur la manche",
+        hint: "Poil animal accroché sur la manche de chemise de Marc"
+      },
+      cheveu: { 
+        x: 47.5, 
+        y: 67.5, 
+        radius: 8.5, 
+        name: "Cheveu sur le col de la veste",
+        hint: "Cheveu humain avec bulbe au niveau du col/tête de la victime"
+      },
+      empreinte: { 
+        x: 41.5, 
+        y: 76.0, 
+        radius: 8.5, 
+        name: "Empreinte digitale au sol",
+        hint: "Empreinte papillaire au sol près de la main droite de Marc"
+      },
+      sang_meuble: { 
+        x: 38.5, 
+        y: 43.5, 
+        radius: 8.5, 
+        name: "Sang séché sur l'angle du bureau",
+        hint: "Sang séché sur l'angle avant en bois du grand bureau de travail"
+      }
     };
 
     const discoveredClues = new Set();
+    let radarHintsActive = false;
+
+    function handleLoupeEnter(e) {
+      const loupe = document.getElementById('scene-loupe');
+      if (loupe) loupe.style.display = 'block';
+    }
+
+    function handleLoupeTouch(e) {
+      if (e.touches && e.touches.length > 0) {
+        const touch = e.touches[0];
+        handleLoupeMove({ clientX: touch.clientX, clientY: touch.clientY });
+      }
+    }
 
     function handleLoupeMove(e) {
       const viewport = document.getElementById('scene-viewport');
       if (!viewport) return;
 
       const rect = viewport.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
+      const mouseX = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+      const mouseY = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
+
+      const percentX = (mouseX / rect.width) * 100;
+      const percentY = (mouseY / rect.height) * 100;
 
       const loupe = document.getElementById('scene-loupe');
+      const badge = document.getElementById('loupe-status-badge');
       if (loupe) {
         const zoom = 2.5;
         const radius = 70; // 140px / 2
@@ -4288,12 +4365,54 @@
         loupe.style.backgroundImage = "url('assets/enquete_genetique/scene_de_crime.jpg')";
         loupe.style.backgroundSize = `${rect.width * zoom}px ${rect.height * zoom}px`;
         loupe.style.backgroundPosition = `-${mouseX * zoom - radius}px -${mouseY * zoom - radius}px`;
+
+        // Vérifier si la loupe survole un indice non découvert
+        let nearbyClue = null;
+        Object.keys(clueLocations).forEach(key => {
+          if (!discoveredClues.has(key)) {
+            const loc = clueLocations[key];
+            const dist = Math.hypot(percentX - loc.x, percentY - loc.y);
+            if (dist < loc.radius) {
+              nearbyClue = key;
+            }
+          }
+        });
+
+        if (nearbyClue) {
+          loupe.classList.add('detecting');
+          if (badge) badge.innerText = "🔍 ANOMALIE DÉTECTÉE !";
+        } else {
+          loupe.classList.remove('detecting');
+          if (badge) badge.innerText = "ZOOM 2.5×";
+        }
       }
     }
 
     function handleLoupeLeave() {
       const loupe = document.getElementById('scene-loupe');
       if (loupe) loupe.style.display = 'none';
+    }
+
+    function toggleRadarHints() {
+      radarHintsActive = !radarHintsActive;
+      const container = document.getElementById('radar-hints-container');
+      const btn = document.getElementById('btn-radar-hints');
+      if (!container) return;
+
+      if (radarHintsActive) {
+        container.style.display = 'block';
+        container.innerHTML = Object.keys(clueLocations).map(key => {
+          if (discoveredClues.has(key)) return '';
+          const loc = clueLocations[key];
+          return `
+            <div class="radar-hint-zone" style="left:${loc.x}%; top:${loc.y}%; width:${loc.radius * 2}%; height:${loc.radius * 2 * (1024/612)}%;"></div>
+          `;
+        }).join('');
+        if (btn) btn.innerHTML = '💡 Masquer les zones suspectes';
+      } else {
+        container.style.display = 'none';
+        if (btn) btn.innerHTML = '💡 Aide : Révéler les zones d\'indices';
+      }
     }
 
     function handleSceneClick(e) {
@@ -4306,18 +4425,18 @@
       const percentX = (mouseX / rect.width) * 100;
       const percentY = (mouseY / rect.height) * 100;
 
-      // Check click on agenda area
-      if (Math.hypot(percentX - 38, percentY - 37) < 6) {
+      // Clic sur l'agenda sur le bureau (x: 36.1%, y: 38.4%)
+      if (Math.hypot(percentX - 36.1, percentY - 38.4) < 7.5) {
         goToStep(2);
         return;
       }
-      // Check click on computer area
-      if (Math.hypot(percentX - 51, percentY - 28) < 7) {
+      // Clic sur l'ordinateur sur le bureau (x: 48.3%, y: 27.0%)
+      if (Math.hypot(percentX - 48.3, percentY - 27.0) < 8.0) {
         goToStep(4);
         return;
       }
 
-      // Check click on clues
+      // Clic sur un des indices de la scène
       let clickedClue = null;
       Object.keys(clueLocations).forEach(key => {
         const loc = clueLocations[key];
@@ -4338,7 +4457,7 @@
             <span class="clue-type-pill" style="background:#334155;">Zone neutre</span>
           </div>
           <div class="clue-body">
-            <p>Aucun indice biologique ni empreinte décelé à cet endroit précis. Continue d'explorer attentivement les vêtements de Marc, les taches au sol, l'angle du meuble et le bureau.</p>
+            <p>Aucun prélèvement à cet endroit précis. Continue d'explorer : le <strong>gobelet au sol</strong> à gauche, les <strong>gouttes de sang au sol</strong> près des jambes, les <strong>vêtements de Marc</strong> (manche et col), l'<strong>empreinte au sol</strong> près de sa main, et l'<strong>angle du bureau</strong>.</p>
           </div>
         `;
       }
@@ -4348,7 +4467,13 @@
       playSuccessChime();
       discoveredClues.add(clueKey);
 
-      // Create evidence marker flag on the scene if not exists
+      // Si le radar d'aide est actif, actualiser les zones restantes
+      if (radarHintsActive) {
+        toggleRadarHints();
+        toggleRadarHints();
+      }
+
+      // Créer la balise de scellé numérotée sur la scène
       const container = document.getElementById('discovered-flags-container');
       if (container && !document.getElementById(`flag-${clueKey}`)) {
         const loc = clueLocations[clueKey];
@@ -4361,7 +4486,7 @@
         container.appendChild(flag);
       }
 
-      // Display inspection & bagging interface
+      // Afficher l'interface de mise sous scellé
       inspectCrimeSceneClue(clueKey);
     }
 
@@ -4372,8 +4497,8 @@
       salive: {
         id: 'salive',
         code: '#SC-2026-S01',
-        title: '☕ Salive sur le gobelet de café',
-        location: 'Table du bureau de Marc (balise n°20)',
+        title: '☕ Gobelet de café au sol (Salive)',
+        location: 'Moquette au sol à gauche de Marc (près du tiroir ouvert)',
         nature: 'Cellules épithéliales de la muqueuse buccale',
         nucleusFact: 'Les cellules épithéliales prélevées sur le gobelet renferment le programme génétique. Mais dans quel compartiment de la cellule (membrane, cytoplasme ou compartiment central) l\'ADN se cache-t-il ? C\'est ce que tu prouveras dans l\'Activité 2 !',
         icon: '☕',
@@ -4383,7 +4508,7 @@
         id: 'cheveu',
         code: '#SC-2026-C01',
         title: '🧥 Cheveu retrouvé sur le col',
-        location: 'Veste déchirée de la victime',
+        location: 'Col de la veste de travail de Marc',
         nature: 'Cellules vivantes du bulbe pileux (racine)',
         nucleusFact: 'Le bulbe à la racine du cheveu contient des cellules humaines avec l\'information génétique de l\'individu. L\'expérience de transfert de l\'Activité 2 permettra de déterminer son emplacement précis.',
         icon: '🧥',
@@ -4393,7 +4518,7 @@
         id: 'poil',
         code: '#SC-2026-P01',
         title: '🐾 Poil animal sur la manche',
-        location: 'Chemise de travail de Marc',
+        location: 'Manche de la veste/chemise de Marc',
         nature: 'Cellules folliculaires de la gaine du poil',
         nucleusFact: 'La gaine du poil contient des cellules animales avec le matériel génétique de l\'espèce. L\'Activité 2 démontrera dans quel compartiment ce matériel est enfermé.',
         icon: '🐾',
@@ -4402,8 +4527,8 @@
       sang_sol: {
         id: 'sang_sol',
         code: '#SC-2026-B01',
-        title: '🩸 Flaque de sang au sol',
-        location: 'Gouttes près du corps inanimé de Marc',
+        title: '🩸 Gouttes de sang au sol',
+        location: 'Moquette tachée près des jambes de Marc',
         nature: 'Globules blancs sanguins (leucocytes)',
         nucleusFact: 'Contrairement aux globules rouges qui sont de simples sacs d\'hémoglobine, les leucocytes (globules blancs) sont des cellules complètes portant l\'ADN. Le laboratoire de l\'Activité 2 révélera où est situé cet ADN.',
         icon: '🩸',
@@ -4412,8 +4537,8 @@
       sang_meuble: {
         id: 'sang_meuble',
         code: '#SC-2026-B02',
-        title: '🩸 Sang séché sur l’angle du meuble',
-        location: 'Coin métallique du bureau (lutte violente)',
+        title: '🩸 Sang séché sur l’angle du bureau',
+        location: 'Arête avant en bois du grand bureau de travail',
         nature: 'Globules blancs sanguins desséchés',
         nucleusFact: 'Même séché, le sang conserve ses cellules leucocytaires et son information génétique reste intacte. Ses chromosomes seront ensuite analysés dans l\'Activité 3.',
         icon: '🩸',
@@ -4423,7 +4548,7 @@
         id: 'empreinte',
         code: '#SC-2026-ED01',
         title: '🖐️ Empreinte digitale au sol',
-        location: 'Carrelage poussiéreux, à quelques centimètres des gouttes de sang',
+        location: 'Moquette à quelques centimètres de la main droite de Marc',
         nature: 'Empreinte papillaire de contact (crêtes, sillons et cellules cutanées)',
         nucleusFact: '🔎 <strong>Analyse dactyloscopique :</strong> La comparaison des crêtes papillaires et minuties avec le fichier d\'identification révèle formellement que cette empreinte appartient à la VICTIME <strong>Marc Delorme</strong> lui-même ! Marc a pris appui au sol de la main droite en chutant sous le choc.<br><br>💡 <strong>Règle d\'or de la police scientifique :</strong> Tous les indices découverts sur une scène de crime n\'appartiennent pas au criminel ! Identifier les traces de la victime permet d\'éviter les erreurs judiciaires.',
         icon: '🖐️',
