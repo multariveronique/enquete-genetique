@@ -1015,6 +1015,49 @@
     margin: 0 8px;
   }
 
+  /* BOUTON OVERLAY DE LECTURE VIDÉO CENTRAL */
+  .cctv-center-play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 45;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    background: rgba(15, 23, 42, 0.9);
+    padding: 12px 24px;
+    border-radius: 40px;
+    border: 2px solid #38bdf8;
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.7);
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    user-select: none;
+  }
+  .cctv-center-play-overlay:hover {
+    transform: translate(-50%, -50%) scale(1.06);
+    background: #0284c7;
+    box-shadow: 0 0 35px rgba(56, 189, 248, 0.9);
+  }
+  .cctv-center-play-overlay.hidden {
+    display: none !important;
+  }
+  .play-icon-triangle {
+    color: #38bdf8;
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+  .cctv-center-play-overlay:hover .play-icon-triangle {
+    color: #ffffff;
+  }
+  .play-overlay-label {
+    color: #f8fafc;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: var(--font-sans);
+    letter-spacing: 0.5px;
+  }
+
   /* HOTSPOTS */
   .hotspot {
     position: absolute;
@@ -3735,6 +3778,12 @@
             <video id="cctv-video-element" src="assets/enquete_genetique/video_camera_surveillance.mp4" playsinline loop muted autoplay onclick="toggleCctvPlay()" style="width:100%; height:auto; display:block; filter:contrast(1.1); cursor:pointer;"></video>
             <div class="cctv-scanlines" style="pointer-events:none;"></div>
 
+            <!-- OVERLAY CENTRAL DE LECTURE SI LA VIDÉO EST EN PAUSE -->
+            <div class="cctv-center-play-overlay" id="cctv-play-overlay" onclick="toggleCctvPlay()">
+              <span class="play-icon-triangle">▶</span>
+              <span class="play-overlay-label">Cliquer pour lancer la vidéo</span>
+            </div>
+
             <!-- BANDEAU HUD INFÉRIEUR : MASQUE TOTAL DU TIMESTAMP 23H & HORODATAGE OFFICIEL 19H -->
             <div class="cctv-hud-bottom-bar">
               <div class="cctv-hud-timecode-row">
@@ -3815,7 +3864,7 @@
         <!-- CONTRÔLES INFÉRIEURS DU MONITEUR -->
         <div class="cctv-controls-strip">
           <div style="display:flex; gap:6px;">
-            <button class="cctv-btn-pill active" id="btn-cam-play" onclick="toggleCctvPlay()">⏸ Pause</button>
+            <button class="cctv-btn-pill" id="btn-cam-play" onclick="toggleCctvPlay()">▶ Lancer la vidéo</button>
             <button class="cctv-btn-pill" onclick="restartCctvVideo()">⏮ Revoir l'extrait</button>
           </div>
           <span style="font-family:var(--font-mono); font-size:0.75rem; color:#94a3b8;">SERVEUR VIDÉO POLICE JUDICIAIRE • 08 NOVEMBRE 2026</span>
@@ -4953,9 +5002,19 @@
       const cctvVid = document.getElementById('cctv-video-element');
       if (cctvVid) {
         if (stepNumber === 4) {
-          cctvVid.play().catch(e => console.log(e));
+          cctvVid.muted = true;
+          const p = cctvVid.play();
+          if (p !== undefined) {
+            p.then(() => {
+              if (typeof updateCctvPlayState === 'function') updateCctvPlayState(true);
+            }).catch(e => {
+              console.log("Autoplay standby:", e);
+              if (typeof updateCctvPlayState === 'function') updateCctvPlayState(false);
+            });
+          }
         } else {
           cctvVid.pause();
+          if (typeof updateCctvPlayState === 'function') updateCctvPlayState(false);
         }
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -5492,14 +5551,21 @@
 
     function toggleCctvPlay() {
       const vid = document.getElementById('cctv-video-element');
-      const btn = document.getElementById('btn-cam-play');
       if (!vid) return;
+      vid.muted = true;
       if (vid.paused) {
-        vid.play();
-        if (btn) btn.innerText = "⏸ Pause";
+        const p = vid.play();
+        if (p !== undefined) {
+          p.then(() => {
+            updateCctvPlayState(true);
+          }).catch(err => {
+            console.warn("Play error:", err);
+            updateCctvPlayState(false);
+          });
+        }
       } else {
         vid.pause();
-        if (btn) btn.innerText = "▶ Lecture";
+        updateCctvPlayState(false);
       }
     }
 
@@ -5507,12 +5573,38 @@
       const vid = document.getElementById('cctv-video-element');
       if (vid) {
         vid.currentTime = 0;
-        vid.play();
+        vid.muted = true;
+        const p = vid.play();
+        if (p !== undefined) {
+          p.then(() => updateCctvPlayState(true)).catch(() => updateCctvPlayState(false));
+        }
       }
       const modalVid = document.getElementById('modal-cctv-video');
       if (modalVid) {
         modalVid.currentTime = 0;
-        modalVid.play();
+        modalVid.muted = true;
+        modalVid.play().catch(() => {});
+      }
+    }
+
+    function updateCctvPlayState(isPlaying) {
+      const btn = document.getElementById('btn-cam-play');
+      const overlay = document.getElementById('cctv-play-overlay');
+      if (btn) {
+        if (isPlaying) {
+          btn.innerText = "⏸ Pause";
+          btn.classList.add('active');
+        } else {
+          btn.innerText = "▶ Lancer la vidéo";
+          btn.classList.remove('active');
+        }
+      }
+      if (overlay) {
+        if (isPlaying) {
+          overlay.classList.add('hidden');
+        } else {
+          overlay.classList.remove('hidden');
+        }
       }
     }
 
@@ -5656,24 +5748,30 @@
       const mainVid = document.getElementById('cctv-video-element');
       const modalVid = document.getElementById('modal-cctv-video');
 
-      // Sélectionner la vidéo en cours de lecture ou active
+      // Sélectionner la vidéo active
       let activeVid = mainVid;
       const modal = document.getElementById('cctv-modal');
       if (modal && modal.classList.contains('open') && modalVid) {
         activeVid = modalVid;
       }
 
-      if (activeVid && !isNaN(activeVid.currentTime)) {
-        const t = activeVid.currentTime;
+      if (activeVid) {
+        const t = (activeVid.currentTime && !isNaN(activeVid.currentTime)) ? activeVid.currentTime : 0;
         
-        // Découpage temporel des 2 séquences de la vidéo (durée totale ~10s) :
-        // 1. Première séquence (0s à 4.9s) : Arrivée -> Défilement continu à partir de 19:18:24
-        // 2. Deuxième séquence (5.0s à 10s) : Départ -> Défilement continu à partir de 19:32:15 (+13min 51s, > 10 min écoulées)
+        // Séquence 1 (0s à 4.9s) : Arrivée -> Débute à 19h18:24 et défile avec la vidéo
+        // Séquence 2 (5.0s à 10s) : Départ -> Débute à 19h32:15 (+13min 51s, > 10 min) et défile avec la vidéo
         const isExitPhase = (t >= 5.0);
 
         let hours = 19;
         let minutes = isExitPhase ? 32 : 18;
-        let seconds = isExitPhase ? (15 + Math.floor(t - 5.0)) : (24 + Math.floor(t));
+        let baseSec = isExitPhase ? 15 : 24;
+        let progressSec = isExitPhase ? (t - 5.0) : t;
+        let seconds = Math.floor(baseSec + progressSec);
+
+        if (seconds >= 60) {
+          minutes += Math.floor(seconds / 60);
+          seconds = seconds % 60;
+        }
 
         const timeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
@@ -5690,21 +5788,18 @@
 
     function setupCctvVideoListeners() {
       const mainVid = document.getElementById('cctv-video-element');
-      const btnPlay = document.getElementById('btn-cam-play');
 
       if (mainVid) {
-        mainVid.addEventListener('play', () => {
-          if (btnPlay) {
-            btnPlay.innerText = "⏸ Pause";
-            btnPlay.classList.add('active');
-          }
-        });
-        mainVid.addEventListener('pause', () => {
-          if (btnPlay) {
-            btnPlay.innerText = "▶ Lecture";
-            btnPlay.classList.remove('active');
-          }
-        });
+        mainVid.muted = true;
+        mainVid.addEventListener('play', () => updateCctvPlayState(true));
+        mainVid.addEventListener('pause', () => updateCctvPlayState(false));
+        mainVid.addEventListener('ended', () => updateCctvPlayState(false));
+        updateCctvPlayState(!mainVid.paused);
+      }
+
+      const modalVid = document.getElementById('modal-cctv-video');
+      if (modalVid) {
+        modalVid.muted = true;
       }
 
       // Lancement de la boucle fluide d'actualisation de l'heure
